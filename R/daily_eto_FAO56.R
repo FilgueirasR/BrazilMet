@@ -1,4 +1,4 @@
-#' Eto calculation based on FAO-56 methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
+#' Eto calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
 #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the the automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*.
 #' @param lat  A numeric value of the Latitude of the AWS in decimal degrees

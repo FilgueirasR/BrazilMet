@@ -37,9 +37,9 @@ download_AWS_INMET_daily <- function(station, start_date, end_date){
   tf<-paste0(gsub('\\', '/', tempdir, fixed=TRUE), ".zip")
   outdir<-gsub('\\', '/', tempdir, fixed=TRUE)
   
-  utils::download.file(url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip") , destfile = tf, method="auto")
+  utils::download.file(url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip") , destfile = tf, method="auto", cacheOK = F)
   a<-unzip(zipfile = tf, exdir =  outdir)
-  pasta<-paste0(outdir, "/", year)
+  pasta<-paste0(outdir)
   list.files(pasta, pattern = station)
   b<-read.csv(file = list.files(pasta, pattern = station, full.names = T) ,header = T, sep = ';', skip = 8, na = '-9999', dec = ",")
   a<-as.data.frame(a)

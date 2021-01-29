@@ -2,7 +2,7 @@
 % Please edit documentation in R/daily_eto_FAO56.R
 \name{daily_eto_FAO56}
 \alias{daily_eto_FAO56}
-\title{Eto calculation based on FAO-56 methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
+\title{Eto calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
 \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
 \usage{
 daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
