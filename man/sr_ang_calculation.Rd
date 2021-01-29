@@ -18,6 +18,9 @@ sr_ang_calculation(latitude, date, n, as, bs)
 
 \item{bs}{A dataframe with the dates that you want to calculate the ra. The values of bs = 0.50 is recommended by Allen et al. (1998).}
 }
+\value{
+A data.frame object with solar radiation data
+}
 \description{
 If global radiation is not measure at station, it can be estimated with this function.
 }
@@ -25,4 +28,7 @@ If global radiation is not measure at station, it can be estimated with this fun
 \dontrun{
 sr_ang <- sr_ang_calculation(latitude, date, n, as, bs)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

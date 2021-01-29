@@ -31,8 +31,9 @@
 #' eto<-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
 #' }
 #' @export
-#' @return Returns a dataframe with the AWS data requested
-#' @author Roberto Filgueiras
+#' @return Returns a data.frame with the AWS data requested
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
+
 
 
 

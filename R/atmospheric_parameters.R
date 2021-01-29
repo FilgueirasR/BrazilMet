@@ -6,7 +6,8 @@
 #' P <- p(z)
 #' }
 #' @export
-#' @return Returns a data.frame object with the with ETo HS data 
+#' @return Returns a data.frame object with the atmospheric pressure calculated.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
 P <- function(z){
   P <- 101.3*((293 - 0.0065*z)/293)^5.26
@@ -24,6 +25,8 @@ P <- function(z){
 #' psy_df <- psy_const(P)
 #' }
 #' @export
+#' @return A data.frame object with the psychrometric constant calculated.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
 
 psy_const <- function(P){

@@ -13,7 +13,7 @@ radiation_conversion(data_to_convert, conversion_name)
 \item{conversion_name}{A character with the conversion_name summarize in the description of this function.}
 }
 \value{
-A dataframe object wit the converted radiation.
+A data.frame object wit the converted radiation.
 }
 \description{
 Function to convert the radiation data. The conversion name can be understand as follow:
@@ -42,4 +42,7 @@ Function to convert the radiation data. The conversion name can be understand as
 radiation_conversion_df <- radiation_conversion(data_to_convert = df$rad,
                                                 conversion_name = "conversion_1")
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

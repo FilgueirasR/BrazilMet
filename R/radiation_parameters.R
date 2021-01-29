@@ -8,6 +8,8 @@
 #' ra <- ra_calculation(latitude, date)
 #' }
 #' @export
+#' @return A data.frame with the extraterrestrial radiation for daily periods
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
  ra_calculation <- function(latitude, date){
@@ -37,6 +39,8 @@
  #' sr_ang <- sr_ang_calculation(latitude, date, n, as, bs)
  #' }
  #' @export
+ #' @return A data.frame object with solar radiation data
+ #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
  
 sr_ang_calculation <- function(latitude, date, n, as, bs){
    
@@ -68,6 +72,8 @@ sr_ang_calculation <- function(latitude, date, n, as, bs){
 #' sr_tair <- sr_tair_calculation(latitude, date, tmax, tmin, location_krs)
 #' }
 #' @export
+#' @return A data.frame object with solar radiation data
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
   if(krs == "coastal"){krs <- 0.19} else{krs <- 0.16}
@@ -95,6 +101,8 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
 #' rso_df <- rso_calculation_1(as, bs, ra)
 #' }
 #' @export
+#' @return A data.frame object with the clear-sky radiation data
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
  rso_calculation_1 <- function(as, bs, ra){
    
@@ -116,6 +124,8 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  #' rs_nearby_df <- rs_nearby_calculation(rs_reg, ra_reg, ra)
  #' }
  #' @export
+ #' @return A data.frame object with the Solar radiation data based on a nearby weather station
+ #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
  
  rs_nearby_calculation <- function(rs_reg, ra_reg, ra){
     
@@ -124,20 +134,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
     colnames(rs_nearby)<- "rs_nearby"
     return(rs_nearby)
  }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  #' Clear-sky solar radiation when calibrated values are not available
  #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
@@ -149,6 +145,8 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  #' rso_df <- rso_calculation_2(z, ra)
  #' }
  #' @export
+ #' @return A data.frame object with the clear-sky solar radiation
+ #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
  
  rso_calculation_2 <- function(z, ra){
    
@@ -161,13 +159,15 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  #' Net solar or net shortwave radiation (rns)
  #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description The rns results form the balance between incoming and reflected solar radiation (MJ m-2 day-1).
- #' @param albedo Albedo or canopy reflectance coefficient. The 0.23 is the value used for hypothetical grass reference crop (dimensionless) .
+ #' @param albedo Albedo or canopy reflectance coefficient. The 0.23 is the value used for hypothetical grass reference crop (dimensionless).
  #' @param rs The incomimg solar radiation (MJ m-2 day-1).
  #' @examples
  #' \dontrun{
  #' ra <- rns_calculation(albedo, rs)
  #' }
  #' @export
+ #' @return A data.frame object with the net solar or net shortwave radiation data.
+ #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
  
  
  rns_calculation <- function(albedo, rs){
@@ -191,6 +191,8 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  #' rnl_df <- rnl_calculation(tmin, tmax, ea, rs, rso)
  #' }
  #' @export
+ #' @return A data.frame object with the net longwave radiation.
+ #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
  
  
  rnl_calculation <- function(tmin, tmax, ea, rs, rso){
@@ -214,6 +216,8 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  #' rn <- rn_calculation(rns, rnl)
  #' }
  #' @export
+ #' @return A data.frame object with the net radiation data.
+ #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
  
  
  rn_calculation <- function(rns, rnl){

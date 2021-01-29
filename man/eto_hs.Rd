@@ -26,3 +26,6 @@ Hargreaves - Samani ETo
 eto_hs <-eto_hs(tmin, tmean, tmax, ra)
 }
 }
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+}

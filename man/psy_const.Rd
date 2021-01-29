@@ -9,6 +9,9 @@ psy_const(P)
 \arguments{
 \item{P}{Atmospheric pressure (kPa)}
 }
+\value{
+A data.frame object with the psychrometric constant calculated.
+}
 \description{
 Psychrometric constant (kPa/°C) is calculated in this function.
 }
@@ -16,4 +19,7 @@ Psychrometric constant (kPa/°C) is calculated in this function.
 \dontrun{
 psy_df <- psy_const(P)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

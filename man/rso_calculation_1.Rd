@@ -14,6 +14,9 @@ rso_calculation_1(as, bs, ra)
 
 \item{ra}{Extraterrestrial radiation for daily periods (ra).}
 }
+\value{
+A data.frame object with the clear-sky radiation data
+}
 \description{
 Clear-sky solar radiation is calculated in this function for near sea level or when calibrated values for as and bs are available.
 }
@@ -21,4 +24,7 @@ Clear-sky solar radiation is calculated in this function for near sea level or w
 \dontrun{
 rso_df <- rso_calculation_1(as, bs, ra)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

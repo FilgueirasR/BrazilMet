@@ -22,3 +22,6 @@ Mean saturation vapour pressure (es)
 es <-es_calculation(tmin, tmax)
 }
 }
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+}

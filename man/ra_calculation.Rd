@@ -12,6 +12,9 @@ ra_calculation(latitude, date)
 
 \item{date}{A dataframe with the dates that you want to calculate the ra.}
 }
+\value{
+A data.frame with the extraterrestrial radiation for daily periods
+}
 \description{
 ra is expressed in MJ m-2 day-1
 }
@@ -19,4 +22,7 @@ ra is expressed in MJ m-2 day-1
 \dontrun{
 ra <- ra_calculation(latitude, date)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

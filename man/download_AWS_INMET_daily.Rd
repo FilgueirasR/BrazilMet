@@ -15,7 +15,7 @@ download_AWS_INMET_daily(station, start_date, end_date)
 \item{end_date}{Date that end the investigation, should be in the following format (2017-12-31 /Year-Month-Day)}
 }
 \value{
-Returns a dataframe with the AWS data requested
+Returns a data.frame with the AWS data requested
 }
 \description{
 This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time step, based on the period of time selected (start_date and end_date).The function only works for downloading data from the same year.
@@ -26,5 +26,5 @@ df<-download_AWS_INMET_daily(station = "A001", start_date = "2001-01-01", end_da
 }
 }
 \author{
-Roberto Filgueiras
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

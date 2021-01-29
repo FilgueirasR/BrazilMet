@@ -12,6 +12,9 @@ rn_calculation(rns, rnl)
 
 \item{rnl}{The outgoing net longwave radiation (MJ m-2 day-1).}
 }
+\value{
+A data.frame object with the net radiation data.
+}
 \description{
 The net radiation (MJ m-2 day-1) is the difference between the incoming net shortwave radiation (rns) and the outgoing net longwave radiation (rnl).
 }
@@ -19,4 +22,7 @@ The net radiation (MJ m-2 day-1) is the difference between the incoming net shor
 \dontrun{
 rn <- rn_calculation(rns, rnl)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

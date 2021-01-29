@@ -7,6 +7,8 @@
 #' u2_df <- u2_calculation(uz, z)
 #' }
 #' @export
+#' @return  A data.frame with the wind speed at 2 meters high calculated.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
 u2_calculation <- function(uz, z){

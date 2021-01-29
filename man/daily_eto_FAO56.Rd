@@ -31,7 +31,7 @@ daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
 \item{date}{A dataframe with the date information}
 }
 \value{
-Returns a dataframe with the AWS data requested
+Returns a data.frame with the AWS data requested
 }
 \description{
 This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the the automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*.
@@ -42,5 +42,5 @@ eto<-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
 }
 }
 \author{
-Roberto Filgueiras
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

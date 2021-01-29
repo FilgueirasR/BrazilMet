@@ -23,8 +23,8 @@
 #' df<-download_AWS_INMET_daily(station = "A001", start_date = "2001-01-01", end_date = "2001-12-31")
 #' }
 #' @export
-#' @return Returns a dataframe with the AWS data requested
-#' @author Roberto Filgueiras
+#' @return Returns a data.frame with the AWS data requested
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
 

@@ -11,11 +11,17 @@ rh_calculation(tmin, t)
 
 \item{t}{A dataframe with air temperature (°C) of the moment that you want to calculate the relative humidity.}
 }
+\value{
+A data.frame object with the relative humidity calculated
+}
 \description{
-Psychrometric constant (kPa/°C) is calculated in this function.
+Relative humidity is calculated in this function based on minimum air temperature of the day and the air temperature of the moment.
 }
 \examples{
 \dontrun{
 rh <- rh_calculation(tmin, t)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

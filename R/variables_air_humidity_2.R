@@ -9,7 +9,8 @@
 #' ea <- ea_rh_calculation(tmin, tmax, rh_min, rh_mean, rh_max)
 #' }
 #' @export
-#' @return Returns a data.frame object with the with ea from relative humidity data. 
+#' @return Returns a data.frame object with the with ea from relative humidity data.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
 
 ea_rh_calculation <- function(tmin, tmax, rh_min, rh_mean, rh_max){
@@ -43,7 +44,8 @@ ea_rh_calculation <- function(tmin, tmax, rh_min, rh_mean, rh_max){
 #' ea <- es_ea_calculation(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_method)
 #' }
 #' @export
-#' @return Returns a data.frame object with the with ea from relative humidity data. 
+#' @return Returns a data.frame object with the with ea from relative humidity data.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
 
 es_ea_calculation <- function(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_method){
@@ -86,7 +88,7 @@ es_ea_calculation <- function(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_meth
 }
 
 #' Relative humidity (rh) calculation
-#' @description Psychrometric constant (kPa/°C) is calculated in this function.
+#' @description Relative humidity is calculated in this function based on minimum air temperature of the day and the air temperature of the moment.
 #' @param tmin A dataframe with minimum daily air temperature (°C)
 #' @param t A dataframe with air temperature (°C) of the moment that you want to calculate the relative humidity.
 #' @examples
@@ -94,6 +96,8 @@ es_ea_calculation <- function(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_meth
 #' rh <- rh_calculation(tmin, t)
 #' }
 #' @export
+#' @return A data.frame object with the relative humidity calculated
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
 rh_calculation <- function(tmin, t){

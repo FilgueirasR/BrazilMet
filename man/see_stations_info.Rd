@@ -8,7 +8,7 @@
 see_stations_info()
 }
 \value{
-A dataframe with informations of OMM code, latitude, longitude and altitude of all AWS stations available in INMET.
+A data.frame with informations of OMM code, latitude, longitude and altitude of all AWS stations available in INMET.
 }
 \description{
 Function to see the localization of the automatic weather station of INMET.
@@ -19,5 +19,5 @@ see_stations_info()
 }
 }
 \author{
-Roberto Filgueiras
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

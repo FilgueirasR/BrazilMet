@@ -1,8 +1,24 @@
 Package: BrazilMet
 Type: Package
-Title: The package download and process weather data from automatic weather stations (AWS) of INMET 
+Title: BrazilMet: Download and Process of Weather Data from Automatic Weather Stations (AWS) of INMET-Brazil 
 Version: 0.1.0
-Author: Roberto Filgueiras [aut, cre] (<https://www.researchgate.net/profile/Roberto_Filgueiras>)
+Authors@R: c(person(given = "Roberto",
+                    family = "Filgueiras",
+                    role = c("aut","cre"),
+                    email = "betofilgueiras@gmail.com",
+                    comment = c(ORCID = "0000-0002-0186-8907")),
+            person(given = "Luan P.",
+                    family = "Venancio",
+                    role = ("aut"),
+                    comment = c(ORCID = "0000-0002-5544-8588")),
+            person(given = "Catariny C.",
+                    family = "Aleman",
+                    role = ("aut"),
+                    comment = c(ORCID = "0000-0002-3894-3077")),
+            person(given = "Fernando F.",
+                    family = "da Cunha",
+                    role = ("aut"),
+                    comment = c(ORCID = "0000-0002-1671-1021")))
 Maintainer: The package maintainer <betofilgueiras@gmail.com>
 Description: This package is a compilation of function to download and process AWS data from INMET, with the purpose of reference evapotranspiration (ETo) estimation and the estimation of actual evaportranspiration (ETa) based on satellite images.The package aims to make meteorological and agricultural data analisys more parsimonious.
 License: GPL-3
@@ -14,9 +30,7 @@ Imports:
     tidyr,
     stringr,
     readxl,
-    dplyr(>= 0.3.0.1),
-    extrafont,
-    ggplot2
+    dplyr(>= 0.3.0.1)
 BugReports: https://github.com/FilgueirasR/BrazilMet/issues
 RoxygenNote: 7.1.1   
     

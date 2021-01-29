@@ -28,3 +28,6 @@ Actual vapour pressure (ea) derived from relative humidity data
 ea <- ea_rh_calculation(tmin, tmax, rh_min, rh_mean, rh_max)
 }
 }
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+}

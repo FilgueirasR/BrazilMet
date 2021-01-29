@@ -18,6 +18,9 @@ rnl_calculation(tmin, tmax, ea, rs, rso)
 
 \item{rso}{A dataframe with the clear-sky radiation (MJ m-2 day-1)}
 }
+\value{
+A data.frame object with the net longwave radiation.
+}
 \description{
 Net outgoing longwave radiation is calculate with this function
 }
@@ -25,4 +28,7 @@ Net outgoing longwave radiation is calculate with this function
 \dontrun{
 rnl_df <- rnl_calculation(tmin, tmax, ea, rs, rso)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

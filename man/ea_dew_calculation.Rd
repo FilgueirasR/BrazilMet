@@ -20,3 +20,6 @@ Actual vapour pressure (ea) derived from dewpoint temperature
 ea <-ea_dew_calculation(tdew)
 }
 }
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+}

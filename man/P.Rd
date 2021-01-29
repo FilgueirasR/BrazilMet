@@ -10,7 +10,7 @@ P(z)
 \item{z}{Elevation above sea level (m)}
 }
 \value{
-Returns a data.frame object with the with ETo HS data
+Returns a data.frame object with the atmospheric pressure calculated.
 }
 \description{
 Atmospheric pressure (P)
@@ -19,4 +19,7 @@ Atmospheric pressure (P)
 \dontrun{
 P <- p(z)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

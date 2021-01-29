@@ -29,7 +29,8 @@
 #'                                                 conversion_name = "conversion_1")
 #' }
 #' @export
-#' @return A dataframe object wit the converted radiation.
+#' @return A data.frame object wit the converted radiation.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
 radiation_conversion <- function(data_to_convert, conversion_name){
   conversion_factor <- switch (conversion_name,

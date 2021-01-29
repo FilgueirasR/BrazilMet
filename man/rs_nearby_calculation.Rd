@@ -14,6 +14,9 @@ rs_nearby_calculation(rs_reg, ra_reg, ra)
 
 \item{ra}{A dataframe with the extraterrestrial radiation for daily periods (ra).}
 }
+\value{
+A data.frame object with the Solar radiation data based on a nearby weather station
+}
 \description{
 The solar radiation data is calculated based in a nearby weather station.
 }
@@ -21,4 +24,7 @@ The solar radiation data is calculated based in a nearby weather station.
 \dontrun{
 rs_nearby_df <- rs_nearby_calculation(rs_reg, ra_reg, ra)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }

@@ -6,9 +6,9 @@
 #' \dontrun{
 #' see_stations_info()
 #' }
-#' @return A dataframe with informations of OMM code, latitude, longitude and altitude of all AWS stations available in INMET.
+#' @return A data.frame with informations of OMM code, latitude, longitude and altitude of all AWS stations available in INMET.
 #' @export
-#' @author Roberto Filgueiras
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
 see_stations_info <- function(){

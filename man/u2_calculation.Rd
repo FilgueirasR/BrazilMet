@@ -11,6 +11,9 @@ u2_calculation(uz, z)
 
 \item{z}{height of measurement above ground surface.}
 }
+\value{
+A data.frame with the wind speed at 2 meters high calculated.
+}
 \description{
 Wind speed at two meters high can be calculated with this function.
 }
@@ -18,4 +21,7 @@ Wind speed at two meters high can be calculated with this function.
 \dontrun{
 u2_df <- u2_calculation(uz, z)
 }
+}
+\author{
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 }
