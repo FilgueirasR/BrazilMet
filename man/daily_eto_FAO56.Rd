@@ -5,40 +5,40 @@
 \title{Eto calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
 \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
 \usage{
-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
+daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min, z, date)
 }
 \arguments{
-\item{lat}{A numeric value of the Latitude of the AWS in decimal degrees}
+\item{lat}{A numeric value of the Latitude of the AWS (decimal degrees).}
 
-\item{tmin}{A dataframe with Minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with Minimum daily air temperature (°C).}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with Maximum daily air temperature (°C).}
 
-\item{tmean}{A dataframe with Mean daily air temperature (°C)}
+\item{tmean}{A dataframe with Mean daily air temperature (°C).}
 
-\item{Rs}{A dataframe with mean daily solar radiation (MJ m-2 day-1)}
+\item{Rs}{A dataframe with mean daily solar radiation (MJ m-2 day-1).}
 
-\item{u2}{A dataframe with Wind speed at meters high (m s-2)}
+\item{u2}{A dataframe with Wind speed at meters high (m s-2).}
 
-\item{P}{A dataframe with atmospheric Pressure (mmHg)}
+\item{Patm}{A dataframe with atmospheric Pressure (mmHg).}
 
-\item{RH_max}{A dataframe with Maximum relative humidity}
+\item{RH_max}{A dataframe with Maximum relative humidity (percentage).}
 
-\item{RH_min}{A dataframe with Minimum relative humidity}
+\item{RH_min}{A dataframe with Minimum relative humidity (percentage).}
 
-\item{z}{A numeric value of the altitude of AWS}
+\item{z}{A numeric value of the altitude of AWS (m).}
 
-\item{date}{A dataframe with the date information}
+\item{date}{A data.frame with the date information (YYYY-MM-DD).}
 }
 \value{
 Returns a data.frame with the AWS data requested
 }
 \description{
-This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the the automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*.
+This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the automatic weather stations (AWS) data, downloaded and processed in function *daily_download_AWS_INMET*.
 }
 \examples{
 \dontrun{
-eto<-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
+eto<-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min, z, date)
 }
 }
 \author{

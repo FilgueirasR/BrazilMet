@@ -21,7 +21,7 @@
 #'   \item  conversion_15  = mm day-1 to cal cm-2 day-1;
 #'   \item  conversion_16  = mm day-1 to W m-2.
 #'  }
-#' @param  data_to_convert A dataframe with radiation values to convert.
+#' @param  data_to_convert A data.frame with radiation values to convert.
 #' @param  conversion_name A character with the conversion_name summarize in the description of this function.
 #' @examples
 #' \dontrun{

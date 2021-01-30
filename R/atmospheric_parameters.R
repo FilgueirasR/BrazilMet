@@ -3,16 +3,16 @@
 #' @param z Elevation above sea level (m)
 #' @examples
 #' \dontrun{
-#' P <- p(z)
+#' Patm <- Patm(z)
 #' }
 #' @export
 #' @return Returns a data.frame object with the atmospheric pressure calculated.
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
-P <- function(z){
+Patm <- function(z){
   P <- 101.3*((293 - 0.0065*z)/293)^5.26
   P <- as.data.frame(P)
-  colnames(P)<- "P (mB)"
+  colnames(P)<- "Patm (mB)"
    return(P)
   }
   

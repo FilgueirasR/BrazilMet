@@ -1,17 +1,17 @@
 #' Eto calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
 #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
-#' @description This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the the automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*.
-#' @param lat  A numeric value of the Latitude of the AWS in decimal degrees
-#' @param tmin A dataframe with Minimum daily air temperature (°C)
-#' @param tmax A dataframe with Maximum daily air temperature (°C)
-#' @param tmean A dataframe with Mean daily air temperature (°C)
-#' @param Rs A dataframe with mean daily solar radiation (MJ m-2 day-1)
-#' @param u2 A dataframe with Wind speed at meters high (m s-2)
-#' @param P A dataframe with atmospheric Pressure (mmHg)
-#' @param RH_max A dataframe with Maximum relative humidity
-#' @param RH_min A dataframe with Minimum relative humidity
-#' @param z A numeric value of the altitude of AWS
-#' @param date A dataframe with the date information 
+#' @description This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the automatic weather stations (AWS) data, downloaded and processed in function *daily_download_AWS_INMET*.
+#' @param lat  A numeric value of the Latitude of the AWS (decimal degrees).
+#' @param tmin A dataframe with Minimum daily air temperature (°C).
+#' @param tmax A dataframe with Maximum daily air temperature (°C).
+#' @param tmean A dataframe with Mean daily air temperature (°C).
+#' @param Rs A dataframe with mean daily solar radiation (MJ m-2 day-1).
+#' @param u2 A dataframe with Wind speed at meters high (m s-2).
+#' @param Patm A dataframe with atmospheric Pressure (mmHg).
+#' @param RH_max A dataframe with Maximum relative humidity (percentage).
+#' @param RH_min A dataframe with Minimum relative humidity (percentage).
+#' @param z A numeric value of the altitude of AWS (m).
+#' @param date A data.frame with the date information (YYYY-MM-DD). 
 #' @import stringr
 #' @import dplyr
 #' @import utils
@@ -28,7 +28,7 @@
 #' @importFrom dplyr %>%
 #' @examples
 #' \dontrun{
-#' eto<-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date)
+#' eto<-daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min, z, date)
 #' }
 #' @export
 #' @return Returns a data.frame with the AWS data requested
@@ -37,7 +37,7 @@
 
 
 
-daily_eto_FAO56 <- function(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z, date){
+daily_eto_FAO56 <- function(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min, z, date){
  
   
   delta<-(4098*(0.6108*exp(17.27*tmean/(tmean+237.30))))/(tmean +237.30)^2
@@ -48,7 +48,7 @@ daily_eto_FAO56 <- function(lat, tmin, tmax, tmean, Rs, u2, P, RH_max, RH_min, z
   
   #Step 6 - Psychrometric constant (KPa °C-1)
   
-  psy_constant<- 0.000665*P
+  psy_constant<- 0.000665*Patm
   
   #Step 7 - Delta Term (DT) (auxiliary calculation for radiation term)
   

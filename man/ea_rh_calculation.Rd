@@ -11,11 +11,11 @@ ea_rh_calculation(tmin, tmax, rh_min, rh_mean, rh_max)
 
 \item{tmax}{A dataframe with maximum daily air temperature (°C)}
 
-\item{rh_min}{A dataframe with minimum daily relative air humidity}
+\item{rh_min}{A dataframe with minimum daily relative air humidity (percentage).}
 
-\item{rh_mean}{A dataframe with mean daily relative air humidity}
+\item{rh_mean}{A dataframe with mean daily relative air humidity (percentage).}
 
-\item{rh_max}{A dataframe with maximum daily relative air humidity}
+\item{rh_max}{A dataframe with maximum daily relative air humidity (percentage).}
 }
 \value{
 Returns a data.frame object with the with ea from relative humidity data.

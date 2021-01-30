@@ -7,19 +7,19 @@
 ea_dew_calculation(tdew)
 }
 \arguments{
-\item{tdew}{A dataframe with dewpoint temperature (°C)}
+\item{tdew}{A dataframe with dewpoint temperature (°C).}
 }
 \value{
-Returns a data.frame object with the with ea from dewpoint data
+Returns a data.frame object with the ea from dewpoint data.
 }
 \description{
 Actual vapour pressure (ea) derived from dewpoint temperature
 }
 \examples{
 \dontrun{
-ea <-ea_dew_calculation(tdew)
+ea <-ea_dew_calculation(tdew).
 }
 }
 \author{
-Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha.
 }

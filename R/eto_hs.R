@@ -2,13 +2,13 @@
 #' @param tmin A dataframe with Maximum daily air temperature (°C)
 #' @param tmean A dataframe with Minimum daily air temperature (°C)
 #' @param tmax A dataframe with Maximum daily air temperature (°C)
-#' @param ra A dataframe of extraterrestrial radiation
+#' @param ra A dataframe of extraterrestrial radiation (MJ m-2 day-1)
 #' @examples
 #' \dontrun{
 #' eto_hs <-eto_hs(tmin, tmean, tmax, ra)
 #' }
 #' @export
-#' @return Returns a data.frame object with the with ETo HS data
+#' @return Returns a data.frame object with the ETo HS data
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha  
 
  eto_hs <- function(tmin, tmean, tmax, ra){

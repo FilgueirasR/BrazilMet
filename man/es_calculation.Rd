@@ -7,12 +7,12 @@
 es_calculation(tmin, tmax)
 }
 \arguments{
-\item{tmin}{A dataframe with Minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with Minimum daily air temperature (°C).}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with Maximum daily air temperature (°C).}
 }
 \value{
-Returns a data.frame object with the with es data
+Returns a data.frame object with the es data.
 }
 \description{
 Mean saturation vapour pressure (es)
@@ -23,5 +23,5 @@ es <-es_calculation(tmin, tmax)
 }
 }
 \author{
-Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha.
 }

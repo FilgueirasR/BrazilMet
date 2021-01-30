@@ -2,7 +2,7 @@
 % Please edit documentation in R/daily_download_AWS_INMET.R
 \name{download_AWS_INMET_daily}
 \alias{download_AWS_INMET_daily}
-\title{Download the hourly automatic weather station data of INMET and aggregate it in a daily time steps
+\title{Download of hourly data from automatic weather stations (AWS) of INMET-Brazil in daily aggregates
 \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
 \usage{
 download_AWS_INMET_daily(station, start_date, end_date)
@@ -18,7 +18,7 @@ download_AWS_INMET_daily(station, start_date, end_date)
 Returns a data.frame with the AWS data requested
 }
 \description{
-This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time step, based on the period of time selected (start_date and end_date).The function only works for downloading data from the same year.
+This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time scale, based on the period of time selected (start_date and end_date).The function only works for downloading data from the same year.
 }
 \examples{
 \dontrun{

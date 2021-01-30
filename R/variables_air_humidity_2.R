@@ -1,9 +1,9 @@
 #' Actual vapour pressure (ea) derived from relative humidity data
 #' @param tmin A dataframe with minimum daily air temperature (°C)
 #' @param tmax A dataframe with maximum daily air temperature (°C)
-#' @param rh_min A dataframe with minimum daily relative air humidity
-#' @param rh_mean A dataframe with mean daily relative air humidity
-#' @param rh_max A dataframe with maximum daily relative air humidity
+#' @param rh_min A dataframe with minimum daily relative air humidity (percentage).
+#' @param rh_mean A dataframe with mean daily relative air humidity (percentage).
+#' @param rh_max A dataframe with maximum daily relative air humidity (percentage).
 #' @examples
 #' \dontrun{
 #' ea <- ea_rh_calculation(tmin, tmax, rh_min, rh_mean, rh_max)
@@ -32,19 +32,19 @@ ea_rh_calculation <- function(tmin, tmax, rh_min, rh_mean, rh_max){
 }
 
 #' Vapour pressure deficit (es - ea)
-#' @param tmin A dataframe with minimum daily air temperature (°C)
-#' @param tmax A dataframe with maximum daily air temperature (°C)
-#' @param tdew A dataframe with dewpoint temperature (°C)
-#' @param rh_min A dataframe with minimum daily relative air humidity
-#' @param rh_mean A dataframe with mean daily relative air humidity
-#' @param rh_max A dataframe with maximum daily relative air humidity
-#' @param ea_method The methodology to calculate the Actual vapour pressure. Assume "rh" (default) for relative humidity procedure and "dew" for dewpoint temperature procedure.
+#' @param tmin A dataframe with minimum daily air temperature (°C).
+#' @param tmax A dataframe with maximum daily air temperature (°C).
+#' @param tdew A dataframe with dewpoint temperature (°C).
+#' @param rh_min A dataframe with minimum daily relative air humidity (percentage).
+#' @param rh_mean A dataframe with mean daily relative air humidity (percentage).
+#' @param rh_max A dataframe with maximum daily relative air humidity (percentage).
+#' @param ea_method The methodology to calculate the actual vapour pressure. Assume the "rh" (default) for relative humidity procedure and "dew" for dewpoint temperature procedure.
 #' @examples
 #' \dontrun{
 #' ea <- es_ea_calculation(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_method)
 #' }
 #' @export
-#' @return Returns a data.frame object with the with ea from relative humidity data.
+#' @return Returns a data.frame object with the ea from relative humidity data.
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
 
 

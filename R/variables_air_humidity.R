@@ -1,13 +1,13 @@
 #' Mean saturation vapour pressure (es)
-#' @param tmin A dataframe with Minimum daily air temperature (°C)
-#' @param tmax A dataframe with Maximum daily air temperature (°C)
+#' @param tmin A dataframe with Minimum daily air temperature (°C).
+#' @param tmax A dataframe with Maximum daily air temperature (°C).
 #' @examples
 #' \dontrun{
 #' es <-es_calculation(tmin, tmax)
 #' }
 #' @export
-#' @return Returns a data.frame object with the with es data
-#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
+#' @return Returns a data.frame object with the es data.
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha. 
 
 
 es_calculation <- function(tmin, tmax){
@@ -21,14 +21,14 @@ es_calculation <- function(tmin, tmax){
 
 
 #' Actual vapour pressure (ea) derived from dewpoint temperature
-#' @param tdew A dataframe with dewpoint temperature (°C)
+#' @param tdew A dataframe with dewpoint temperature (°C).
 #' @examples
 #' \dontrun{
-#' ea <-ea_dew_calculation(tdew)
+#' ea <-ea_dew_calculation(tdew).
 #' }
 #' @export
-#' @return Returns a data.frame object with the with ea from dewpoint data
-#' @author  Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
+#' @return Returns a data.frame object with the ea from dewpoint data.
+#' @author  Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha. 
 
 
 ea_dew_calculation <- function(tdew){

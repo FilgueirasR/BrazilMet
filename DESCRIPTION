@@ -1,6 +1,6 @@
 Package: BrazilMet
 Type: Package
-Title: BrazilMet: Download and Process of Weather Data from Automatic Weather Stations (AWS) of INMET-Brazil 
+Title: BrazilMet: Download and Processing of Automatic  Weather Stations (AWS) Data of INMET-Brazil 
 Version: 0.1.0
 Authors@R: c(person(given = "Roberto",
                     family = "Filgueiras",
@@ -20,7 +20,7 @@ Authors@R: c(person(given = "Roberto",
                     role = ("aut"),
                     comment = c(ORCID = "0000-0002-1671-1021")))
 Maintainer: The package maintainer <betofilgueiras@gmail.com>
-Description: This package is a compilation of function to download and process AWS data from INMET, with the purpose of reference evapotranspiration (ETo) estimation and the estimation of actual evaportranspiration (ETa) based on satellite images.The package aims to make meteorological and agricultural data analisys more parsimonious.
+Description: This package is a compilation of functions to download and processing AWS data of INMET-Brazil, with the purpose of reference evapotranspiration (ETo) estimation. The package aims to make meteorological and agricultural data analysis more parsimonious.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

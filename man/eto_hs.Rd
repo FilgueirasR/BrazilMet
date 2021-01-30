@@ -13,10 +13,10 @@ eto_hs(tmin, tmean, tmax, ra)
 
 \item{tmax}{A dataframe with Maximum daily air temperature (°C)}
 
-\item{ra}{A dataframe of extraterrestrial radiation}
+\item{ra}{A dataframe of extraterrestrial radiation (MJ m-2 day-1)}
 }
 \value{
-Returns a data.frame object with the with ETo HS data
+Returns a data.frame object with the ETo HS data
 }
 \description{
 Hargreaves - Samani ETo

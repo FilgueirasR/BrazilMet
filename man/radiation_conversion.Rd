@@ -8,7 +8,7 @@
 radiation_conversion(data_to_convert, conversion_name)
 }
 \arguments{
-\item{data_to_convert}{A dataframe with radiation values to convert.}
+\item{data_to_convert}{A data.frame with radiation values to convert.}
 
 \item{conversion_name}{A character with the conversion_name summarize in the description of this function.}
 }

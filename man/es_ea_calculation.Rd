@@ -7,22 +7,22 @@
 es_ea_calculation(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_method)
 }
 \arguments{
-\item{tmin}{A dataframe with minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with minimum daily air temperature (°C).}
 
-\item{tmax}{A dataframe with maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with maximum daily air temperature (°C).}
 
-\item{tdew}{A dataframe with dewpoint temperature (°C)}
+\item{tdew}{A dataframe with dewpoint temperature (°C).}
 
-\item{rh_min}{A dataframe with minimum daily relative air humidity}
+\item{rh_min}{A dataframe with minimum daily relative air humidity (percentage).}
 
-\item{rh_mean}{A dataframe with mean daily relative air humidity}
+\item{rh_mean}{A dataframe with mean daily relative air humidity (percentage).}
 
-\item{rh_max}{A dataframe with maximum daily relative air humidity}
+\item{rh_max}{A dataframe with maximum daily relative air humidity (percentage).}
 
-\item{ea_method}{The methodology to calculate the Actual vapour pressure. Assume "rh" (default) for relative humidity procedure and "dew" for dewpoint temperature procedure.}
+\item{ea_method}{The methodology to calculate the actual vapour pressure. Assume the "rh" (default) for relative humidity procedure and "dew" for dewpoint temperature procedure.}
 }
 \value{
-Returns a data.frame object with the with ea from relative humidity data.
+Returns a data.frame object with the ea from relative humidity data.
 }
 \description{
 Vapour pressure deficit (es - ea)
