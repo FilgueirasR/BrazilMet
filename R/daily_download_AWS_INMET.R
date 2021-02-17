@@ -38,8 +38,9 @@ download_AWS_INMET_daily <- function(station, start_date, end_date){
   outdir<-gsub('\\', '/', tempdir, fixed=TRUE)
   
   utils::download.file(url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip") , destfile = tf, method="auto", cacheOK = F)
-  a<-unzip(zipfile = tf, exdir =  outdir)
+  a<-unzip(zipfile = tf, exdir =  outdir, junkpaths = T)
   pasta<-paste0(outdir)
+  if(length(list.files(pasta, pattern = station, full.names = T, all.files = T)) == 0){message("There is no data for this period for this station. Choose another period!")} else{
   list.files(pasta, pattern = station)
   b<-read.csv(file = list.files(pasta, pattern = station, full.names = T) ,header = T, sep = ';', skip = 8, na = '-9999', dec = ",")
   a<-as.data.frame(a)
@@ -222,4 +223,4 @@ download_AWS_INMET_daily <- function(station, start_date, end_date){
   
 }
 
-
+}

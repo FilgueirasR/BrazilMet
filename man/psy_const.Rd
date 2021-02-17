@@ -4,10 +4,10 @@
 \alias{psy_const}
 \title{Psychrometric constant}
 \usage{
-psy_const(P)
+psy_const(Patm)
 }
 \arguments{
-\item{P}{Atmospheric pressure (kPa)}
+\item{Patm}{Atmospheric pressure (kPa)}
 }
 \value{
 A data.frame object with the psychrometric constant calculated.

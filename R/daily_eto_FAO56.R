@@ -7,7 +7,7 @@
 #' @param tmean A dataframe with Mean daily air temperature (°C).
 #' @param Rs A dataframe with mean daily solar radiation (MJ m-2 day-1).
 #' @param u2 A dataframe with Wind speed at meters high (m s-2).
-#' @param Patm A dataframe with atmospheric Pressure (mmHg).
+#' @param Patm A dataframe with atmospheric Pressure (mB).
 #' @param RH_max A dataframe with Maximum relative humidity (percentage).
 #' @param RH_min A dataframe with Minimum relative humidity (percentage).
 #' @param z A numeric value of the altitude of AWS (m).
@@ -44,7 +44,7 @@ daily_eto_FAO56 <- function(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min
   
   
   #Step 5 - convertion of P from mmHg to kPa
-  P<- P/10
+  Patm<- Patm/10
   
   #Step 6 - Psychrometric constant (KPa °C-1)
   

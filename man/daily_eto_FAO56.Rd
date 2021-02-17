@@ -20,7 +20,7 @@ daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min, z, date)
 
 \item{u2}{A dataframe with Wind speed at meters high (m s-2).}
 
-\item{Patm}{A dataframe with atmospheric Pressure (mmHg).}
+\item{Patm}{A dataframe with atmospheric Pressure (mB).}
 
 \item{RH_max}{A dataframe with Maximum relative humidity (percentage).}
 
