@@ -1,7 +1,7 @@
 #' Download of hourly data from automatic weather stations (AWS) of INMET-Brazil in daily aggregates
 #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time scale, based on the period of time selected (start_date and end_date).The function only works for downloading data from the same year.
-#' @param station The station identification (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
+#' @param station The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
 #' @param start_date Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)
 #' @param end_date Date that end the investigation, should be in the following format (2017-12-31 /Year-Month-Day)
 #' @import stringr
@@ -220,7 +220,12 @@ download_AWS_INMET_daily <- function(station, start_date, end_date){
   
   df<-filter(df, Data >= start_date & Data <= end_date)
   df<- df %>% mutate(longitude = longitude, latitude = latitude, altitude = altitude)
+  colnames(df)<-c("Date","Tair_mean (c)", "Tair_min (c)", "Tair_max (c)", "Dew_tmean (c)", "Dew_tmin (c)",
+                  "Dew_tmax (c)", "Dry_bulb_t (c)",  "Rainfall (mm)", "Patm (mB)","Rh_mean (porc)", "Rh_max (porc)",
+                  "Rh_min (porc)", "Ws_10 (m s-1)", "Ws_2 (m s-1)", "Ws_gust (m s-1)", "Wd (degrees)", "Sr (Mj m-2 day-1)",         
+                  "DOY", "Ra (Mj m-2 day-1)", "Station_code", "Longitude (degrees)", "Latitude (degrees)", "Altitude (m)" )
   
+  return(df)
 }
 
 }

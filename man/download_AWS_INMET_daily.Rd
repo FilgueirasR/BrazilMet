@@ -8,7 +8,7 @@
 download_AWS_INMET_daily(station, start_date, end_date)
 }
 \arguments{
-\item{station}{The station identification (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.}
+\item{station}{The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.}
 
 \item{start_date}{Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)}
 
