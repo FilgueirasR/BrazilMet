@@ -12,7 +12,7 @@ sr_ang_calculation(latitude, date, n, as, bs)
 
 \item{date}{A dataframe with the dates that you want to calculate the ra.}
 
-\item{n}{The actual duration of sunshine. This variable is recorded with Campblel Stokes sunshine recorder.}
+\item{n}{The actual duration of sunshine. This variable is recorded with Campbell-Stokes sunshine recorder.}
 
 \item{as}{A dataframe with latitude in decimal degrees that you want to calculate the ra. The values of as = 0.25 is recommended by Allen et al. (1998).}
 

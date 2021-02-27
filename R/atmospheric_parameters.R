@@ -1,4 +1,4 @@
-#' Atmospheric pressure (P)
+#' Atmospheric pressure (Patm)
 #' 
 #' @param z Elevation above sea level (m)
 #' @examples
@@ -22,7 +22,7 @@ Patm <- function(z){
 #' @param Patm Atmospheric pressure (kPa)
 #' @examples
 #' \dontrun{
-#' psy_df <- psy_const(P)
+#' psy_df <- psy_const(Patm)
 #' }
 #' @export
 #' @return A data.frame object with the psychrometric constant calculated.

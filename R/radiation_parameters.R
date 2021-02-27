@@ -31,7 +31,7 @@
  #' @description If global radiation is not measure at station, it can be estimated with this function. 
  #' @param latitude A dataframe with latitude in decimal degrees that you want to calculate the ra.
  #' @param date A dataframe with the dates that you want to calculate the ra.
- #' @param n The actual duration of sunshine. This variable is recorded with Campblel Stokes sunshine recorder.
+ #' @param n The actual duration of sunshine. This variable is recorded with Campbell-Stokes sunshine recorder.
  #' @param as A dataframe with latitude in decimal degrees that you want to calculate the ra. The values of as = 0.25 is recommended by Allen et al. (1998).
  #' @param bs A dataframe with the dates that you want to calculate the ra. The values of bs = 0.50 is recommended by Allen et al. (1998).
  #' @examples
@@ -76,18 +76,20 @@ sr_ang_calculation <- function(latitude, date, n, as, bs){
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
-  if(krs == "coastal"){krs <- 0.19} else{krs <- 0.16}
-  julian_day <- as.data.frame(as.numeric(format(date, "%j")))
-  lat_rad <- (pi/180)*(latitude)
-  dr<-1+0.033*cos((2*pi/365)*julian_day)
-  solar_declination<-0.409*sin(((2*pi/365)*julian_day)-1.39)
-  sunset_hour_angle<-acos(-tan(lat_rad)*tan(solar_declination))
-  ra <- ((24*(60))/pi)*(0.0820)*dr*(sunset_hour_angle*sin(lat_rad)*sin(solar_declination)+cos(lat_rad)*cos(solar_declination)*sin(sunset_hour_angle))
-  ra <- as.data.frame(ra)
-  sr_tair <- krs*sqrt(tmax - tmin)*ra
-  sr_tair <- as.data.frame(sr_tair)
-  colnames(rs_tair)<- "sr_tair"
-  return(sr_tair)
+   if(location_krs == "interior"){krs <- 0.16} else {if(location_krs == "coastal"){krs <- 0.19} else {krs <- NULL}}
+   
+   
+   julian_day <- as.data.frame(as.numeric(format(date, "%j")))
+   lat_rad <- (pi/180)*(latitude)
+   dr<-1+0.033*cos((2*pi/365)*julian_day)
+   solar_declination<-0.409*sin(((2*pi/365)*julian_day)-1.39)
+   sunset_hour_angle<-acos(-tan(lat_rad)*tan(solar_declination))
+   ra <- ((24*(60))/pi)*(0.0820)*dr*(sunset_hour_angle*sin(lat_rad)*sin(solar_declination)+cos(lat_rad)*cos(solar_declination)*sin(sunset_hour_angle))
+   ra <- as.data.frame(ra)
+   sr_tair <- krs*sqrt(tmax - tmin)*ra
+   sr_tair <- as.data.frame(sr_tair)
+   colnames(sr_tair)<- "sr_tair"
+   return(sr_tair)
 }
 
 #' Clear-sky solar radiation with calibrated values available

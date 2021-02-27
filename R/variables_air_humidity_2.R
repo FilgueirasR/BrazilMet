@@ -90,19 +90,19 @@ es_ea_calculation <- function(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_meth
 #' Relative humidity (rh) calculation
 #' @description Relative humidity is calculated in this function based on minimum air temperature of the day and the air temperature of the moment.
 #' @param tmin A dataframe with minimum daily air temperature (°C)
-#' @param t A dataframe with air temperature (°C) of the moment that you want to calculate the relative humidity.
+#' @param tmean A dataframe with mean air temperature (°C) that you want to calculate the relative humidity.
 #' @examples
 #' \dontrun{
-#' rh <- rh_calculation(tmin, t)
+#' rh <- rh_calculation(tmin, tmean)
 #' }
 #' @export
 #' @return A data.frame object with the relative humidity calculated
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
-rh_calculation <- function(tmin, t){
+rh_calculation <- function(tmin, tmean){
   e_tmin <- 0.6108*exp(17.27*tmin/(tmin + 237.3))
-  e_t <- 0.6108*exp(17.27*t/(t + 237.3))
+  e_t <- 0.6108*exp(17.27*t/(tmean + 237.3))
   rh <- 100*(e_tmin/e_t)
   rh<-as.data.frame(rh)
   colnames(rh) <- "rh"

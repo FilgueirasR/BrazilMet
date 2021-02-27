@@ -17,7 +17,7 @@ Psychrometric constant (kPa/°C) is calculated in this function.
 }
 \examples{
 \dontrun{
-psy_df <- psy_const(P)
+psy_df <- psy_const(Patm)
 }
 }
 \author{

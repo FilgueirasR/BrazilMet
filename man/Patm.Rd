@@ -2,7 +2,7 @@
 % Please edit documentation in R/atmospheric_parameters.R
 \name{Patm}
 \alias{Patm}
-\title{Atmospheric pressure (P)}
+\title{Atmospheric pressure (Patm)}
 \usage{
 Patm(z)
 }
@@ -13,7 +13,7 @@ Patm(z)
 Returns a data.frame object with the atmospheric pressure calculated.
 }
 \description{
-Atmospheric pressure (P)
+Atmospheric pressure (Patm)
 }
 \examples{
 \dontrun{
