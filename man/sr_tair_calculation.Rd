@@ -16,7 +16,7 @@ sr_tair_calculation(latitude, date, tmax, tmin, location_krs)
 
 \item{tmin}{A dataframe with Minimum daily air temperature (°C)}
 
-\item{location_krs}{Adjustment coeficient based in location. Please decide between "coastal or "interior". If coastal the krs will be 0.19, if interior the krs will be 0.16.}
+\item{location_krs}{Adjustment coefficient based in location. Please decide between "coastal or "interior". If coastal the krs will be 0.19, if interior the krs will be 0.16.}
 }
 \value{
 A data.frame object with solar radiation data

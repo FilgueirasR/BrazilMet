@@ -64,7 +64,7 @@ sr_ang_calculation <- function(latitude, date, n, as, bs){
 #' @description If global radiation is not measure at station, it can be estimated with this function. 
 #' @param latitude A dataframe with latitude in decimal degrees that you want to calculate the ra.
 #' @param date A dataframe with the dates that you want to calculate the ra.
-#' @param location_krs Adjustment coeficient based in location. Please decide between "coastal or "interior". If coastal the krs will be 0.19, if interior the krs will be 0.16.
+#' @param location_krs Adjustment coefficient based in location. Please decide between "coastal or "interior". If coastal the krs will be 0.19, if interior the krs will be 0.16.
 #' @param tmin A dataframe with Minimum daily air temperature (°C)
 #' @param tmax A dataframe with Maximum daily air temperature (°C)
 #' @examples
@@ -162,7 +162,7 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description The rns results form the balance between incoming and reflected solar radiation (MJ m-2 day-1).
  #' @param albedo Albedo or canopy reflectance coefficient. The 0.23 is the value used for hypothetical grass reference crop (dimensionless).
- #' @param rs The incomimg solar radiation (MJ m-2 day-1).
+ #' @param rs The incoming solar radiation (MJ m-2 day-1).
  #' @examples
  #' \dontrun{
  #' ra <- rns_calculation(albedo, rs)
