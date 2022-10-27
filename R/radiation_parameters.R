@@ -1,5 +1,4 @@
 #' Extraterrestrial radiation for daily periods (ra)
-#' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description ra is expressed in MJ m-2 day-1
 #' @param latitude A dataframe with latitude in decimal degrees that you want to calculate the ra.
 #' @param date A dataframe with the dates that you want to calculate the ra.
@@ -27,7 +26,6 @@
  
  
  #' Solar radiation based in Angstrom formula (sr_ang)
- #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description If global radiation is not measure at station, it can be estimated with this function. 
  #' @param latitude A dataframe with latitude in decimal degrees that you want to calculate the ra.
  #' @param date A dataframe with the dates that you want to calculate the ra.
@@ -60,7 +58,6 @@ sr_ang_calculation <- function(latitude, date, n, as, bs){
 }
  
 #' Solar radiation data derived from air temperature differences
-#' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description If global radiation is not measure at station, it can be estimated with this function. 
 #' @param latitude A dataframe with latitude in decimal degrees that you want to calculate the ra.
 #' @param date A dataframe with the dates that you want to calculate the ra.
@@ -93,7 +90,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
 }
 
 #' Clear-sky solar radiation with calibrated values available
-#' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description Clear-sky solar radiation is calculated in this function for near sea level or when calibrated values for as and bs are available.
 #' @param as A dataframe with latitude in decimal degrees that you want to calculate the ra. The values of as = 0.25 is recommended by Allen et al. (1998).
 #' @param bs A dataframe with the dates that you want to calculate the ra. The values of bs = 0.50 is recommended by Allen et al. (1998).
@@ -116,7 +112,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  
  
  #' Solar radiation data from a nearby weather station
- #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description The solar radiation data is calculated based in a nearby weather station.
  #' @param rs_reg A dataframe with the solar radiation at the regional location (MJ m-2 day-1).
  #' @param ra_reg A dataframe with the extraterrestrial radiation at the regional location (MJ m-2 day-1).
@@ -138,7 +133,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  }
  
  #' Clear-sky solar radiation when calibrated values are not available
- #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description Clear-sky solar radiation is calculated in this function for near sea level or when calibrated values for as and bs are available.
  #' @param z Station elevation above sea level (m)
  #' @param ra Extraterrestrial radiation for daily periods (ra).
@@ -159,7 +153,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  }
 
  #' Net solar or net shortwave radiation (rns)
- #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description The rns results form the balance between incoming and reflected solar radiation (MJ m-2 day-1).
  #' @param albedo Albedo or canopy reflectance coefficient. The 0.23 is the value used for hypothetical grass reference crop (dimensionless).
  #' @param rs The incoming solar radiation (MJ m-2 day-1).
@@ -181,7 +174,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  }
  
  #' Net longwave radiation (rnl)
- #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description Net outgoing longwave radiation is calculate with this function 
  #' @param tmin A dataframe with Minimum daily air temperature (°C)
  #' @param tmax A dataframe with Maximum daily air temperature (°C)
@@ -209,7 +201,6 @@ sr_tair_calculation <- function(latitude, date, tmax, tmin, location_krs){
  }
  
  #' Net radiation (rn)
- #' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
  #' @description  The net radiation (MJ m-2 day-1) is the difference between the incoming net shortwave radiation (rns) and the outgoing net longwave radiation (rnl).
  #' @param rns The incomimg net shortwave radiation (MJ m-2 day-1).
  #' @param rnl The outgoing net longwave radiation (MJ m-2 day-1).

@@ -1,5 +1,4 @@
 #' Conversion factors for radiation
-#' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' 
 #' @description Function to convert the radiation data. The conversion name can be understand as follow:
 #' 

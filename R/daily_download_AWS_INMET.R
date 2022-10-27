@@ -1,5 +1,4 @@
 #' Download of hourly data from automatic weather stations (AWS) of INMET-Brazil in daily aggregates
-#' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time scale, based on the period of time selected (start_date and end_date).The function only works for downloading data from the same year.
 #' @param station The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
 #' @param start_date Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)

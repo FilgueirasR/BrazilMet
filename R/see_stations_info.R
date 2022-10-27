@@ -1,5 +1,4 @@
 #' Localization of the automatic weather station of INMET
-#' \if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}
 #' @description Function to see the localization of the automatic weather station of INMET.
 #' @importFrom readxl read_xlsx
 #' @examples
