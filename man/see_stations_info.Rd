@@ -2,8 +2,7 @@
 % Please edit documentation in R/see_stations_info.R
 \name{see_stations_info}
 \alias{see_stations_info}
-\title{Localization of the automatic weather station of INMET
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Localization of the automatic weather station of INMET}
 \usage{
 see_stations_info()
 }

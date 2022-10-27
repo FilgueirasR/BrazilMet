@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{rn_calculation}
 \alias{rn_calculation}
-\title{Net radiation (rn)
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Net radiation (rn)}
 \usage{
 rn_calculation(rns, rnl)
 }

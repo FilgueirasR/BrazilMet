@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{ra_calculation}
 \alias{ra_calculation}
-\title{Extraterrestrial radiation for daily periods (ra)
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Extraterrestrial radiation for daily periods (ra)}
 \usage{
 ra_calculation(latitude, date)
 }

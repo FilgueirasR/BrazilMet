@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{sr_ang_calculation}
 \alias{sr_ang_calculation}
-\title{Solar radiation based in Angstrom formula (sr_ang)
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Solar radiation based in Angstrom formula (sr_ang)}
 \usage{
 sr_ang_calculation(latitude, date, n, as, bs)
 }

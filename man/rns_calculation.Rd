@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{rns_calculation}
 \alias{rns_calculation}
-\title{Net solar or net shortwave radiation (rns)
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Net solar or net shortwave radiation (rns)}
 \usage{
 rns_calculation(albedo, rs)
 }

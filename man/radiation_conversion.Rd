@@ -2,8 +2,7 @@
 % Please edit documentation in R/conversion_factor_for_radiations.R
 \name{radiation_conversion}
 \alias{radiation_conversion}
-\title{Conversion factors for radiation
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Conversion factors for radiation}
 \usage{
 radiation_conversion(data_to_convert, conversion_name)
 }

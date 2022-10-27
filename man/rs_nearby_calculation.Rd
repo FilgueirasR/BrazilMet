@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{rs_nearby_calculation}
 \alias{rs_nearby_calculation}
-\title{Solar radiation data from a nearby weather station
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Solar radiation data from a nearby weather station}
 \usage{
 rs_nearby_calculation(rs_reg, ra_reg, ra)
 }

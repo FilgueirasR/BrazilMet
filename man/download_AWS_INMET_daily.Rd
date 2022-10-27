@@ -2,8 +2,7 @@
 % Please edit documentation in R/daily_download_AWS_INMET.R
 \name{download_AWS_INMET_daily}
 \alias{download_AWS_INMET_daily}
-\title{Download of hourly data from automatic weather stations (AWS) of INMET-Brazil in daily aggregates
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Download of hourly data from automatic weather stations (AWS) of INMET-Brazil in daily aggregates}
 \usage{
 download_AWS_INMET_daily(station, start_date, end_date)
 }

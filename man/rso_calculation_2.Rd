@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{rso_calculation_2}
 \alias{rso_calculation_2}
-\title{Clear-sky solar radiation when calibrated values are not available
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Clear-sky solar radiation when calibrated values are not available}
 \usage{
 rso_calculation_2(z, ra)
 }

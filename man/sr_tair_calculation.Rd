@@ -2,8 +2,7 @@
 % Please edit documentation in R/radiation_parameters.R
 \name{sr_tair_calculation}
 \alias{sr_tair_calculation}
-\title{Solar radiation data derived from air temperature differences
-\if{html}{\figure{logo_BrazilMet.png}{options: height= 300 width=auto style = float:right alt= Our logo}}}
+\title{Solar radiation data derived from air temperature differences}
 \usage{
 sr_tair_calculation(latitude, date, tmax, tmin, location_krs)
 }
