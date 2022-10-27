@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 *desktop.ini
+*.xlsx
+*.ini
