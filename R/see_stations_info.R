@@ -10,9 +10,7 @@
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
-see_stations_info <- function(){
+see_stations_info <- function() {
   a <- readxl::read_xlsx(system.file("extdata", paste0("Localization_AWS", ".xlsx"), package = "BrazilMet"))
   return(a)
 }
-
-
