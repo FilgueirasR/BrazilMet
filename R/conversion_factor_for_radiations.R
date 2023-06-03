@@ -1,7 +1,7 @@
 #' Conversion factors for radiation
-#' 
+#'
 #' @description Function to convert the radiation data. The conversion name can be understand as follow:
-#' 
+#'
 #' \itemize{
 #'   \item  conversion_1 = MJ m-2 day-1 to J cm-2 day-1;
 #'   \item  conversion_2 = MJ m-2 day-1 to cal cm-2 day-1;
@@ -24,36 +24,37 @@
 #' @param  conversion_name A character with the conversion_name summarize in the description of this function.
 #' @examples
 #' \dontrun{
-#' radiation_conversion_df <- radiation_conversion(data_to_convert = df$rad,
-#'                                                 conversion_name = "conversion_1")
+#' radiation_conversion_df <- radiation_conversion(
+#'   data_to_convert = df$rad,
+#'   conversion_name = "conversion_1"
+#' )
 #' }
 #' @export
 #' @return A data.frame object wit the converted radiation.
-#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha 
+#' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
-radiation_conversion <- function(data_to_convert, conversion_name){
-  data_to_convert<-as.data.frame(data_to_convert)
-  conversion_factor <- switch (conversion_name,
-                               "conversion_1" = 100,
-                               "conversion_2" = 23.9,
-                               "conversion_3" = 11.6,
-                               "conversion_4" = 0.408,
-                               "conversion_5" = 0.041868,
-                               "conversion_6" = 4.1868,
-                               "conversion_7" = 0.485,
-                               "conversion_8" = 0.0171,
-                               "conversion_9" = 0.0864,
-                               "conversion_10" = 8.64,
-                               "conversion_11" = 2.06,
-                               "conversion_12" = 0.035,
-                               "conversion_13" = 2.45,
-                               "conversion_14" = 245,
-                               "conversion_15" = 58.5,
-                               "conversion_16" = 28.4
+radiation_conversion <- function(data_to_convert, conversion_name) {
+  data_to_convert <- as.data.frame(data_to_convert)
+  conversion_factor <- switch(conversion_name,
+    "conversion_1" = 100,
+    "conversion_2" = 23.9,
+    "conversion_3" = 11.6,
+    "conversion_4" = 0.408,
+    "conversion_5" = 0.041868,
+    "conversion_6" = 4.1868,
+    "conversion_7" = 0.485,
+    "conversion_8" = 0.0171,
+    "conversion_9" = 0.0864,
+    "conversion_10" = 8.64,
+    "conversion_11" = 2.06,
+    "conversion_12" = 0.035,
+    "conversion_13" = 2.45,
+    "conversion_14" = 245,
+    "conversion_15" = 58.5,
+    "conversion_16" = 28.4
   )
-  
-  rad_converted <-data_to_convert*conversion_factor
+
+  rad_converted <- data_to_convert * conversion_factor
   colnames(rad_converted) <- paste0("rc_", conversion_name)
   return(rad_converted)
-  
 }
