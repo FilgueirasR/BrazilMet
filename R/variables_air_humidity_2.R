@@ -101,7 +101,7 @@ es_ea_calculation <- function(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_meth
 
 rh_calculation <- function(tmin, tmean) {
   e_tmin <- 0.6108 * exp(17.27 * tmin / (tmin + 237.3))
-  e_t <- 0.6108 * exp(17.27 * t / (tmean + 237.3))
+  e_t <- 0.6108 * exp(17.27 * tmean / (tmean + 237.3))
   rh <- 100 * (e_tmin / e_t)
   rh <- as.data.frame(rh)
   colnames(rh) <- "rh"
