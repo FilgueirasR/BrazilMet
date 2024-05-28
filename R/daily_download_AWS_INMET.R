@@ -143,10 +143,7 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       as.POSIXct(dfx$date_hora, format = "%Y-%m-%d %H"),
       "%H"
     )
-    
-    diff_days <- as.Date(end_date) - as.Date(start_date)
-    
-    if (nrow(dfx) < 4380 & diff_days > 120) {
+    if (nrow(dfx) < 4380) {
     } else {
       dfx_temp <- na.omit(dplyr::select(
         dfx, Hora, Data,
