@@ -69,13 +69,13 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       full.names = T
     ), header = F, sep = ";")
     OMM <- (OMM[4, 2])
-    
+
     UF <- read.csv(file = list.files(pasta, pattern = station, full.names = T), header = F, sep = ";")
     UF <- (UF[2, 2])
-    
+
     Station <- read.csv(file = list.files(pasta, pattern = station, full.names = T), header = F, sep = ";")
     Station <- (Station[3, 2])
-    
+
     dfx <- read.csv(
       file = list.files(pasta,
         pattern = station,
@@ -144,7 +144,7 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       "%H"
     )
     diff_days <- as.Date(end_date) - as.Date(start_date)
-    
+
     if (nrow(dfx) < 4380 & diff_days > 120) {
     } else {
       dfx_temp <- na.omit(dplyr::select(
@@ -362,7 +362,7 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
     df <- df %>% mutate(
       Station = Station,
       UF = UF,
-      longitude = longitude, 
+      longitude = longitude,
       latitude = latitude,
       altitude = altitude
     )
@@ -373,7 +373,7 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       "Patm (mB)", "Rh_mean (porc)", "Rh_max (porc)", "Rh_min (porc)",
       "Ws_10 (m s-1)", "Ws_2 (m s-1)", "Ws_gust (m s-1)",
       "Wd (degrees)", "Sr (Mj m-2 day-1)", "DOY", "Ra (Mj m-2 day-1)",
-      "Station_code","Station", "UF" ,"Longitude (degrees)", "Latitude (degrees)",
+      "Station_code", "Station", "UF", "Longitude (degrees)", "Latitude (degrees)",
       "Altitude (m)"
     )
     return(df)
