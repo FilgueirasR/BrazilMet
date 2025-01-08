@@ -38,8 +38,10 @@ Function to convert the radiation data. The conversion name can be understand as
 }
 \examples{
 \dontrun{
-radiation_conversion_df <- radiation_conversion(data_to_convert = df$rad,
-                                                conversion_name = "conversion_1")
+radiation_conversion_df <- radiation_conversion(
+  data_to_convert = df$rad,
+  conversion_name = "conversion_1"
+)
 }
 }
 \author{

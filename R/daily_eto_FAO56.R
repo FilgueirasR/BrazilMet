@@ -5,7 +5,7 @@
 #' @param tmax A dataframe with Maximum daily air temperature (°C).
 #' @param tmean A dataframe with Mean daily air temperature (°C).
 #' @param Rs A dataframe with mean daily solar radiation (MJ m-2 day-1).
-#' @param u2 A dataframe with Wind speed at meters high (m s-2).
+#' @param u2 A dataframe with Wind speed at two meters high (m s-2).
 #' @param Patm A dataframe with atmospheric Pressure (mB).
 #' @param RH_max A dataframe with Maximum relative humidity (percentage).
 #' @param RH_min A dataframe with Minimum relative humidity (percentage).

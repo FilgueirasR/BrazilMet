@@ -23,7 +23,7 @@ Hargreaves - Samani ETo
 }
 \examples{
 \dontrun{
-eto_hs <-eto_hs(tmin, tmean, tmax, ra)
+eto_hs <- eto_hs(tmin, tmean, tmax, ra)
 }
 }
 \author{

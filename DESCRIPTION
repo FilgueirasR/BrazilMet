@@ -28,7 +28,7 @@ Depends:
 Imports:
     stringr,
     readxl,
-    dplyr(>= 0.3.0.1)
+    dplyr(>= 0.3.0.1),
+    tibble
 BugReports: https://github.com/FilgueirasR/BrazilMet/issues
-RoxygenNote: 7.1.1   
-    
+RoxygenNote: 7.3.1
