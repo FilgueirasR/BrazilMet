@@ -3,17 +3,18 @@
 #' @param station The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
 #' @param start_date Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)
 #' @param end_date Date that end the investigation, should be in the following format (2017-12-31 /Year-Month-Day)
-#' @import httr
-#' @import jsonlite
 #' @import dplyr
 #' @importFrom dplyr filter
 #' @importFrom dplyr select
 #' @importFrom dplyr mutate
 #' @importFrom dplyr %>%
-#' @importFrom jsonlite fromJSON
+#' @importFrom tibble as_tibble
 #' @examples
 #' \dontrun{
-#' df <- hourly_weather_station_download(station = "A001", start_date = "2022-08-12", end_date = "2022-08-16")
+#' df <- hourly_weather_station_download(
+#'                                       station = "A001",
+#'                                       start_date = "2022-08-12",
+#'                                       end_date = "2022-08-16")
 #' }
 #' @export
 #' @return Returns a data.frame with the AWS data requested
@@ -21,6 +22,11 @@
 
 
 hourly_weather_station_download <- function(start_date, end_date, station) {
+  
+  X <- pressure_max_mb <- pressure_min_mb <- date_hour <- hour <- ppt_h_mm <- pressure_mb <- rj_kj_m2 <- tbs_c <- NULL
+  tpo_c <- tar_max_c <- tar_main_c <- to_max_c <- to_min_c <- ur_min <- ur <- u_dir_degrees <- u_raj_m_s <- u10_m_s <- NULL
+  rg_kj_m2 <- tar_min_c <- ur_max <- NULL
+  
   year <- substr(start_date, 1, 4)
   tempdir <- tempfile()
   tf <- paste0(gsub("\\", "/", tempdir, fixed = TRUE), ".zip")
