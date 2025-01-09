@@ -36,16 +36,16 @@ see_stations_info()
 
 df<-download_AWS_INMET_daily(station = "A001", start_date = "2001-01-01", end_date = "2001-12-31")
 
-df$eto <- daily_eto_FAO56(lat = df$`Latitude (degrees)`,
-                       tmin = df$`Tair_min (c)`,
-                       tmax = df$`Tair_max (c)`,
-                       tmean = df$`Tair_mean (c)`,
-                       Rs = df$`Sr (Mj m-2 day-1)`,
-                       u2 = df$`Ws_2 (m s-1)`,
-                       Patm = df$`Patm (mB)`,
-                       RH_max = df$`Rh_max (porc)`,
-                       RH_min = df$`Rh_min (porc)`,
-                       z = df$`Altitude (m)`,
-                       date = df$Date)
+df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
+                          tmin = df$tair_min_c,
+                          tmax = df$tair_max_c,
+                          tmean = df$tair_mean_c,
+                          Rs = df$sr_mj_m2_day,
+                          u2 = df$ws_2_m_s,
+                          Patm = df$Patm_mB,
+                          RH_max = df$rh_max_porc,
+                          RH_min = df$rh_min_porc,
+                          z = df$altitude_m,
+                          date = df$date)
 
 ```
