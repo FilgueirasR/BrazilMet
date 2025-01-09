@@ -367,14 +367,14 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       altitude = altitude
     )
     colnames(df) <- c(
-      "Date", "Tair_mean (c)", "Tair_min (c)",
-      "Tair_max (c)", "Dew_tmean (c)", "Dew_tmin (c)",
-      "Dew_tmax (c)", "Dry_bulb_t (c)", "Rainfall (mm)",
-      "Patm (mB)", "Rh_mean (porc)", "Rh_max (porc)", "Rh_min (porc)",
-      "Ws_10 (m s-1)", "Ws_2 (m s-1)", "Ws_gust (m s-1)",
-      "Wd (degrees)", "Sr (Mj m-2 day-1)", "DOY", "Ra (Mj m-2 day-1)",
-      "Station_code", "Station", "UF", "Longitude (degrees)", "Latitude (degrees)",
-      "Altitude (m)"
+      "date", "tair_mean_c", "tair_min_c",
+      "tair_max_c", "dew_tmean_c", "dew_tmin_c",
+      "dew_tmax_c", "dry_bulb_t_c", "rainfall_mm",
+      "Patm_mB", "rh_mean_porc", "rh_max_porc", "rh_min_porc",
+      "ws_10_m_s", "ws_2_m_s", "ws_gust_m_s",
+      "wd_degrees", "sr_mj_m2_day", "doy", "ra_mj_m2_day",
+      "station_code", "station", "uf", "longitude_degrees", "latitude_degrees",
+      "altitude_m"
     )
     return(df)
   }
