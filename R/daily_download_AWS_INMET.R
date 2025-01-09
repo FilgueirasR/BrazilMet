@@ -370,7 +370,7 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       "date", "tair_mean_c", "tair_min_c",
       "tair_max_c", "dew_tmean_c", "dew_tmin_c",
       "dew_tmax_c", "dry_bulb_t_c", "rainfall_mm",
-      "Patm_mB", "rh_mean_porc", "rh_max_porc", "rh_min_porc",
+      "patm_mB", "rh_mean_porc", "rh_max_porc", "rh_min_porc",
       "ws_10_m_s", "ws_2_m_s", "ws_gust_m_s",
       "wd_degrees", "sr_mj_m2_day", "doy", "ra_mj_m2_day",
       "station_code", "station", "uf", "longitude_degrees", "latitude_degrees",
