@@ -8,6 +8,7 @@
 
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/FilgueirasR/BrazilMet/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FilgueirasR/BrazilMet/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The BrazilMet package aims to facilitate the acquisition and processing of meteorological data from INMET automatic stations.
