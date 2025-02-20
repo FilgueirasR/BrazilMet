@@ -17,7 +17,7 @@ download_AWS_INMET_daily(station, start_date, end_date)
 Returns a data.frame with the AWS data requested
 }
 \description{
-This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time scale, based on the period of time selected (start_date and end_date).The function only works for downloading data from the same year.
+This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time scale, based on the period of time selected (start_date and end_date).
 }
 \examples{
 \dontrun{
