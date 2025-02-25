@@ -1,6 +1,6 @@
 #' Download of hourly data from automatic weather stations (AWS) of INMET-Brazil in daily aggregates
 #' @description This function will download the hourly AWS data of INMET and it will aggregate the data in a daily time scale, based on the period of time selected (start_date and end_date).
-#' @param station The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
+#' @param stations The stations code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
 #' @param start_date Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)
 #' @param end_date Date that end the investigation, should be in the following format (2017-12-31 /Year-Month-Day)
 #' @import stringr
@@ -26,7 +26,7 @@
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 
-download_AWS_INMET_daily <- function(station, start_date, end_date) {
+download_AWS_INMET_daily <- function(stations, start_date, end_date) {
   
   start_year <- substr(start_date, 1, 4)
   end_year <- substr(end_date, 1, 4)
@@ -48,6 +48,10 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
       a <- unzip(zipfile = tf, exdir = outdir, junkpaths = T)
       pasta <- paste0(outdir)
 
+      df_all_stations <- data.frame()
+      
+      for(station in stations){
+        
       if (length(list.files(pasta,
         pattern = station, full.names = T,
         all.files = T
@@ -387,9 +391,14 @@ download_AWS_INMET_daily <- function(station, start_date, end_date) {
           "altitude_m"
         )
       }
+        
+        df_all_stations <- rbind(df_all_stations, df)
+        }
 
-      df_sequence <- rbind(df_sequence, df)
-      df_sequence <- dplyr::arrange(df_sequence, date)
+      df_sequence <- rbind(df_sequence, df_all_stations)
+      
+      df_sequence <- df_sequence |> 
+        dplyr::arrange(station, date)
     }
 
     return(df_sequence)
