@@ -6,3 +6,5 @@
 ^\\.github/
 ^\\.github$
 ^\.github$
+^\docs$
+^docs$
