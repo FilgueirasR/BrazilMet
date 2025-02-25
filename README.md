@@ -35,7 +35,7 @@ library(BrazilMet)
 
 see_stations_info()
 
-df<-download_AWS_INMET_daily(station = "A001", start_date = "2001-01-01", end_date = "2001-12-31")
+df<-download_AWS_INMET_daily(stations = c("A001", "A042), start_date = "2023-01-01", end_date = "2024-12-31")
 
 df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
                           tmin = df$tair_min_c,
