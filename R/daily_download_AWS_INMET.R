@@ -19,11 +19,15 @@
 #' @importFrom dplyr %>%
 #' @examples
 #' \dontrun{
-#' df <- download_AWS_INMET_daily(station = "A001", start_date = "2001-01-01", end_date = "2001-12-31")
+#' df <- download_AWS_INMET_daily(stations = c("A001", "A042"),
+#'                                start_date = "2016-01-01",
+#'                                 end_date = "2018-12-31")
 #' }
 #' @export
 #' @return Returns a data.frame with the AWS data requested
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
+
+
 
 
 download_AWS_INMET_daily <- function(stations, start_date, end_date) {
@@ -39,7 +43,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
       tempdir <- tempfile()
       tf <- paste0(gsub("\\", "/", tempdir, fixed = TRUE), ".zip")
       outdir <- gsub("\\", "/", tempdir, fixed = TRUE)
-
+      options(timeout = 600)
       utils::download.file(url = paste0(
         "https://portal.inmet.gov.br/uploads/dadoshistoricos/",
         year, ".zip"
@@ -49,7 +53,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
       pasta <- paste0(outdir)
 
       df_all_stations <- data.frame()
-      
+
       for(station in stations){
         
       if (length(list.files(pasta,
@@ -380,6 +384,8 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           latitude = latitude,
           altitude = altitude
         )
+        
+        if(nrow(df) != 0){
         colnames(df) <- c(
           "date", "tair_mean_c", "tair_min_c",
           "tair_max_c", "dew_tmean_c", "dew_tmin_c",
@@ -389,8 +395,9 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           "wd_degrees", "sr_mj_m2_day", "doy", "ra_mj_m2_day",
           "station_code", "station", "uf", "longitude_degrees", "latitude_degrees",
           "altitude_m"
-        )
+        )}else{message("There is no data for this period for this station: ", station)}
       }
+        
         
         df_all_stations <- rbind(df_all_stations, df)
         }
@@ -404,4 +411,3 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
     return(df_sequence)
 
 }
-
