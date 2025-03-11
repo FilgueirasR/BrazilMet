@@ -16,10 +16,10 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr summarize
 #' @importFrom dplyr mutate
-#' @importFrom dplyr %>%
+#' @importFrom dplyr rename
 #' @examples
 #' \dontrun{
-#' df <- download_AWS_INMET_daily(stations = c("A001", "A042"),
+#' df <- download_AWS_INMET_daily(stations = c("A001","A042"),
 #'                                start_date = "2016-01-01",
 #'                                 end_date = "2018-12-31")
 #' }
@@ -27,10 +27,15 @@
 #' @return Returns a data.frame with the AWS data requested
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
-
-
-
 download_AWS_INMET_daily <- function(stations, start_date, end_date) {
+
+  X <- patm_max_mb <- patm_min_mb <- hour <- NULL
+  dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- dry_bulb_t_c <- NULL
+  rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
+  ws_10_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
+  
+  altitude_m <- dew_tmean_c <- latitude_degrees <- longitude_degrees <- patm_mb <- NULL
+  ra_mj_m2 <- station_code <- tair_mean_c <- uf <- ws_2_m_s <- NULL
   
   start_year <- substr(start_date, 1, 4)
   end_year <- substr(end_date, 1, 4)
@@ -44,370 +49,270 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
       tf <- paste0(gsub("\\", "/", tempdir, fixed = TRUE), ".zip")
       outdir <- gsub("\\", "/", tempdir, fixed = TRUE)
       options(timeout = 600)
-      utils::download.file(url = paste0(
-        "https://portal.inmet.gov.br/uploads/dadoshistoricos/",
-        year, ".zip"
-      ), destfile = tf, method = "auto", cacheOK = F)
+
+      utils::download.file(url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"), 
+      destfile = tf, method = "auto", cacheOK = F, quiet = T)
 
       a <- unzip(zipfile = tf, exdir = outdir, junkpaths = T)
-      pasta <- paste0(outdir)
 
       df_all_stations <- data.frame()
 
       for(station in stations){
         
-      if (length(list.files(pasta,
-        pattern = station, full.names = T,
-        all.files = T
-      )) == 0) {
-        message("There is no data for this period for this station. Choose another period!")
+        station_file <- list.files(outdir, pattern = station, full.names = T, all.files = T)
+        
+      if (length(station_file) == 0) {
+          message("There is no data for this period for this station. Choose another period!")
       } else {
-        list.files(pasta, pattern = station)
-        b <- read.csv(
-          file = list.files(pasta,
-            pattern = station,
-            full.names = T
-          ), header = T, sep = ";", skip = 8,
-          na = "-9999", dec = ",", check.names = F
-        )
-        a <- as.data.frame(a)
-        X <- `pressao-max(mB)` <- `pressao-min(mB)` <- Data <- Hora <- NULL
-        `to-min(C)` <- `to-max(C)` <- `tar_min(C)` <- `tar_max(C)` <- `tbs(C)` <- NULL
-        `ppt-h (mm)` <- `pressao (mB)` <- `UR-max` <- `UR-min` <- UR <- NULL
-        `U10 (m/s)` <- `U-raj (m/s)` <- `U-dir(degrees)` <- `RG(Kj/m2)` <- `RG(Mj/m2)` <- NULL
-        df <- data.frame(matrix(ncol = 18, nrow = 0))
-        colnames(df) <- c(
-          "Data", "Hora", "ppt-h (mm)", "pressao (mB)",
-          "RG(Mj/m2)", "tbs-(C)", "tpo(C)", "tar_max(C)", "tar_min(C)",
-          "to-max(C)", "to-min(C)", "UR-max", "UR-min", "UR",
-          "U-dir(degrees)", "U-raj (m/s)", "U10 (m/s)", "OMM"
-        )
-        OMM <- read.csv(file = list.files(pasta,
-          pattern = station,
-          full.names = T
-        ), header = F, sep = ";")
-        OMM <- (OMM[4, 2])
 
-        UF <- read.csv(file = list.files(pasta, pattern = station, full.names = T), header = F, sep = ";")
-        UF <- (UF[2, 2])
+        dfx <- read.csv(file = station_file, 
+                      header = T, 
+                      sep = ";",
+                      skip = 8,
+                      na = "-9999",
+                      dec = ",",
+                      check.names = F)
+        
+        header_info <- read.csv(file = station_file, header = F, sep = ";")
+        
+        OMM <- header_info[4, 2]
+        UF <- header_info[2, 2]
+        station <- header_info[3, 2]
+        
+        # Função para converter coordenadas no formato correto
+        convert_coord <- function(coord) {
+          lat_part <- substr(coord, 1, 3)
+          dec_part <- substr(coord, 5, 10)
+          as.numeric(paste0(lat_part, ".", dec_part))}
+        
+        # Extrai e converte os valores desejados
+        latitude <- convert_coord(header_info[5, 2])
+        longitude <- convert_coord(header_info[6, 2])
+        
+        # Ajuste da altitude
+        altitude <- as.numeric(gsub(",", ".", header_info[7, 2]))
 
-        Station <- read.csv(file = list.files(pasta, pattern = station, full.names = T), header = F, sep = ";")
-        Station <- (Station[3, 2])
-
-        dfx <- read.csv(
-          file = list.files(pasta,
-            pattern = station,
-            full.names = T
-          ), header = T, sep = ";", skip = 8,
-          na = "-9999", dec = ",", check.names = F
-        )
-        names(dfx)
         names(dfx) <- c(
-          "Data", "Hora", "ppt-h (mm)", "pressao (mB)",
-          "pressao-max(mB)", "pressao-min(mB)", "RG(Kj/m2)",
-          "tbs(C)", "tpo(C)", "tar_max(C)", "tar_min(C)", "to-max(C)",
-          "to-min(C)", "UR-max", "UR-min", "UR", "U-dir(degrees)",
-          "U-raj (m/s)", "U10 (m/s)", "X"
+          "date", "hour", "rainfall_mm", "patm_mb",
+          "patm_max_mb", "patm_min_mb", "sr_kj_m2",
+          "dry_bulb_t_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
+          "dew_tmin_c", "rh_max_porc", "rh_min_porc", "rh_mean_porc", "wd_degrees",
+          "ws_gust_m_s", "ws_10_m_s", "X"
         )
-        latitude <- read.csv(file = list.files(pasta,
-          pattern = station,
-          full.names = T
-        ), header = F, sep = ";", dec = ",")
-        latitude <- latitude[5, 2]
-        lat <- substr(latitude, 1, 3)
-        itude <- substr(latitude, 5, 10)
-        latitude <- as.numeric(paste0(lat, ".", itude))
-        longitude <- read.csv(file = list.files(pasta,
-          pattern = station,
-          full.names = T
-        ), header = F, sep = ";", dec = ",")
-        longitude <- longitude[6, 2]
-        long <- substr(longitude, 1, 3)
-        itude <- substr(longitude, 5, 10)
-        longitude <- as.numeric(paste0(long, ".", itude))
-        altitude <- read.csv(file = list.files(pasta,
-          pattern = station,
-          full.names = T
-        ), header = F, sep = ";", dec = ",")
-        altitude <- altitude[7, 2]
-        altitude <- gsub(",", replacement = ".", altitude)
-        altitude <- as.numeric(altitude)
-        dfx <- dplyr::select(dfx, -X, -`pressao-max(mB)`, -`pressao-min(mB)`)
+        
+        dfx <- dplyr::select(dfx, -X, -patm_max_mb, -patm_min_mb)
         dfx <- tibble::as_tibble(dfx)
-        dfx <- dplyr::mutate(dfx, Data = as.Date(Data), Hora = as.numeric(as.factor(Hora)))
-        dfx$date_hora <- paste0(dfx$Data, dfx$Hora)
-        dfx$date_hora <- as.POSIXct(strptime(dfx$date_hora, format = "%Y-%m-%d %H"))
+        dfx <- dplyr::mutate(dfx, date = as.Date(date), hour = as.numeric(as.factor(hour)))
+        
+        dfx$date_hour <- paste0(dfx$date, dfx$hour)
+        dfx$date_hour <- as.POSIXct(strptime(dfx$date_hour, format = "%Y-%m-%d %H"))
+        
         for (i in 1:nrow(dfx)) {
-          if (longitude > -37.5) {
-            (dfx$date_hora[i] <- dfx$date_hora[i] - as.difftime(2,
-              units = "hours"
-            ))
-          } else if (longitude > -52.5) {
-            (dfx$date_hora[i] <- dfx$date_hora[i] - as.difftime(3,
-              units = "hours"
-            ))
+          if (longitude > -37.5) { (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(2, units = "hours"))} else if (longitude > -52.5) {
+             (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(3, units = "hours"))
           } else if (longitude > -67.5) {
-            (dfx$date_hora[i] <- dfx$date_hora[i] - as.difftime(4,
-              units = "hours"
-            ))
+            (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(4, units = "hours"))
           } else if (longitude > -82.5) {
-            (dfx$date_hora[i] <- dfx$date_hora[i] - as.difftime(5,
-              units = "hours"
-            ))
+            (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(5, units = "hours"))
           }
         }
-        dfx$Data <- as.POSIXct(strptime(dfx$date_hora, format = "%Y-%m-%d"))
-        dfx$Hora <- format(
-          as.POSIXct(dfx$date_hora, format = "%Y-%m-%d %H"),
-          "%H"
-        )
+        
+        dfx$date <- as.POSIXct(strptime(dfx$date_hour, format = "%Y-%m-%d"))
+        dfx$hour <- format(as.POSIXct(dfx$date_hour, format = "%Y-%m-%d %H"),"%H")
         diff_days <- as.Date(end_date) - as.Date(start_date)
-
-        if (nrow(dfx) < 4380 & diff_days > 120) {
-        } else {
-          dfx_temp <- na.omit(dplyr::select(
-            dfx, Hora, Data,
-            `to-min(C)`, `to-max(C)`, `tar_min(C)`, `tar_max(C)`,
-            `tbs(C)`
-          ))
-          n_dfx_temp <- group_by(dfx_temp, Data) %>%
-            summarise(n = n()) %>%
-            filter(n == 24)
-          if (nrow(n_dfx_temp) == 0) {
-          } else {
-            dfx_temp <- left_join(dfx_temp, n_dfx_temp, by = "Data")
+        
+#estudar melhor essa condicao
+       # if (nrow(dfx) < 4380 & diff_days > 120) {} else {
+          #dfx_temp <- na.omit(dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c))
+          dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c)
+         
+           n_dfx_temp <- dplyr::group_by(dfx_temp, date) |>
+            dplyr::summarise(n = n()) |>
+            dplyr::filter(n == 24)
+          
+          if (nrow(n_dfx_temp) == 0) {} else {
+            dfx_temp <- dplyr::left_join(dfx_temp, n_dfx_temp, by = "date")
             dfx_temp <- dplyr::filter(dfx_temp, n == 24)
-            dfx_temp <- dplyr::mutate(dfx_temp, tar_mean = (`tar_min(C)` +
-              `tar_max(C)`) / 2)
-            dfx_temp <- dplyr::mutate(dfx_temp, to_mean = (`to-min(C)` +
-              `to-max(C)`) / 2)
-            dfx_temp_mean_day <- aggregate(
-              tar_mean ~ Data,
-              dfx_temp, mean
-            )
-            dfx_temp_min_day <- aggregate(`tar_min(C)` ~
-              Data, dfx_temp, min)
-            dfx_temp_max_day <- aggregate(`tar_max(C)` ~
-              Data, dfx_temp, max)
-            dfx_to_min_day <- aggregate(
-              `to-min(C)` ~ Data,
-              dfx_temp, min
-            )
-            dfx_to_max_day <- aggregate(
-              `to-max(C)` ~ Data,
-              dfx_temp, max
-            )
-            dfx_to_mean_day <- aggregate(
-              to_mean ~ Data,
-              dfx_temp, mean
-            )
-            dfx_tbs_day <- aggregate(
-              `tbs(C)` ~ Data, dfx_temp,
-              mean
-            )
-            dfx_temps_day <- cbind(
-              dfx_temp_mean_day, dfx_temp_min_day,
-              dfx_temp_max_day, dfx_to_mean_day, dfx_to_min_day,
-              dfx_to_max_day, dfx_tbs_day
-            )
-            dfx_temps_day <- dplyr::select(
-              dfx_temps_day,
-              -3, -5, -7, -9, -11, -13
-            )
-            dfx_prec <- na.omit(dplyr::select(
-              dfx, Hora,
-              Data, `ppt-h (mm)`
-            ))
-            dfx_prec <- group_by(dfx_prec, Data)
-            if (nrow(dfx_prec) == 0) {
-            } else {
-              dfx_prec_day <- aggregate(
-                `ppt-h (mm)` ~ Data,
-                dfx_prec, sum
-              )
-              dfx_press <- na.omit(dplyr::select(
-                dfx, Hora,
-                Data, `pressao (mB)`
-              ))
-              n_dfx_press <- group_by(dfx_press, Data) %>%
-                summarise(n = n()) %>%
-                filter(n == 24)
-              if (nrow(n_dfx_press) == 0) {
-              } else {
-                dfx_press <- left_join(dfx_press, n_dfx_press,
-                  by = "Data"
-                )
-                dfx_press <- dplyr::filter(dfx_press, n ==
-                  24)
-                dfx_press_mean_day <- aggregate(`pressao (mB)` ~
-                  Data, dfx_press, mean)
-                dfx_ur <- na.omit(dplyr::select(
-                  dfx, Hora,
-                  Data, `UR-max`, `UR-min`, UR
-                ))
-                n_dfx_ur <- group_by(dfx_ur, Data) %>%
-                  summarise(n = n()) %>%
-                  filter(n == 24)
-                if (nrow(n_dfx_ur) == 0) {
-                } else {
-                  dfx_ur <- left_join(dfx_ur, n_dfx_ur, by = "Data")
+            dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = (tair_min_c + tair_max_c / 2))
+            dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = (dew_tmin_c + dew_tmax_c / 2))
+            
+            dfx_temp_mean_day <- stats::aggregate(tair_mean_c ~ date, dfx_temp, mean)
+            dfx_temp_min_day <- stats::aggregate(tair_min_c ~ date, dfx_temp, min)
+            dfx_temp_max_day <- stats::aggregate(tair_max_c ~ date, dfx_temp, max)
+            dfx_to_min_day <- stats::aggregate(dew_tmin_c ~ date, dfx_temp, min)
+            dfx_to_max_day <- stats::aggregate(dew_tmax_c ~ date, dfx_temp, max)
+            dfx_to_mean_day <- stats::aggregate(dew_tmean_c ~ date, dfx_temp, mean)
+            dfx_tbs_day <- stats::aggregate(dry_bulb_t_c ~ date, dfx_temp, mean)
+            
+            dfx_temps_day <- dfx_temp_mean_day %>%
+              left_join(dfx_temp_min_day, by = "date") %>%
+              left_join(dfx_temp_max_day, by = "date") %>%
+              left_join(dfx_to_mean_day, by = "date") %>%
+              left_join(dfx_to_min_day, by = "date") %>%
+              left_join(dfx_to_max_day, by = "date") %>%
+              left_join(dfx_tbs_day, by = "date")}
+          
+            #dfx_prec <- na.omit(dplyr::select(dfx, hour, date, rainfall_mm))
+            dfx_prec <- dplyr::select(dfx, hour, date, rainfall_mm)
+            dfx_prec <- dplyr::group_by(dfx_prec, date)
+            
+            if (nrow(dfx_prec) == 0) {} else {
+              
+              dfx_prec_day <- stats::aggregate(rainfall_mm ~ date, dfx_prec, sum)
+              
+            }
+            
+             #dfx_press <- na.omit(dplyr::select(dfx, hour, date, patm_mb))
+              dfx_press <- dplyr::select(dfx, hour, date, patm_mb)
+              
+              n_dfx_press <- dplyr::group_by(dfx_press, date) |>
+                              dplyr::summarise(n = n()) |>
+                              dplyr::filter(n == 24)
+              
+              if (nrow(n_dfx_press) == 0) {} else {
+                dfx_press <- dplyr::left_join(dfx_press, n_dfx_press, by = "date")
+                dfx_press <- dplyr::filter(dfx_press, n == 24)
+                
+                dfx_press_mean_day <- stats::aggregate(patm_mb ~ date, dfx_press, mean)}
+              
+                #dfx_ur <- na.omit(dplyr::select(dfx, hour, date, rh_max_porc, rh_min_porc, rh_mean_porc))
+                dfx_ur <- dplyr::select(dfx, hour, date, rh_max_porc, rh_min_porc, rh_mean_porc)
+                
+                n_dfx_ur <- dplyr::group_by(dfx_ur, date) |>
+                  dplyr::summarise(n = n()) |>
+                  dplyr::filter(n == 24)
+                
+                if (nrow(n_dfx_ur) == 0) {} else {
+                  dfx_ur <- dplyr::left_join(dfx_ur, n_dfx_ur, by = "date")
                   dfx_ur <- dplyr::filter(dfx_ur, n == 24)
-                  dfx_ur_mean_day <- aggregate(
-                    UR ~ Data,
-                    dfx_ur, mean
-                  )
-                  dfx_ur_min_day <- aggregate(`UR-min` ~
-                    Data, dfx_ur, min)
-                  dfx_ur_max_day <- aggregate(`UR-max` ~
-                    Data, dfx_ur, max)
-                  dfx_urs_day <- cbind(
-                    dfx_ur_mean_day, dfx_ur_max_day,
-                    dfx_ur_min_day
-                  )
-                  dfx_urs_day <- dplyr::select(
-                    dfx_urs_day,
-                    -3, -5
-                  )
-                  dfx_vv <- na.omit(dplyr::select(
-                    dfx, Hora,
-                    Data, `U10 (m/s)`, `U-raj (m/s)`, `U-dir(degrees)`
-                  ))
-                  n_dfx_vv <- group_by(dfx_vv, Data) %>%
-                    summarise(n = n()) %>%
-                    filter(n == 24)
-                  if (nrow(n_dfx_vv) == 0) {
-                  } else {
-                    dfx_vv <- left_join(dfx_vv, n_dfx_vv,
-                      by = "Data"
-                    )
-                    dfx_vv <- dplyr::filter(dfx_vv, n ==
-                      24)
-                    dfx_vv <- mutate(dfx_vv, u2 = (4.868 / (log(67.75 *
-                      10 - 5.42))) * `U10 (m/s)`)
-                    dfx_vv_mean_day <- aggregate(`U10 (m/s)` ~
-                      Data, dfx_vv, mean)
-                    dfx_vv_meanu2_day <- aggregate(
-                      u2 ~ Data,
-                      dfx_vv, mean
-                    )
-                    dfx_vv_raj_day <- aggregate(`U-raj (m/s)` ~
-                      Data, dfx_vv, max)
-                    dfx_vv_dir_day <- aggregate(`U-dir(degrees)` ~
-                      Data, dfx_vv, mean)
-                    dfx_vvs_day <- cbind(
-                      dfx_vv_mean_day,
-                      dfx_vv_meanu2_day, dfx_vv_raj_day,
-                      dfx_vv_dir_day
-                    )
-                    dfx_vvs_day <- dplyr::select(
-                      dfx_vvs_day,
-                      -3, -5, -7
-                    )
-                    dfx_RG <- dplyr::select(
-                      dfx, Hora, Data,
-                      `RG(Kj/m2)`
-                    )
-                    dfx_RG <- dplyr::mutate(dfx_RG, `RG(Mj/m2)` = `RG(Kj/m2)` / 1000)
-                    dfx_RG <- na.omit(dplyr::select(
-                      dfx_RG,
-                      -`RG(Kj/m2)`
-                    ))
-                    dfx_RG <- dplyr::filter(dfx_RG, `RG(Mj/m2)` >
-                      0)
-                    n_RG <- group_by(dfx_RG, Data) %>%
-                      summarise(n = n()) %>%
+                  
+                  dfx_ur_mean_day <- stats::aggregate(rh_mean_porc ~ date, dfx_ur, mean)
+                  dfx_ur_min_day <- aggregate(rh_min_porc ~ date, dfx_ur, min)
+                  
+                  dfx_ur_max_day <- stats::aggregate(rh_max_porc ~ date, dfx_ur, max)
+                  
+                  dfx_urs_day <- dfx_ur_mean_day|>
+                    dplyr::left_join(dfx_ur_max_day, by = "date")|>
+                    dplyr::left_join(dfx_ur_min_day, by = "date")}
+      
+                  #dfx_vv <- na.omit(dplyr::select(dfx, hour, date, ws_10_m_s, ws_gust_m_s, wd_degrees))
+                  dfx_vv <- dplyr::select(dfx, hour, date, ws_10_m_s, ws_gust_m_s, wd_degrees)
+                  
+                  n_dfx_vv <- dplyr::group_by(dfx_vv, date) |>
+                    dplyr::summarise(n = n()) |>
+                    dplyr::filter(n == 24)
+                  
+                  if (nrow(n_dfx_vv) == 0) {} else {
+                    dfx_vv <- dplyr::left_join(dfx_vv, n_dfx_vv, by = "date")
+                    dfx_vv <- dplyr::filter(dfx_vv, n == 24)
+                    dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_10_m_s)
+                    
+                    dfx_vv_mean_day <- aggregate(ws_10_m_s ~ date, dfx_vv, mean)
+                    dfx_vv_meanu2_day <- aggregate(u2 ~ date, dfx_vv, mean)
+                    dfx_vv_raj_day <- stats::aggregate(ws_gust_m_s ~ date, dfx_vv, max)
+                    
+                    dfx_vv_dir_day <- stats::aggregate(wd_degrees ~ date, dfx_vv, mean)
+                    
+                    dfx_vvs_day <- dfx_vv_mean_day|>
+                      dplyr::left_join(dfx_vv_meanu2_day, by = "date")|>
+                      dplyr::left_join(dfx_vv_raj_day, by = "date")|>
+                      dplyr::left_join(dfx_vv_dir_day, by = "date")}
+                    
+                    dfx_RG <- dplyr::select(dfx, hour, date, sr_kj_m2)
+                    
+                    dfx_RG <- dplyr::mutate(dfx_RG, sr_mj_m2 = sr_kj_m2 / 1000)
+                    #dfx_RG <- na.omit(dplyr::select(dfx_RG, sr_kj_m2))
+                    dfx_RG <- dplyr::select(dfx_RG, date, sr_mj_m2)########
+                    
+                    dfx_RG <- dplyr::filter(dfx_RG, sr_mj_m2 > 0)
+                    
+                    n_RG <- dplyr::group_by(dfx_RG, date) |>
+                      summarise(n = n()) |>
                       filter(n >= 12)
-                    if (nrow(n_RG) == 0) {
-                    } else {
-                      dfx_RG <- left_join(dfx_RG, n_RG, by = "Data")
-                      dfx_RG <- dplyr::filter(dfx_RG, n >=
-                        12)
-                      dfx_RG_sum_day <- aggregate(`RG(Mj/m2)` ~
-                        Data, dfx_RG, sum)
-                      julian_day <- as.data.frame(as.numeric(format(
-                        dfx_RG_sum_day$Data,
-                        "%j"
-                      )))
-                      names(julian_day) <- "julian_day"
-                      dfx_RG_sum_day <- cbind(
-                        dfx_RG_sum_day,
-                        julian_day
-                      )
+                    
+                    if (nrow(n_RG) == 0) {} else {
+                      dfx_RG <- dplyr::left_join(dfx_RG, n_RG, by = "date")
+                      dfx_RG <- dplyr::filter(dfx_RG, n >= 12)
+                      
+                      dfx_RG_sum_day <- aggregate(sr_mj_m2 ~ date, dfx_RG, sum)
+                      
+                      dfx_RG_sum_day <- dfx_RG_sum_day |> 
+                        dplyr::mutate(julian_day = as.numeric(format(date, "%j")))
+                      
                       lat_rad <- (pi / 180) * (latitude)
+                      
                       dr <- 1 + 0.033 * cos((2 * pi / 365) *
                         dfx_RG_sum_day$julian_day)
-                      summary(dr)
-                      solar_declination <- 0.409 * sin(((2 *
-                        pi / 365) * dfx_RG_sum_day$julian_day) -
-                        1.39)
-                      sunset_hour_angle <- acos(-tan(lat_rad) *
-                        tan(solar_declination))
+
+                      solar_declination <- 0.409 * sin(((2 *pi / 365) * dfx_RG_sum_day$julian_day) - 1.39)
+                      sunset_hour_angle <- acos(-tan(lat_rad) * tan(solar_declination))
+                      
                       ra <- ((24 * (60)) / pi) * (0.082) *
                         dr * (sunset_hour_angle * sin(lat_rad) *
                           sin(solar_declination) + cos(lat_rad) *
                             cos(solar_declination) * sin(sunset_hour_angle))
+                     
                       ra <- as.data.frame(ra)
-                      dfx_RG_sum_day <- cbind(
-                        dfx_RG_sum_day,
-                        ra
-                      )
-                      dfx_day <- dplyr::full_join(dfx_temps_day,
-                        dfx_prec_day,
-                        by = "Data"
-                      )
-                      dfx_day <- dplyr::full_join(dfx_day, dfx_press_mean_day,
-                        by = "Data"
-                      )
-                      dfx_day <- dplyr::full_join(dfx_day, dfx_urs_day,
-                        by = "Data"
-                      )
-                      dfx_day <- dplyr::full_join(dfx_day, dfx_vvs_day,
-                        by = "Data"
-                      )
-                      dfx_day <- dplyr::full_join(dfx_day, dfx_RG_sum_day,
-                        by = "Data"
-                      )
+                      dfx_RG_sum_day <- dplyr::bind_cols(dfx_RG_sum_day, ra)}
+                        
+                      
+                    dfx_day <- dplyr::full_join(dfx_temps_day, dfx_prec_day, by = "date")
+                      dfx_day <- dplyr::full_join(dfx_day, dfx_press_mean_day, by = "date")
+                      dfx_day <- dplyr::full_join(dfx_day, dfx_urs_day, by = "date")
+                      dfx_day <- dplyr::full_join(dfx_day, dfx_vvs_day, by = "date")
+                      dfx_day <- dplyr::full_join(dfx_day, dfx_RG_sum_day, by = "date")
                       dfx_day <- dplyr::mutate(dfx_day, OMM = OMM)
-                      df <- rbind(df, dfx_day)
-                    }
-                  }
-                }
-              }
-            }
-          }
+                      df <- dfx_day
+        
+        df <- dplyr::filter(df, date >= start_date & date <= end_date)
+
+        df <- df |> 
+          dplyr::mutate(
+                        station = station,
+                        UF = UF,
+                        longitude_degrees = longitude,
+                        latitude_degrees = latitude,
+                        altitude_m = altitude)|> 
+          dplyr::arrange(station, date) |>
+          dplyr::rename("station_code" = "OMM",
+                        "uf" = "UF",
+                        "ws_2_m_s" = "u2",
+                        "ra_mj_m2" = "ra")|>
+          dplyr::select(c(station_code,
+                          station,
+                          uf,
+                          date,
+                          tair_mean_c,
+                          tair_min_c,
+                          tair_max_c,
+                          dew_tmean_c,
+                          dew_tmin_c,
+                          dew_tmax_c,
+                          dry_bulb_t_c,
+                          rainfall_mm,
+                          patm_mb,
+                          rh_mean_porc,
+                          rh_max_porc,
+                          rh_min_porc,
+                          ws_10_m_s,
+                          ws_2_m_s,
+                          ws_gust_m_s,
+                          wd_degrees,
+                          sr_mj_m2,
+                          ra_mj_m2,
+                          longitude_degrees,
+                          latitude_degrees,
+                          altitude_m))
+        
         }
-        df <- filter(df, Data >= start_date & Data <= end_date)
-        df <- df %>% mutate(
-          Station = Station,
-          UF = UF,
-          longitude = longitude,
-          latitude = latitude,
-          altitude = altitude
-        )
-        
-        if(nrow(df) != 0){
-        colnames(df) <- c(
-          "date", "tair_mean_c", "tair_min_c",
-          "tair_max_c", "dew_tmean_c", "dew_tmin_c",
-          "dew_tmax_c", "dry_bulb_t_c", "rainfall_mm",
-          "patm_mB", "rh_mean_porc", "rh_max_porc", "rh_min_porc",
-          "ws_10_m_s", "ws_2_m_s", "ws_gust_m_s",
-          "wd_degrees", "sr_mj_m2_day", "doy", "ra_mj_m2_day",
-          "station_code", "station", "uf", "longitude_degrees", "latitude_degrees",
-          "altitude_m"
-        )}else{message("There is no data for this period for this station: ", station)}
-      }
-        
-        
+
         df_all_stations <- rbind(df_all_stations, df)
         }
 
       df_sequence <- rbind(df_sequence, df_all_stations)
       
-      df_sequence <- df_sequence |> 
-        dplyr::arrange(station, date)
+      df_sequence <- df_sequence 
     }
 
     return(df_sequence)
-
 }

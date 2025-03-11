@@ -21,7 +21,7 @@ This function will download the hourly AWS data of INMET and it will aggregate t
 }
 \examples{
 \dontrun{
-df <- download_AWS_INMET_daily(stations = c("A001", "A042"),
+df <- download_AWS_INMET_daily(stations = c("A001","A042"),
                                start_date = "2016-01-01",
                                 end_date = "2018-12-31")
 }
