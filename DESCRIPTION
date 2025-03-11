@@ -1,7 +1,7 @@
 Package: BrazilMet
 Type: Package
 Title: Download and Processing of Automatic  Weather Stations (AWS) Data of INMET-Brazil 
-Version: 0.2.0
+Version: 0.3.0
 Language: en-US
 Authors@R: c(person(given = "Roberto",
                     family = "Filgueiras",
