@@ -4,14 +4,14 @@
 \alias{hourly_weather_station_download}
 \title{Download of hourly data from automatic weather stations (AWS) of INMET-Brazil}
 \usage{
-hourly_weather_station_download(start_date, end_date, station)
+hourly_weather_station_download(stations, start_date, end_date)
 }
 \arguments{
+\item{stations}{The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.}
+
 \item{start_date}{Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)}
 
 \item{end_date}{Date that end the investigation, should be in the following format (2017-12-31 /Year-Month-Day)}
-
-\item{station}{The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.}
 }
 \value{
 Returns a data.frame with the AWS data requested
@@ -22,7 +22,7 @@ This function will download the hourly AWS data of INMET for whatever station of
 \examples{
 \dontrun{
 df <- hourly_weather_station_download(
-                                      station = "A001",
+                                      stations = c("A001", "A042"),
                                       start_date = "2022-08-12",
                                       end_date = "2022-08-16")
 }
