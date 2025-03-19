@@ -1,3 +1,14 @@
+# BrazilMet 0.3.0 (2025-03-19)
+
+
+##New functions
+- Implemented the hourly_download_AWS_inmet.R
+- Implemented the eto_thorntwaite.R
+
+##Improvements
+- Refactored the daily_download_AWS_INMET.R script to be more efficient and enable downloading data for multiple years and stations.
+
+
 # BrazilMet 0.2.0
 
 ## Error correction reported by CRAN

@@ -1,3 +1,15 @@
+## Test environments BrazilMet 0.3.0
+
+### R CMD check results
+
+Duration: 27.2s
+
+0 errors √ | 0 warnings √ | 1 note ✖
+
+checking for future file timestamps ... NOTE
+  unable to verify current time
+  
+
 ## Test environments BrazilMet 0.2.0
 
 ### R CMD check results
