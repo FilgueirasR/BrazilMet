@@ -1,4 +1,4 @@
-#' Eto calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
+#' ETo calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*
 #' @description This function will calculate the reference evapotranspiration (ETo) based on FAO-56 (Allen et al., 1998) with the automatic weather stations (AWS) data, downloaded and processed in function *daily_download_AWS_INMET*.
 #' @param lat  A numeric value of the Latitude of the AWS (decimal degrees).
 #' @param tmin A dataframe with Minimum daily air temperature (°C).

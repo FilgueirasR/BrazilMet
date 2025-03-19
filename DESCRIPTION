@@ -24,7 +24,7 @@ Description: A compilation of functions to download and processing AWS data of I
 License: GPL-3
 Encoding: UTF-8
 Depends: 
-    R (>= 3.2.0)
+    R (>= 4.1.0)
 Imports:
     stringr,
     readxl,
