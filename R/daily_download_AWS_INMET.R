@@ -133,8 +133,8 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           if (nrow(n_dfx_temp) == 0) {} else {
             dfx_temp <- dplyr::left_join(dfx_temp, n_dfx_temp, by = "date")
             dfx_temp <- dplyr::filter(dfx_temp, n == 24)
-            dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = (tair_min_c + tair_max_c / 2))
-            dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = (dew_tmin_c + dew_tmax_c / 2))
+            dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
+            dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
             
             dfx_temp_mean_day <- stats::aggregate(tair_mean_c ~ date, dfx_temp, mean)
             dfx_temp_min_day <- stats::aggregate(tair_min_c ~ date, dfx_temp, min)
