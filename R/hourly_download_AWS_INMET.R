@@ -9,6 +9,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr %>%
 #' @importFrom tibble as_tibble
+#' @importFrom lubridate hours
 #' @examples
 #' \dontrun{
 #' df <- hourly_weather_station_download(
@@ -26,6 +27,7 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
   dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- dry_bulb_t_c <- NULL
   rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
   ws_10_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
+  date_hour <- UTC_offset <- date_hour_local <- date_hour_utc <- NULL
   
   altitude_m <- dew_tmean_c <- latitude_degrees <- longitude_degrees <- patm_mb <- NULL
   ra_mj_m2 <- station_code <- tair_mean_c <- uf <- ws_2_m_s <- NULL
@@ -100,22 +102,30 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
         dfx$date_hour <- paste0(dfx$date, dfx$hour)
         dfx$date_hour <- as.POSIXct(strptime(dfx$date_hour, format = "%Y-%m-%d %H"))
         
-        for (i in 1:nrow(dfx)) {
-          if (longitude > -37.5) { (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(2, units = "hours"))} else if (longitude > -52.5) {
-            (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(3, units = "hours"))
-          } else if (longitude > -67.5) {
-            (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(4, units = "hours"))
-          } else if (longitude > -82.5) {
-            (dfx$date_hour[i] <- dfx$date_hour[i] - as.difftime(5, units = "hours"))
-          }
-        }
-        
-        dfx$date <- as.POSIXct(strptime(dfx$date_hour, format = "%Y-%m-%d"))
-        dfx$hour <- format(as.POSIXct(dfx$date_hour, format = "%Y-%m-%d %H"),"%H")
+         dfx <- dfx %>%
+           dplyr::mutate(
+             # Define o offset por estado
+             UTC_offset = case_when(
+               UF == "AC" ~ -5,  # UTC-5 (Acre)
+               UF %in% c("AM", "MT", "RO", "RR") ~ -4,  # UTC-4 (Amazonas, Mato Grosso, Rondônia, Roraima)
+               UF %in% c("MS", "GO", "DF", "TO", "BA", "SE", "AL", "PE", "PB", 
+                         "RN", "CE", "PI", "MA", "PA", "AP", "SP", "RJ", "MG", "ES", 
+                         "PR", "SC", "RS") ~ -3,  # UTC-3 (Maior parte do Brasil)
+               TRUE ~ 0  # Caso não encontre a UF, mantém UTC
+             ),
+             # Ajusta para horário local
+             date_hour_local = date_hour + hours(UTC_offset)) %>% 
+           dplyr::mutate(
+             # Extraindo a data e a hora corretamente
+             date = as.POSIXct(strptime(date_hour_local, format = "%Y-%m-%d")),  # Apenas a data
+             hour = format(date_hour_local, "%H:%M:%S")  # Apenas a hora
+           ) %>%
+           select(-UTC_offset)
+
   
-        dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c)
-        dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = (tair_min_c + tair_max_c / 2))
-        dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = (dew_tmin_c + dew_tmax_c / 2))
+        dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c, date_hour, date_hour_local)
+        dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
+        dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
         
         dfx_prec <- dplyr::select(dfx, hour, date, rainfall_mm)
         
@@ -150,19 +160,21 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
           dplyr::arrange(station, date) |>
           dplyr::rename("station_code" = "OMM",
                         "uf" = "UF",
-                        "ws_2_m_s" = "u2")|>
+                        "ws_2_m_s" = "u2",
+                        "date_hour_utc" = "date_hour")|>
           dplyr::select(c(station_code,
                           station,
                           uf,
                           date,
                           hour,
+                          date_hour_utc,
                           tair_mean_c,
+                          dry_bulb_t_c,
                           tair_min_c,
                           tair_max_c,
                           dew_tmean_c,
                           dew_tmin_c,
                           dew_tmax_c,
-                          dry_bulb_t_c,
                           rainfall_mm,
                           patm_mb,
                           rh_mean_porc,
