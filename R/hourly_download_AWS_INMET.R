@@ -94,14 +94,15 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
           "dew_tmin_c", "rh_max_porc", "rh_min_porc", "rh_mean_porc", "wd_degrees",
           "ws_gust_m_s", "ws_10_m_s", "X"
         )
-        
+
         dfx <- dplyr::select(dfx, -X, -patm_max_mb, -patm_min_mb)
         dfx <- tibble::as_tibble(dfx)
-        dfx <- dplyr::mutate(dfx, date = as.Date(date), hour = as.numeric(as.factor(hour)))
+        dfx <- dplyr::mutate(dfx, date = as.Date(date), 
+                             hour = as.numeric(substr(hour, 1, 2)))
         
-        dfx$date_hour <- paste0(dfx$date, dfx$hour)
+        dfx$date_hour <- paste0(dfx$date," ", dfx$hour)
         dfx$date_hour <- as.POSIXct(strptime(dfx$date_hour, format = "%Y-%m-%d %H"))
-        
+
          dfx <- dfx %>%
            dplyr::mutate(
              # Define o offset por estado
