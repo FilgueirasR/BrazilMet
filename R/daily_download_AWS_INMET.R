@@ -27,10 +27,11 @@
 #' @return Returns a data.frame with the AWS data requested
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
+
 download_AWS_INMET_daily <- function(stations, start_date, end_date) {
 
   X <- patm_max_mb <- patm_min_mb <- hour <- NULL
-  dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- dry_bulb_t_c <- NULL
+  dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- tair_dry_bulb_c <- NULL
   rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
   ws_10_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
   date_hour<- UTC_offset <- date_hour_local <- NULL
@@ -96,7 +97,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         names(dfx) <- c(
           "date", "hour", "rainfall_mm", "patm_mb",
           "patm_max_mb", "patm_min_mb", "sr_kj_m2",
-          "dry_bulb_t_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
+          "tair_dry_bulb_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
           "dew_tmin_c", "rh_max_porc", "rh_min_porc", "rh_mean_porc", "wd_degrees",
           "ws_gust_m_s", "ws_10_m_s", "X"
         )
@@ -133,7 +134,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
 #estudar melhor essa condicao
        # if (nrow(dfx) < 4380 & diff_days > 120) {} else {
           #dfx_temp <- na.omit(dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c))
-          dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c)
+          dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmean_c, dew_tmax_c, tair_min_c, tair_max_c, tair_dry_bulb_c)
          
            n_dfx_temp <- dplyr::group_by(dfx_temp, date) |>
             dplyr::summarise(n = n()) |>
@@ -142,24 +143,28 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           if (nrow(n_dfx_temp) == 0) {} else {
             dfx_temp <- dplyr::left_join(dfx_temp, n_dfx_temp, by = "date")
             dfx_temp <- dplyr::filter(dfx_temp, n == 24)
-            dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
-            dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
+            #dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
+            #dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
             
-            dfx_temp_mean_day <- stats::aggregate(tair_mean_c ~ date, dfx_temp, mean)
+            dfx_temp_mean_day <- stats::aggregate(tair_dry_bulb_c ~ date, dfx_temp, mean)
             dfx_temp_min_day <- stats::aggregate(tair_min_c ~ date, dfx_temp, min)
             dfx_temp_max_day <- stats::aggregate(tair_max_c ~ date, dfx_temp, max)
             dfx_to_min_day <- stats::aggregate(dew_tmin_c ~ date, dfx_temp, min)
             dfx_to_max_day <- stats::aggregate(dew_tmax_c ~ date, dfx_temp, max)
             dfx_to_mean_day <- stats::aggregate(dew_tmean_c ~ date, dfx_temp, mean)
-            dfx_tbs_day <- stats::aggregate(dry_bulb_t_c ~ date, dfx_temp, mean)
+            #dfx_tbs_day <- stats::aggregate(dry_bulb_t_c ~ date, dfx_temp, mean)
             
             dfx_temps_day <- dfx_temp_mean_day %>%
               left_join(dfx_temp_min_day, by = "date") %>%
               left_join(dfx_temp_max_day, by = "date") %>%
               left_join(dfx_to_mean_day, by = "date") %>%
               left_join(dfx_to_min_day, by = "date") %>%
-              left_join(dfx_to_max_day, by = "date") %>%
-              left_join(dfx_tbs_day, by = "date")}
+              left_join(dfx_to_max_day, by = "date") #%>%
+              #left_join(dfx_tbs_day, by = "date")
+            
+            dfx_temps_day <- dfx_temps_day %>% 
+              dplyr::rename("tair_mean_c" = "tair_dry_bulb_c")
+            }
           
             #dfx_prec <- na.omit(dplyr::select(dfx, hour, date, rainfall_mm))
             dfx_prec <- dplyr::select(dfx, hour, date, rainfall_mm)
@@ -297,7 +302,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
                           dew_tmean_c,
                           dew_tmin_c,
                           dew_tmax_c,
-                          dry_bulb_t_c,
                           rainfall_mm,
                           patm_mb,
                           rh_mean_porc,

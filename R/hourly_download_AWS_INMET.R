@@ -1,5 +1,5 @@
 #' Download of hourly data from automatic weather stations (AWS) of INMET-Brazil
-#' @description This function will download the hourly AWS data of INMET for whatever station of interest, based on the period of time selected (start_date and end_date) and station code. The limit acquisition in the same requisition for hourly data is one year.
+#' @description This function will download the hourly AWS data of INMET for whatever station of interest, based on the period of time selected (start_date and end_date) and station code.
 #' @param stations The station code (ID - WMO code) for download. To see the station ID, please see the function *see_stations_info*.
 #' @param start_date Date that start the investigation, should be in the following format (1958-01-01 /Year-Month-Day)
 #' @param end_date Date that end the investigation, should be in the following format (2017-12-31 /Year-Month-Day)
@@ -24,7 +24,7 @@
 hourly_weather_station_download <- function(stations, start_date, end_date) {
   
   X <- patm_max_mb <- patm_min_mb <- hour <- NULL
-  dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- dry_bulb_t_c <- NULL
+  dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- tair_dry_bulb_c <- NULL
   rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
   ws_10_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
   date_hour <- UTC_offset <- date_hour_local <- date_hour_utc <- NULL
@@ -90,7 +90,7 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
         names(dfx) <- c(
           "date", "hour", "rainfall_mm", "patm_mb",
           "patm_max_mb", "patm_min_mb", "sr_kj_m2",
-          "dry_bulb_t_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
+          "tair_dry_bulb_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
           "dew_tmin_c", "rh_max_porc", "rh_min_porc", "rh_mean_porc", "wd_degrees",
           "ws_gust_m_s", "ws_10_m_s", "X"
         )
@@ -122,11 +122,11 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
              hour = format(date_hour_local, "%H:%M:%S")  # Apenas a hora
            ) %>%
            select(-UTC_offset)
-
+names(dfx)
   
-        dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c, date_hour, date_hour_local)
-        dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
-        dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
+        dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmean_c, dew_tmax_c, tair_min_c, tair_dry_bulb_c, tair_max_c, date_hour, date_hour_local)
+        #dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
+        #dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
         
         dfx_prec <- dplyr::select(dfx, hour, date, rainfall_mm)
         
@@ -169,8 +169,7 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
                           date,
                           hour,
                           date_hour_utc,
-                          tair_mean_c,
-                          dry_bulb_t_c,
+                          tair_dry_bulb_c,
                           tair_min_c,
                           tair_max_c,
                           dew_tmean_c,
