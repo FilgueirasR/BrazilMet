@@ -50,3 +50,16 @@ df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
                           date = df$date)
 
 ```
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Whether it's reporting issues, suggesting improvements, or submitting pull requests, your help is greatly appreciated.
+
+### How to contribute:
+1. **Fork** the repository  
+2. **Create a new branch** (`git checkout -b feature-branch`)  
+3. **Make your changes and commit** (`git commit -m "Description of changes"`)  
+4. **Push to your branch** (`git push origin feature-branch`)  
+5. **Open a pull request**  
+
+Feel free to contribute and make something great together!
