@@ -30,6 +30,7 @@ Imports:
     readxl,
     dplyr(>= 0.3.0.1),
     tibble,
-    lubridate
+    lubridate,
+    sf
 BugReports: https://github.com/FilgueirasR/BrazilMet/issues
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
