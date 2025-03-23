@@ -17,7 +17,7 @@ hourly_weather_station_download(stations, start_date, end_date)
 Returns a data.frame with the AWS data requested
 }
 \description{
-This function will download the hourly AWS data of INMET for whatever station of interest, based on the period of time selected (start_date and end_date) and station code. The limit acquisition in the same requisition for hourly data is one year.
+This function will download the hourly AWS data of INMET for whatever station of interest, based on the period of time selected (start_date and end_date) and station code.
 }
 \examples{
 \dontrun{
