@@ -9,13 +9,13 @@ selectAWSstations(aoi, as_sf = FALSE)
 \arguments{
 \item{aoi}{sf object. Area of interest.}
 
-\item{as_sf}{logical. Inmet stations inventory result should be export as sf object? Defalut = FALSE.}
+\item{as_sf}{logical. Inmet stations inventory result should be export as sf object? Default = FALSE.}
 }
 \value{
 a vector or sf object with station located at area of interest (aoi)
 }
 \description{
-Select automatic weather stations of INMET based on sf object
+Select automatic weather stations of INMET based on sf object.
 }
 \examples{
 \dontrun{
