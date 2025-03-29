@@ -6,3 +6,4 @@
 *.xlsx
 *.ini
 docs
+!docs/figures/
