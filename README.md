@@ -4,7 +4,7 @@
 # BrazilMet
 
 <div class="fluid-row" id="header">
-    <img src='man/figures/logo_BrazilMet.png' height='150' width='auto' align='right'>
+    <img src='docs/figures/logo_BrazilMet.png' height='150' width='auto' align='right'>
 
 
 <!-- badges: start -->

@@ -5,6 +5,7 @@
 <url><loc>/news/index.html</loc></url>
 <url><loc>/reference/daily_eto_FAO56.html</loc></url>
 <url><loc>/reference/download_AWS_INMET_daily.html</loc></url>
+<url><loc>/reference/download_climate_normals.html</loc></url>
 <url><loc>/reference/ea_dew_calculation.html</loc></url>
 <url><loc>/reference/ea_rh_calculation.html</loc></url>
 <url><loc>/reference/es_calculation.html</loc></url>
@@ -25,6 +26,7 @@
 <url><loc>/reference/rso_calculation_2.html</loc></url>
 <url><loc>/reference/rs_nearby_calculation.html</loc></url>
 <url><loc>/reference/see_stations_info.html</loc></url>
+<url><loc>/reference/selectAWSstations.html</loc></url>
 <url><loc>/reference/sr_ang_calculation.html</loc></url>
 <url><loc>/reference/sr_tair_calculation.html</loc></url>
 <url><loc>/reference/u2_calculation.html</loc></url>
