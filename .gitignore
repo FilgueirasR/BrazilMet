@@ -5,5 +5,5 @@
 *desktop.ini
 *.xlsx
 *.ini
-docs
+docs/
 !docs/figures/
