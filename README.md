@@ -93,7 +93,8 @@ df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
 
 ```
 
-# 🤝 Contributing
+🤝 Contributing
+
 We welcome contributions from the community! Whether it’s reporting issues, suggesting improvements, or submitting pull requests, your help is greatly appreciated.
 
 How to contribute:
