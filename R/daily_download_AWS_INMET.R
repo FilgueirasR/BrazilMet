@@ -27,7 +27,6 @@
 #' @return Returns a data.frame with the AWS data requested
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
-
 download_AWS_INMET_daily <- function(stations, start_date, end_date) {
 
   X <- patm_max_mb <- patm_min_mb <- hour <- NULL
@@ -82,9 +81,13 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         station <- header_info[3, 2]
         
         # Função para converter coordenadas no formato correto
+     
         convert_coord <- function(coord) {
-          lat_part <- substr(coord, 1, 3)
-          dec_part <- substr(coord, 5, 10)
+          #lat_part <- substr(coord, 1, 3)
+          lat_part <- sub(",.*", "", coord) # 
+          
+          #dec_part <- substr(coord, 5, 10)
+          dec_part <- sub(".*,", "", coord)
           as.numeric(paste0(lat_part, ".", dec_part))}
         
         # Extrai e converte os valores desejados

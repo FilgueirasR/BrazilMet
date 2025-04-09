@@ -76,8 +76,11 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
         
         # Função para converter coordenadas no formato correto
         convert_coord <- function(coord) {
-          lat_part <- substr(coord, 1, 3)
-          dec_part <- substr(coord, 5, 10)
+          #lat_part <- substr(coord, 1, 3)
+          lat_part <- sub(",.*", "", coord) # 
+          
+          #dec_part <- substr(coord, 5, 10)
+          dec_part <- sub(".*,", "", coord)
           as.numeric(paste0(lat_part, ".", dec_part))}
         
         # Extrai e converte os valores desejados
