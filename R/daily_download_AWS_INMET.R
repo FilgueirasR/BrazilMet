@@ -33,7 +33,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
   X <- patm_max_mb <- patm_min_mb <- hour <- NULL
   dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- tair_dry_bulb_c <- NULL
   rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
-  ws_10_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
+  ws_2_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
   date_hour<- UTC_offset <- date_hour_local <- NULL
   
   altitude_m <- dew_tmean_c <- latitude_degrees <- longitude_degrees <- patm_mb <- NULL
@@ -99,7 +99,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           "patm_max_mb", "patm_min_mb", "sr_kj_m2",
           "tair_dry_bulb_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
           "dew_tmin_c", "rh_max_porc", "rh_min_porc", "rh_mean_porc", "wd_degrees",
-          "ws_gust_m_s", "ws_10_m_s", "X"
+          "ws_gust_m_s", "ws_2_m_s", "X"
         )
         
         dfx <- dplyr::select(dfx, -X, -patm_max_mb, -patm_min_mb)
@@ -209,8 +209,8 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
                     dplyr::left_join(dfx_ur_max_day, by = "date")|>
                     dplyr::left_join(dfx_ur_min_day, by = "date")}
       
-                  #dfx_vv <- na.omit(dplyr::select(dfx, hour, date, ws_10_m_s, ws_gust_m_s, wd_degrees))
-                  dfx_vv <- dplyr::select(dfx, hour, date, ws_10_m_s, ws_gust_m_s, wd_degrees)
+                  #dfx_vv <- na.omit(dplyr::select(dfx, hour, date, ws_2_m_s, ws_gust_m_s, wd_degrees))
+                  dfx_vv <- dplyr::select(dfx, hour, date, ws_2_m_s, ws_gust_m_s, wd_degrees)
                   
                   n_dfx_vv <- dplyr::group_by(dfx_vv, date) |>
                     dplyr::summarise(n = n()) |>
@@ -219,18 +219,19 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
                   if (nrow(n_dfx_vv) == 0) {} else {
                     dfx_vv <- dplyr::left_join(dfx_vv, n_dfx_vv, by = "date")
                     dfx_vv <- dplyr::filter(dfx_vv, n == 24)
-                    dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_10_m_s)
+                    #dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_10_m_s)
                     
-                    dfx_vv_mean_day <- aggregate(ws_10_m_s ~ date, dfx_vv, mean)
-                    dfx_vv_meanu2_day <- aggregate(u2 ~ date, dfx_vv, mean)
+                    dfx_vv_mean_day <- aggregate(ws_2_m_s ~ date, dfx_vv, mean)
+                    #dfx_vv_meanu2_day <- aggregate(u2 ~ date, dfx_vv, mean)
                     dfx_vv_raj_day <- stats::aggregate(ws_gust_m_s ~ date, dfx_vv, max)
                     
                     dfx_vv_dir_day <- stats::aggregate(wd_degrees ~ date, dfx_vv, mean)
                     
                     dfx_vvs_day <- dfx_vv_mean_day|>
-                      dplyr::left_join(dfx_vv_meanu2_day, by = "date")|>
+                      #dplyr::left_join(dfx_vv_meanu2_day, by = "date")|>
                       dplyr::left_join(dfx_vv_raj_day, by = "date")|>
-                      dplyr::left_join(dfx_vv_dir_day, by = "date")}
+                      dplyr::left_join(dfx_vv_dir_day, by = "date")
+                    }
                     
                     dfx_RG <- dplyr::select(dfx, hour, date, sr_kj_m2)
                     
@@ -290,7 +291,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dplyr::arrange(station, date) |>
           dplyr::rename("station_code" = "OMM",
                         "uf" = "UF",
-                        "ws_2_m_s" = "u2",
+                        #"ws_2_m_s" = "u2",
                         "ra_mj_m2" = "ra")|>
           dplyr::select(c(station_code,
                           station,
@@ -307,7 +308,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
                           rh_mean_porc,
                           rh_max_porc,
                           rh_min_porc,
-                          ws_10_m_s,
                           ws_2_m_s,
                           ws_gust_m_s,
                           wd_degrees,

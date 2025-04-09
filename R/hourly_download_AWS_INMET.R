@@ -26,7 +26,7 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
   X <- patm_max_mb <- patm_min_mb <- hour <- NULL
   dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- tair_dry_bulb_c <- NULL
   rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
-  ws_10_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
+  ws_2_m_s <- ws_gust_m_s <- wd_degrees <- sr_kj_m2 <- sr_mj_m2 <- NULL
   date_hour <- UTC_offset <- date_hour_local <- date_hour_utc <- NULL
   
   altitude_m <- dew_tmean_c <- latitude_degrees <- longitude_degrees <- patm_mb <- NULL
@@ -92,7 +92,7 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
           "patm_max_mb", "patm_min_mb", "sr_kj_m2",
           "tair_dry_bulb_c", "dew_tmean_c", "tair_max_c", "tair_min_c", "dew_tmax_c",
           "dew_tmin_c", "rh_max_porc", "rh_min_porc", "rh_mean_porc", "wd_degrees",
-          "ws_gust_m_s", "ws_10_m_s", "X"
+          "ws_gust_m_s", "ws_2_m_s", "X"
         )
 
         dfx <- dplyr::select(dfx, -X, -patm_max_mb, -patm_min_mb)
@@ -134,8 +134,8 @@ names(dfx)
         
         dfx_ur <- dplyr::select(dfx, hour, date, rh_max_porc, rh_min_porc, rh_mean_porc)
         
-        dfx_vv <- dplyr::select(dfx, hour, date, ws_10_m_s, ws_gust_m_s, wd_degrees)
-        dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_10_m_s)
+        dfx_vv <- dplyr::select(dfx, hour, date, ws_2_m_s, ws_gust_m_s, wd_degrees)
+        #dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_2_m_s)
           
         dfx_RG <- dplyr::select(dfx, hour, date, sr_kj_m2)
         dfx_RG <- dplyr::mutate(dfx_RG, sr_mj_m2 = sr_kj_m2 / 1000)
@@ -161,7 +161,7 @@ names(dfx)
           dplyr::arrange(station, date) |>
           dplyr::rename("station_code" = "OMM",
                         "uf" = "UF",
-                        "ws_2_m_s" = "u2",
+                        #"ws_2_m_s" = "u2",
                         "date_hour_utc" = "date_hour")|>
           dplyr::select(c(station_code,
                           station,
@@ -180,7 +180,6 @@ names(dfx)
                           rh_mean_porc,
                           rh_max_porc,
                           rh_min_porc,
-                          ws_10_m_s,
                           ws_2_m_s,
                           ws_gust_m_s,
                           wd_degrees,
