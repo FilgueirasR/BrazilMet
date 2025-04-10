@@ -143,7 +143,21 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           ) %>%
           select(-UTC_offset)
 
-
+        agg_safe_fillna <- function(df, formula, fun, ...) {
+          var <- all.vars(formula)[1]
+          group_var <- all.vars(formula)[2]
+          
+          if (all(is.na(df[[var]]))) {
+            # Retorna um data.frame com NA para cada data única
+            dates <- unique(df[[group_var]])
+            return(data.frame(date = dates, tmp = NA_real_)) |>
+              stats::setNames(c(group_var, var))
+          } else {
+            return(stats::aggregate(formula, df, fun, ...))
+          }
+        }
+        
+        
         # estudar melhor essa condicao
         # if (nrow(dfx) < 4380 & diff_days > 120) {} else {
         # dfx_temp <- na.omit(dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c))
@@ -167,22 +181,30 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           # dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
           # dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
 
-          dfx_temp_mean_day <- stats::aggregate(tair_dry_bulb_c ~ date, dfx_temp, mean, na.rm = TRUE)
-          dfx_temp_min_day <- stats::aggregate(tair_min_c ~ date, dfx_temp, min)
-          dfx_temp_max_day <- stats::aggregate(tair_max_c ~ date, dfx_temp, max)
-          dfx_to_min_day <- stats::aggregate(dew_tmin_c ~ date, dfx_temp, min)
-          dfx_to_max_day <- stats::aggregate(dew_tmax_c ~ date, dfx_temp, max)
-          dfx_to_mean_day <- stats::aggregate(dew_tmean_c ~ date, dfx_temp, mean)
-          # dfx_tbs_day <- stats::aggregate(dry_bulb_t_c ~ date, dfx_temp, mean)
-
-          dfx_temps_day <- dfx_temp_mean_day %>%
-            left_join(dfx_temp_min_day, by = "date") %>%
-            left_join(dfx_temp_max_day, by = "date") %>%
-            left_join(dfx_to_mean_day, by = "date") %>%
-            left_join(dfx_to_min_day, by = "date") %>%
-            left_join(dfx_to_max_day, by = "date") # %>%
-          # left_join(dfx_tbs_day, by = "date")
-
+          
+          dfx_temp_mean_day <- agg_safe_fillna(dfx_temp, tair_dry_bulb_c ~ date, mean, na.rm = TRUE)
+          names(dfx_temp_mean_day)[2] <- "tair_dry_bulb_c"
+          dfx_temp_min_day  <- agg_safe_fillna(dfx_temp, tair_min_c ~ date, min, na.rm = TRUE)
+          names(dfx_temp_min_day)[2] <- "tair_min_c"
+          dfx_temp_max_day  <- agg_safe_fillna(dfx_temp, tair_max_c ~ date, max, na.rm = TRUE)
+          names(dfx_temp_max_day)[2] <- "tair_max_c"
+          dfx_to_min_day    <- agg_safe_fillna(dfx_temp, dew_tmin_c ~ date, min, na.rm = TRUE)
+          names(dfx_to_min_day)[2] <- "dew_tmin_c"
+          dfx_to_max_day    <- agg_safe_fillna(dfx_temp, dew_tmax_c ~ date, max, na.rm = TRUE)
+          names(dfx_to_max_day)[2] <- "dew_tmax_c"
+          dfx_to_mean_day   <- agg_safe_fillna(dfx_temp, dew_tmean_c ~ date, mean, na.rm = TRUE)
+          names(dfx_to_mean_day)[2] <- "dew_tmean_c"
+          
+          joins <- list(dfx_temp_min_day, dfx_temp_max_day, dfx_to_mean_day, dfx_to_min_day, dfx_to_max_day)
+          
+          dfx_temps_day <- dfx_temp_mean_day
+          
+          for (j in joins) {
+            if (!is.null(j)) {
+              dfx_temps_day <- left_join(dfx_temps_day, j, by = "date")
+            }
+          }
+          
           dfx_temps_day <- dfx_temps_day %>%
             dplyr::rename("tair_mean_c" = "tair_dry_bulb_c")
         }
@@ -198,7 +220,9 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         if (nrow(dfx_prec) == 0) {
           message(paste0("No valid data for this period in this station: ", OMM, " - year ", year, " - Rainfall group"))
         } else {
-          dfx_prec_day <- stats::aggregate(rainfall_mm ~ date, dfx_prec, sum)
+          #dfx_prec_day <- stats::aggregate(rainfall_mm ~ date, dfx_prec, sum)
+          dfx_prec_day   <- agg_safe_fillna(dfx_prec, rainfall_mm ~ date, sum, na.rm = TRUE)
+          names(dfx_prec_day)[2] <- "rainfall_mm"
         }
 
         # dfx_press <- na.omit(dplyr::select(dfx, hour, date, patm_mb))
@@ -217,7 +241,10 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_press <- dplyr::left_join(dfx_press, n_dfx_press, by = "date")
           dfx_press <- dplyr::filter(dfx_press, n == 24)
 
-          dfx_press_mean_day <- stats::aggregate(patm_mb ~ date, dfx_press, mean)
+          #dfx_press_mean_day <- stats::aggregate(patm_mb ~ date, dfx_press, mean)
+          dfx_press_mean_day   <- agg_safe_fillna(dfx_press, patm_mb ~ date, mean, na.rm = TRUE)
+          names(dfx_press_mean_day)[2] <- "patm_mb"
+          
         }
 
         # dfx_ur <- na.omit(dplyr::select(dfx, hour, date, rh_max_porc, rh_min_porc, rh_mean_porc))
@@ -237,14 +264,30 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_ur <- dplyr::left_join(dfx_ur, n_dfx_ur, by = "date")
           dfx_ur <- dplyr::filter(dfx_ur, n == 24)
 
-          dfx_ur_mean_day <- stats::aggregate(rh_mean_porc ~ date, dfx_ur, mean)
-          dfx_ur_min_day <- aggregate(rh_min_porc ~ date, dfx_ur, min)
+          #dfx_ur_mean_day <- stats::aggregate(rh_mean_porc ~ date, dfx_ur, mean)
+          #dfx_ur_min_day <- aggregate(rh_min_porc ~ date, dfx_ur, min)
+          #dfx_ur_max_day <- stats::aggregate(rh_max_porc ~ date, dfx_ur, max)
+          
+          dfx_ur_mean_day <- agg_safe_fillna(dfx_ur, rh_mean_porc ~ date, mean, na.rm = TRUE)
+          names(dfx_ur_mean_day)[2] <- "rh_mean_porc"
+          dfx_ur_min_day <- agg_safe_fillna(dfx_ur, rh_min_porc ~ date, min, na.rm = TRUE)
+          names(dfx_ur_min_day)[2] <- "rh_min_porc"
+          dfx_ur_max_day <- agg_safe_fillna(dfx_ur, rh_max_porc ~ date, max, na.rm = TRUE)
+          names(dfx_ur_max_day)[2] <- "rh_max_porc"
 
-          dfx_ur_max_day <- stats::aggregate(rh_max_porc ~ date, dfx_ur, max)
-
-          dfx_urs_day <- dfx_ur_mean_day |>
-            dplyr::left_join(dfx_ur_max_day, by = "date") |>
-            dplyr::left_join(dfx_ur_min_day, by = "date")
+          joins <- list(dfx_ur_min_day, dfx_ur_max_day)
+          
+          dfx_urs_day <- dfx_ur_mean_day
+          
+          for (j in joins) {
+            if (!is.null(j)) {
+              dfx_urs_day <- left_join(dfx_urs_day, j, by = "date")
+            }
+          }
+          
+          #dfx_urs_day <- dfx_ur_mean_day |>
+          #  dplyr::left_join(dfx_ur_max_day, by = "date") |>
+          #  dplyr::left_join(dfx_ur_min_day, by = "date")
         }
 
         # dfx_vv <- na.omit(dplyr::select(dfx, hour, date, ws_2_m_s, ws_gust_m_s, wd_degrees))
@@ -264,16 +307,33 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_vv <- dplyr::filter(dfx_vv, n == 24)
           # dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_10_m_s)
 
-          dfx_vv_mean_day <- aggregate(ws_2_m_s ~ date, dfx_vv, mean)
+          #dfx_vv_mean_day <- aggregate(ws_2_m_s ~ date, dfx_vv, mean)
           # dfx_vv_meanu2_day <- aggregate(u2 ~ date, dfx_vv, mean)
-          dfx_vv_raj_day <- stats::aggregate(ws_gust_m_s ~ date, dfx_vv, max)
+          #dfx_vv_raj_day <- stats::aggregate(ws_gust_m_s ~ date, dfx_vv, max)
+          #dfx_vv_dir_day <- stats::aggregate(wd_degrees ~ date, dfx_vv, mean)
+          
+          dfx_vv_mean_day <- agg_safe_fillna(dfx_vv, ws_2_m_s ~ date, mean, na.rm = TRUE)
+          names(dfx_vv_mean_day)[2] <- "ws_2_m_s"
+          dfx_vv_raj_day <- agg_safe_fillna(dfx_vv, ws_gust_m_s ~ date, max, na.rm = TRUE)
+          names(dfx_vv_raj_day)[2] <- "ws_gust_m_s"
+          dfx_vv_dir_day <- agg_safe_fillna(dfx_vv, wd_degrees ~ date, mean, na.rm = TRUE)
+          names(dfx_vv_dir_day)[2] <- "wd_degrees"
+          
+          joins <- list(dfx_vv_raj_day, dfx_vv_raj_day)
+          
+          dfx_vvs_day <- dfx_vv_mean_day
+          
+          for (j in joins) {
+            if (!is.null(j)) {
+              dfx_vvs_day <- left_join(dfx_vvs_day, j, by = "date")
+            }
+          }
+          
 
-          dfx_vv_dir_day <- stats::aggregate(wd_degrees ~ date, dfx_vv, mean)
-
-          dfx_vvs_day <- dfx_vv_mean_day |>
+          #dfx_vvs_day <- dfx_vv_mean_day |>
             # dplyr::left_join(dfx_vv_meanu2_day, by = "date")|>
-            dplyr::left_join(dfx_vv_raj_day, by = "date") |>
-            dplyr::left_join(dfx_vv_dir_day, by = "date")
+            #dplyr::left_join(dfx_vv_raj_day, by = "date") |>
+            #dplyr::left_join(dfx_vv_dir_day, by = "date")
         }
 
         dfx_RG <- dplyr::select(dfx, hour, date, sr_kj_m2)
@@ -297,8 +357,11 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_RG <- dplyr::left_join(dfx_RG, n_RG, by = "date")
           dfx_RG <- dplyr::filter(dfx_RG, n >= 12)
 
-          dfx_RG_sum_day <- aggregate(sr_mj_m2 ~ date, dfx_RG, sum)
-
+          #dfx_RG_sum_day <- aggregate(sr_mj_m2 ~ date, dfx_RG, sum)
+          dfx_RG_sum_day <- agg_safe_fillna(dfx_RG, sr_mj_m2 ~ date, sum, na.rm = TRUE)
+          names(dfx_RG_sum_day)[2] <- "sr_mj_m2"
+          
+          
           dfx_RG_sum_day <- dfx_RG_sum_day |>
             dplyr::mutate(julian_day = as.numeric(format(date, "%j")))
 
