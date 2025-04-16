@@ -62,9 +62,9 @@ install.packages("devtools")
 devtools::install_github("FilgueirasR/BrazilMet")
 
 ```
-#  🚀 Usage Example
+#  🚀 Usage Example - ETo estimation
 
-Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56:
+Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56 for multiple stations and years:
 
 ```r
 # Load the package
@@ -92,7 +92,32 @@ df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
                           date = df$date)
 
 ```
+#  🚀 Usage Example desing ETo calculation
 
+Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56, followed by the calculation of the design ETo.
+
+```r
+
+library(BrazilMet)
+stations <- BrazilMet::see_stations_info()
+
+df <- BrazilMet::download_AWS_INMET_daily(stations = "A001", start_date = "2000-01-01", end_date = "2025-03-31")
+
+df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
+                          tmin = df$tair_min_c,
+                          tmax = df$tair_max_c,
+                          tmean = df$tair_mean_c,
+                          Rs = df$sr_mj_m2,
+                          u2 = df$ws_2_m_s,
+                          Patm = df$patm_mb,
+                          RH_max = df$rh_max_porc,
+                          RH_min = df$rh_min_porc,
+                          z = df$altitude_m,
+                          date = df$date)
+
+BrazilMet::design_eto(eto_daily_data = df, percentile = .80)
+
+```
 🤝 Contributing
 
 We welcome contributions from the community! Whether it’s reporting issues, suggesting improvements, or submitting pull requests, your help is greatly appreciated.
