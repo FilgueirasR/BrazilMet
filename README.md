@@ -30,7 +30,8 @@
 ### 💧 Evapotranspiration Estimation  
 - Reference evapotranspiration (ETo) via Hargreaves-Samani.  
 - Reference evapotranspiration (ETo) via Penman-Monteith FAO-56.  
-- Potential evapotranspiration (ETp) via Thornthwaite.  
+- Potential evapotranspiration (ETp) via Thornthwaite.
+- Design reference evapotranspiration.
 
 ### ☀️ Radiation Parameter Estimation  
 - Extraterrestrial radiation for daily periods.  
@@ -92,7 +93,7 @@ df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
                           date = df$date)
 
 ```
-#  🚀 Usage Example desing ETo calculation
+#  🚀 Usage Example design ETo calculation
 
 Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56, followed by the calculation of the design ETo.
 
