@@ -31,6 +31,7 @@
 - Reference evapotranspiration (ETo) via Hargreaves-Samani.  
 - Reference evapotranspiration (ETo) via Penman-Monteith FAO-56.  
 - Potential evapotranspiration (ETp) via Thornthwaite.
+- Correction for sunlight hours and the number of days in the month for Thornthwaite ETp.
 - Design reference evapotranspiration.
 
 ### ☀️ Radiation Parameter Estimation  
