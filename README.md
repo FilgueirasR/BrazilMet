@@ -21,7 +21,8 @@
 ### 📥 Downloading Data  
 - Automatic weather station data from INMET (daily aggregation).  
 - Automatic weather station data from INMET (hourly intervals).  
-- Climatological normals from conventional INMET weather stations.  
+- Climatological normals from conventional INMET weather stations.
+- Download and Extraction of Maximum Reference Evapotranspiration (ETo) Grids for Brazil (Dias, 2018).
 
 ### 🌤️ Atmospheric Parameter Calculations  
 - Atmospheric pressure calculation based on altitude.  
