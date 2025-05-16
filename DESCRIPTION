@@ -32,6 +32,7 @@ Imports:
     tibble,
     lubridate,
     sf,
-    stringi
+    stringi,
+    terra
 BugReports: https://github.com/FilgueirasR/BrazilMet/issues
 RoxygenNote: 7.3.2
