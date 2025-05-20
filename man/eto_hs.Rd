@@ -9,7 +9,7 @@ eto_hs(tmin, tmean, tmax, ra)
 \arguments{
 \item{tmin}{A dataframe with Maximum daily air temperature (°C)}
 
-\item{tmean}{A dataframe with Minimum daily air temperature (°C)}
+\item{tmean}{A dataframe with Mean daily air temperature (°C)}
 
 \item{tmax}{A dataframe with Maximum daily air temperature (°C)}
 
