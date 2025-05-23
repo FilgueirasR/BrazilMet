@@ -1,3 +1,12 @@
+## Test environments BrazilMet 0.4.0
+
+### R CMD check results
+
+Duration: 4m 53.3s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+
 ## Test environments BrazilMet 0.3.0
 
 ### R CMD check results

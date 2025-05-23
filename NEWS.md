@@ -1,3 +1,20 @@
+# BrazilMet 0.4.0 (2025-05-23)
+
+
+##New functions
+- Implemented the climatological_normal_cws.R
+- Implemented the design_eto.R
+- Implemented the eto_hs.R
+- Implemented max_eto_grid_download.R
+- Implemented get_max_eto_at_location.R
+- Implemented selectedAWSstations.R
+
+##Improvements
+- Fixed some bugs in daily_download_AWS_INMET.R. 
+- Corrected typos description of some functions.
+- General improvements to some function descriptions. 
+
+
 # BrazilMet 0.3.0 (2025-03-19)
 
 
