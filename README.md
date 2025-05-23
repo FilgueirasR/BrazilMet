@@ -1,5 +1,6 @@
 ![CRAN Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/BrazilMet)
 ![CRAN Download Badge](https://cranlogs.r-pkg.org/badges/BrazilMet)
+![CRAN Version](https://www.r-pkg.org/badges/version/BrazilMet)
 
 # BrazilMet
 
