@@ -7,11 +7,11 @@
 es_ea_calculation(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_method)
 }
 \arguments{
-\item{tmin}{A dataframe with minimum daily air temperature (°C).}
+\item{tmin}{A dataframe with minimum daily air temperature (Celsius).}
 
-\item{tmax}{A dataframe with maximum daily air temperature (°C).}
+\item{tmax}{A dataframe with maximum daily air temperature (Celsius).}
 
-\item{tdew}{A dataframe with dewpoint temperature (°C).}
+\item{tdew}{A dataframe with dewpoint temperature (Celsius).}
 
 \item{rh_min}{A dataframe with minimum daily relative air humidity (percentage).}
 

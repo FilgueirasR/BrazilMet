@@ -36,3 +36,6 @@ img_max_eto <- max_eto_grid_download(dir_out = "data/", product = "max_12_months
 \references{
 Dias, S. H. B. (2018). *Evapotranspiração de referência para projeto de irrigação no Brasil utilizando o produto MOD16*. Dissertação (Mestrado) – Universidade Federal de Viçosa.
 }
+\author{
+Roberto Filgueiras.
+}

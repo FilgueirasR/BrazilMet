@@ -1,5 +1,5 @@
 #' Thorntwaite - Potential evapotranspiration
-#' @param tmean A dataframe with Mean monthly air temperature (°C)
+#' @param tmean A dataframe with Mean monthly air temperature (Celsius)
 #' @examples
 #' \dontrun{
 #' etp <- etp_thorntwaite(tmean)

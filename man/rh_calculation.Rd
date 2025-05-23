@@ -7,9 +7,9 @@
 rh_calculation(tmin, tmean)
 }
 \arguments{
-\item{tmin}{A dataframe with minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with minimum daily air temperature (Celsius)}
 
-\item{tmean}{A dataframe with mean air temperature (°C) that you want to calculate the relative humidity.}
+\item{tmean}{A dataframe with mean air temperature (Celsius) that you want to calculate the relative humidity.}
 }
 \value{
 A data.frame object with the relative humidity calculated

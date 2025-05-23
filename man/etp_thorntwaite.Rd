@@ -7,7 +7,7 @@
 etp_thorntwaite(tmean)
 }
 \arguments{
-\item{tmean}{A dataframe with Mean monthly air temperature (°C)}
+\item{tmean}{A dataframe with Mean monthly air temperature (Celsius)}
 }
 \value{
 Returns a data.frame object with the Thorntwaite ETp data

@@ -9,11 +9,11 @@ daily_eto_FAO56(lat, tmin, tmax, tmean, Rs, u2, Patm, RH_max, RH_min, z, date)
 \arguments{
 \item{lat}{A numeric value of the Latitude of the AWS (decimal degrees).}
 
-\item{tmin}{A dataframe with Minimum daily air temperature (°C).}
+\item{tmin}{A dataframe with Minimum daily air temperature (Celsius).}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C).}
+\item{tmax}{A dataframe with Maximum daily air temperature (Celsius).}
 
-\item{tmean}{A dataframe with Mean daily air temperature (°C).}
+\item{tmean}{A dataframe with Mean daily air temperature (Celsius).}
 
 \item{Rs}{A dataframe with mean daily solar radiation (MJ m-2 day-1).}
 

@@ -7,9 +7,9 @@
 ea_rh_calculation(tmin, tmax, rh_min, rh_mean, rh_max)
 }
 \arguments{
-\item{tmin}{A dataframe with minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with minimum daily air temperature (Celsius)}
 
-\item{tmax}{A dataframe with maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with maximum daily air temperature (Celsius)}
 
 \item{rh_min}{A dataframe with minimum daily relative air humidity (percentage).}
 

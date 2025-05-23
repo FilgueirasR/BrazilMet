@@ -18,7 +18,7 @@ Patm <- function(z) {
 
 
 #' Psychrometric constant
-#' @description Psychrometric constant (kPa/°C) is calculated in this function.
+#' @description Psychrometric constant (kPa/Celsius) is calculated in this function.
 #' @param Patm Atmospheric pressure (kPa)
 #' @examples
 #' \dontrun{

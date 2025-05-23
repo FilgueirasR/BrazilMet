@@ -1,6 +1,6 @@
 #' Actual vapour pressure (ea) derived from relative humidity data
-#' @param tmin A dataframe with minimum daily air temperature (°C)
-#' @param tmax A dataframe with maximum daily air temperature (°C)
+#' @param tmin A dataframe with minimum daily air temperature (Celsius)
+#' @param tmax A dataframe with maximum daily air temperature (Celsius)
 #' @param rh_min A dataframe with minimum daily relative air humidity (percentage).
 #' @param rh_mean A dataframe with mean daily relative air humidity (percentage).
 #' @param rh_max A dataframe with maximum daily relative air humidity (percentage).
@@ -32,9 +32,9 @@ ea_rh_calculation <- function(tmin, tmax, rh_min, rh_mean, rh_max) {
 }
 
 #' Vapour pressure deficit (es - ea)
-#' @param tmin A dataframe with minimum daily air temperature (°C).
-#' @param tmax A dataframe with maximum daily air temperature (°C).
-#' @param tdew A dataframe with dewpoint temperature (°C).
+#' @param tmin A dataframe with minimum daily air temperature (Celsius).
+#' @param tmax A dataframe with maximum daily air temperature (Celsius).
+#' @param tdew A dataframe with dewpoint temperature (Celsius).
 #' @param rh_min A dataframe with minimum daily relative air humidity (percentage).
 #' @param rh_mean A dataframe with mean daily relative air humidity (percentage).
 #' @param rh_max A dataframe with maximum daily relative air humidity (percentage).
@@ -88,8 +88,8 @@ es_ea_calculation <- function(tmin, tmax, tdew, rh_min, rh_mean, rh_max, ea_meth
 
 #' Relative humidity (rh) calculation
 #' @description Relative humidity is calculated in this function based on minimum air temperature of the day and the air temperature of the moment.
-#' @param tmin A dataframe with minimum daily air temperature (°C)
-#' @param tmean A dataframe with mean air temperature (°C) that you want to calculate the relative humidity.
+#' @param tmin A dataframe with minimum daily air temperature (Celsius)
+#' @param tmean A dataframe with mean air temperature (Celsius) that you want to calculate the relative humidity.
 #' @examples
 #' \dontrun{
 #' rh <- rh_calculation(tmin, tmean)

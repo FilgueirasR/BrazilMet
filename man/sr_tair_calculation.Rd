@@ -11,9 +11,9 @@ sr_tair_calculation(latitude, date, tmax, tmin, location_krs)
 
 \item{date}{A dataframe with the dates that you want to calculate the ra.}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with Maximum daily air temperature (Celsius)}
 
-\item{tmin}{A dataframe with Minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with Minimum daily air temperature (Celsius)}
 
 \item{location_krs}{Adjustment coefficient based in location. Please decide between "coastal or "interior". If coastal the krs will be 0.19, if interior the krs will be 0.16.}
 }

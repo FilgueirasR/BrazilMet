@@ -59,8 +59,8 @@ sr_ang_calculation <- function(latitude, date, n, as, bs) {
 #' @param latitude A dataframe with latitude in decimal degrees that you want to calculate the ra.
 #' @param date A dataframe with the dates that you want to calculate the ra.
 #' @param location_krs Adjustment coefficient based in location. Please decide between "coastal or "interior". If coastal the krs will be 0.19, if interior the krs will be 0.16.
-#' @param tmin A dataframe with Minimum daily air temperature (°C)
-#' @param tmax A dataframe with Maximum daily air temperature (°C)
+#' @param tmin A dataframe with Minimum daily air temperature (Celsius)
+#' @param tmax A dataframe with Maximum daily air temperature (Celsius)
 #' @examples
 #' \dontrun{
 #' sr_tair <- sr_tair_calculation(latitude, date, tmax, tmin, location_krs)
@@ -176,8 +176,8 @@ rns_calculation <- function(albedo, rs) {
 
 #' Net longwave radiation (rnl)
 #' @description Net outgoing longwave radiation is calculate with this function
-#' @param tmin A dataframe with Minimum daily air temperature (°C)
-#' @param tmax A dataframe with Maximum daily air temperature (°C)
+#' @param tmin A dataframe with Minimum daily air temperature (Celsius)
+#' @param tmax A dataframe with Maximum daily air temperature (Celsius)
 #' @param ea A dataframe with the actual vapour pressure (KPa).
 #' @param rs A dataframe with the incomimg solar radiation (MJ m-2 day-1).
 #' @param rso A dataframe with the clear-sky radiation (MJ m-2 day-1)

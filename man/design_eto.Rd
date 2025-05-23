@@ -2,16 +2,16 @@
 % Please edit documentation in R/design_eto.R
 \name{design_eto}
 \alias{design_eto}
-\title{Design reference evapotranspiration (Design ET₀)}
+\title{Design reference evapotranspiration (Design ETo)}
 \usage{
 design_eto(eto_daily_data, percentile = 0.8, grouping = NULL)
 }
 \arguments{
-\item{eto_daily_data}{A data frame containing daily reference evapotranspiration values (mm day-1) named as "eto", and other column with dates named "date". To estimate the design reference evapotranspiration, it is recommended to use more than 10 years of historical data.}
+\item{eto_daily_data}{A data frame containing daily reference evapotranspiration values (mm day-1) named as "ETo", and other column with dates named "date". To estimate the design reference evapotranspiration, it is recommended to use more than 10 years of historical data.}
 
-\item{percentile}{The relative position of a value within the data distribution. The recomendation to desing irrigating is greater than 80 percent (0.8). For instance: The 90th (0.90) percentile of reference evapotranspiration (ET₀) represents a value that is surpassed in only 10 percent of the observed period.}
+\item{percentile}{The relative position of a value within the data distribution. The recomendation to desing irrigating is greater than 80 percent (0.8). For instance: The 90th (0.90) percentile of reference evapotranspiration (ETo) represents a value that is surpassed in only 10 percent of the observed period.}
 
-\item{grouping}{specifies the column used to group the data, typically by station. Use this parameter to calculate the design ET₀ separately for each station, based on the corresponding station code.}
+\item{grouping}{specifies the column used to group the data, typically by station. Use this parameter to calculate the design ETo separately for each station, based on the corresponding station code.}
 }
 \value{
 Returns a numeric object with the desing ETo for the respective data and percentile.

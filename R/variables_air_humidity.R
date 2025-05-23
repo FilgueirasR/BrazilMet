@@ -1,6 +1,6 @@
 #' Mean saturation vapour pressure (es)
-#' @param tmin A dataframe with Minimum daily air temperature (°C).
-#' @param tmax A dataframe with Maximum daily air temperature (°C).
+#' @param tmin A dataframe with Minimum daily air temperature (Celsius).
+#' @param tmax A dataframe with Maximum daily air temperature (Celsius).
 #' @examples
 #' \dontrun{
 #' es <-es_calculation(tmin, tmax)
@@ -21,7 +21,7 @@ es_calculation <- function(tmin, tmax){
 
 
 #' Actual vapour pressure (ea) derived from dewpoint temperature
-#' @param tdew A dataframe with dewpoint temperature (°C).
+#' @param tdew A dataframe with dewpoint temperature (Celsius).
 #' @examples
 #' \dontrun{
 #' ea <-ea_dew_calculation(tdew).

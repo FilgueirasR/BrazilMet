@@ -7,9 +7,9 @@
 es_calculation(tmin, tmax)
 }
 \arguments{
-\item{tmin}{A dataframe with Minimum daily air temperature (°C).}
+\item{tmin}{A dataframe with Minimum daily air temperature (Celsius).}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C).}
+\item{tmax}{A dataframe with Maximum daily air temperature (Celsius).}
 }
 \value{
 Returns a data.frame object with the es data.

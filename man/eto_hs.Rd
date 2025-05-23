@@ -7,11 +7,11 @@
 eto_hs(tmin, tmean, tmax, ra)
 }
 \arguments{
-\item{tmin}{A dataframe with Maximum daily air temperature (°C)}
+\item{tmin}{A dataframe with Maximum daily air temperature (Celsius)}
 
-\item{tmean}{A dataframe with Mean daily air temperature (°C)}
+\item{tmean}{A dataframe with Mean daily air temperature (Celsius)}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with Maximum daily air temperature (Celsius)}
 
 \item{ra}{A dataframe of extraterrestrial radiation (MJ m-2 day-1)}
 }

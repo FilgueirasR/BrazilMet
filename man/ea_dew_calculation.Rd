@@ -7,7 +7,7 @@
 ea_dew_calculation(tdew)
 }
 \arguments{
-\item{tdew}{A dataframe with dewpoint temperature (°C).}
+\item{tdew}{A dataframe with dewpoint temperature (Celsius).}
 }
 \value{
 Returns a data.frame object with the ea from dewpoint data.

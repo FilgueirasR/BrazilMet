@@ -7,9 +7,9 @@
 rnl_calculation(tmin, tmax, ea, rs, rso)
 }
 \arguments{
-\item{tmin}{A dataframe with Minimum daily air temperature (°C)}
+\item{tmin}{A dataframe with Minimum daily air temperature (Celsius)}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (°C)}
+\item{tmax}{A dataframe with Maximum daily air temperature (Celsius)}
 
 \item{ea}{A dataframe with the actual vapour pressure (KPa).}
 

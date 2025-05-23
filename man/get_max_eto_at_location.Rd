@@ -29,3 +29,6 @@ max_eto_df <- get_max_reference_eto_by_location(img,
 }
 
 }
+\author{
+Roberto Filgueiras.
+}

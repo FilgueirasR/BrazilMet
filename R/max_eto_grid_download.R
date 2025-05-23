@@ -13,6 +13,7 @@
 #' }
 #'
 #' @return A `SpatRaster` object containing the downloaded maximum reference evapotranspiration (ETo) grid.
+#' @author Roberto Filgueiras.
 #'
 #' @references
 #' Dias, S. H. B. (2018). *Evapotranspiração de referência para projeto de irrigação no Brasil utilizando o produto MOD16*. Dissertação (Mestrado) – Universidade Federal de Viçosa.

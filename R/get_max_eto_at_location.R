@@ -7,6 +7,7 @@
 #' @param long Numeric. Longitude of the location in decimal degrees.
 #' @param lat Numeric. Latitude of the location in decimal degrees. 
 #' @return A `data.frame` object containing the maximum reference evapotranspiration (ETo) values per pair of coordinates.
+#' @author Roberto Filgueiras.
 #' @importFrom terra crs
 #' @importFrom terra rast
 #' @importFrom terra vect

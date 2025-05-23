@@ -13,7 +13,7 @@ psy_const(Patm)
 A data.frame object with the psychrometric constant calculated.
 }
 \description{
-Psychrometric constant (kPa/°C) is calculated in this function.
+Psychrometric constant (kPa/Celsius) is calculated in this function.
 }
 \examples{
 \dontrun{

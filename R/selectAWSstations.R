@@ -5,7 +5,7 @@
 #'
 #'
 #' @param aoi sf object. Area of interest.
-#' @param as_sf logical. Inmet stations inventory result should be export as sf object? Default = FALSE.
+#' @param as_sf logical. Inmet stations inventory result should be export as sf object. Default = FALSE.
 #'
 #' @return a vector or sf object with station located at area of interest (aoi)
 #'

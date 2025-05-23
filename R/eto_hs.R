@@ -1,7 +1,7 @@
 #' Hargreaves - Samani ETo
-#' @param tmin A dataframe with Maximum daily air temperature (°C)
-#' @param tmean A dataframe with Mean daily air temperature (°C)
-#' @param tmax A dataframe with Maximum daily air temperature (°C)
+#' @param tmin A dataframe with Maximum daily air temperature (Celsius)
+#' @param tmean A dataframe with Mean daily air temperature (Celsius)
+#' @param tmax A dataframe with Maximum daily air temperature (Celsius)
 #' @param ra A dataframe of extraterrestrial radiation (MJ m-2 day-1)
 #' @examples
 #' \dontrun{
