@@ -7,16 +7,16 @@
 eto_hs(tmin, tmean, tmax, ra)
 }
 \arguments{
-\item{tmin}{A dataframe with Maximum daily air temperature (Celsius)}
+\item{tmin}{A numeric object with Maximum daily air temperature (Celsius)}
 
-\item{tmean}{A dataframe with Mean daily air temperature (Celsius)}
+\item{tmean}{A numeric object with Mean daily air temperature (Celsius)}
 
-\item{tmax}{A dataframe with Maximum daily air temperature (Celsius)}
+\item{tmax}{A numeric object with Maximum daily air temperature (Celsius)}
 
-\item{ra}{A dataframe of extraterrestrial radiation (MJ m-2 day-1)}
+\item{ra}{A numeric object of extraterrestrial radiation (MJ m-2 day-1)}
 }
 \value{
-Returns a data.frame object with the ETo HS data
+Returns a numeric object with the ETo HS data
 }
 \description{
 Hargreaves - Samani ETo
