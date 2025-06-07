@@ -1,6 +1,11 @@
 template:
   bootstrap: 5
+  bootswatch: flatly
+  theme: default
+  bslib:
+    primary: "#0072B2
   
+destination: docs
 url: https://filgueirasr.github.io/BrazilMet
  
 navbar:
