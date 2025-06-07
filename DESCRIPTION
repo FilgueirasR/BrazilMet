@@ -39,5 +39,12 @@ Imports:
     sf,
     stringi,
     terra
+URL: https://github.com/FilgueirasR/BrazilMet,
+     https://filgueirasr.github.io/BrazilMet
 BugReports: https://github.com/FilgueirasR/BrazilMet/issues
 RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown,
+    ggplot2
+VignetteBuilder: knitr

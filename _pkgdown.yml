@@ -1,4 +1,23 @@
-url: ~
 template:
   bootstrap: 5
+  
+url: https://filgueirasr.github.io/BrazilMet
+ 
+navbar:
+  title: "BrazilMet"
+  type: default
+  left:
+    - text: "References"
+      href: reference/index.html
+    - text: "Tutorials"
+      href: articles/index.html
+    - text: "GitHub"
+      href: https://github.com/FilgueirasR/BrazilMet
 
+articles:
+  - title: "Tutorials"
+    contents:
+      - eto_pm_estimation
+      
+#      
+      

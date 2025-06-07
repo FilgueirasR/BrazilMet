@@ -3,11 +3,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="default" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">BrazilMet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,8 +15,9 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">References</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/index.html">Tutorials</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/FilgueirasR/BrazilMet">GitHub</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/FilgueirasR/BrazilMet/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -44,10 +45,22 @@
 
       <dl><dt>
 
+          <code><a href="correction_etp_thornwaite.html">correction_etp_thornwaite()</a></code>
+
+        </dt>
+        <dd>Correction for Thorntwaite - Potential evapotranspiration</dd>
+      </dl><dl><dt>
+
           <code><a href="daily_eto_FAO56.html">daily_eto_FAO56()</a></code>
 
         </dt>
         <dd>ETo calculation based on FAO-56 Penman-Monteith methodology, with data from automatic weather stations (AWS) downloaded and processed in function *daily_download_AWS_INMET*</dd>
+      </dl><dl><dt>
+
+          <code><a href="design_eto.html">design_eto()</a></code>
+
+        </dt>
+        <dd>Design reference evapotranspiration (Design ETo)</dd>
       </dl><dl><dt>
 
           <code><a href="download_AWS_INMET_daily.html">download_AWS_INMET_daily()</a></code>
@@ -98,10 +111,22 @@
         <dd>Thorntwaite - Potential evapotranspiration</dd>
       </dl><dl><dt>
 
+          <code><a href="get_max_eto_at_location.html">get_max_eto_at_location()</a></code>
+
+        </dt>
+        <dd>Get Max Reference Evapotranspiration Values by Geographic Location</dd>
+      </dl><dl><dt>
+
           <code><a href="hourly_weather_station_download.html">hourly_weather_station_download()</a></code>
 
         </dt>
         <dd>Download of hourly data from automatic weather stations (AWS) of INMET-Brazil</dd>
+      </dl><dl><dt>
+
+          <code><a href="max_eto_grid_download.html">max_eto_grid_download()</a></code>
+
+        </dt>
+        <dd>Download maximum reference evapotranspiration (ETo) grids for Brazil</dd>
       </dl><dl><dt>
 
           <code><a href="Patm.html">Patm()</a></code>
