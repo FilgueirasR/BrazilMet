@@ -1,17 +1,22 @@
 template:
   bootstrap: 5
+  logo: pkgdown/logo_BrazilMet.png
+  assets: pkgdown/extra.css
   bootswatch: flatly
-  theme: default
   bslib:
-    primary: "#0072B2
-  
+    primary: "#0072B2"
+    heading_font: "Segoe UI"
+    base_font: "Roboto"
+
 destination: docs
 url: https://filgueirasr.github.io/BrazilMet
- 
+
 navbar:
   title: "BrazilMet"
   type: default
-  left:
+  left:    
+    - text: "Home"
+      href: index.html
     - text: "References"
       href: reference/index.html
     - text: "Tutorials"
@@ -19,10 +24,62 @@ navbar:
     - text: "GitHub"
       href: https://github.com/FilgueirasR/BrazilMet
 
+reference:
+  - title: "Downloading data"
+    desc: Tools for accessing and downloading weather and climate data from external sources.
+    contents:
+      - download_AWS_INMET_daily
+      - download_climate_normals
+      - hourly_weather_station_download
+      - max_eto_grid_download
+      
+  - title: "Atmospheric Parameter Calculations"
+    desc: Functions for computing atmosphere pressure Psychrometric constant.
+    contents:
+      - Patm
+      - psy_const
+      
+  - title: "Evapotranspiration Estimation"
+    desc: Methods for calculating reference evapotranspiration using approaches like Penman-Monteith, or even design evapotranspiration.
+    contents:
+      - daily_eto_FAO56
+      - eto_hs
+      - etp_thorntwaite
+      - correction_etp_thornwaite
+      - get_max_eto_at_location
+      - design_eto
+      
+  - title: "Radiation Parameter Estimation"
+    desc: functions for estimating incoming solar radiation and related radiation parameters.
+    contents:
+      - ra_calculation
+      - sr_ang_calculation
+      - sr_tair_calculation
+      - rso_calculation_1
+      - rs_nearby_calculation
+      - rso_calculation_2
+      - rns_calculation
+      - rnl_calculation
+      - rn_calculation
+      - radiation_conversion
+      
+  - title: "Air Humidity & Wind Speed Parameters"
+    desc: Functions to compute relative humidity, saturation vapor pressure, and wind speed adjustments.
+    contents:
+      - es_calculation
+      - ea_dew_calculation
+      - ea_rh_calculation
+      - es_ea_calculation
+      - rh_calculation
+      - u2_calculation
+      
+  - title: "Station Selection & Information"
+    desc: Tools for listing, filtering, and retrieving the weather stations of interest in Brazil.
+    contents:
+      - see_stations_info
+      - selectAWSstations
+
 articles:
   - title: "Tutorials"
     contents:
       - eto_pm_estimation
-      
-#      
-      

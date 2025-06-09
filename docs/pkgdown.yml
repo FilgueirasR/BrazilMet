@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   eto_pm_estimation: eto_pm_estimation.html
-last_built: 2025-06-07T21:17Z
+last_built: 2025-06-09T02:51Z
 urls:
   reference: https://filgueirasr.github.io/BrazilMet/reference
   article: https://filgueirasr.github.io/BrazilMet/articles

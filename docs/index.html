@@ -10,7 +10,8 @@
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Download and Processing of Automatic Weather Stations (AWS) Data of INMET-Brazil">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Download and Processing of Automatic Weather Stations (AWS) Data of INMET-Brazil">
 <meta name="description" content="A collection of functions for downloading and processing automatic weather station (AWS) data from INMET (Brazil’s National Institute of Meteorology), designed to support the estimation of reference evapotranspiration (ETo). The package facilitates streamlined access to meteorological data and aims to simplify analyses in agricultural and environmental contexts.">
 <meta property="og:description" content="A collection of functions for downloading and processing automatic weather station (AWS) data from INMET (Brazil’s National Institute of Meteorology), designed to support the estimation of reference evapotranspiration (ETo). The package facilitates streamlined access to meteorological data and aims to simplify analyses in agricultural and environmental contexts.">
 </head>
@@ -18,7 +19,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="default" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="default" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">BrazilMet</a>
 
@@ -31,6 +32,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="active nav-item"><a class="nav-link" href="index.html">Home</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">References</a></li>
 <li class="nav-item"><a class="nav-link" href="articles/index.html">Tutorials</a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/FilgueirasR/BrazilMet">GitHub</a></li>
@@ -47,12 +49,13 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><img src="https://cranlogs.r-pkg.org/badges/grand-total/BrazilMet" alt="CRAN Total Downloads"><img src="https://cranlogs.r-pkg.org/badges/BrazilMet" alt="CRAN Download Badge"></p>
-<div class="section level1">
+  <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="brazilmet">BrazilMet<a class="anchor" aria-label="anchor" href="#brazilmet"></a>
 </h1></div>
 <div class="fluid-row" id="header">
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&lt;</span>img src<span class="ot">=</span><span class="st">'docs/figures/logo_BrazilMet.png'</span> height<span class="ot">=</span><span class="st">'150'</span> width<span class="ot">=</span><span class="st">'auto'</span> align<span class="ot">=</span><span class="st">'right'</span><span class="sc">&gt;</span></span></code></pre></div>
+
+<p><img src="reference/figures/logo_BrazilMet.png" height="120" style="float: right; margin-left: 10px;"></p>
+<p><img src="https://cranlogs.r-pkg.org/badges/grand-total/BrazilMet" alt="CRAN Total Downloads"><img src="https://cranlogs.r-pkg.org/badges/BrazilMet" alt="CRAN Download Badge"></p>
 <!-- badges: start -->
 
 <div class="section level2">
@@ -139,19 +142,18 @@
 <h2 id="id_-installation">⚡ Installation<a class="anchor" aria-label="anchor" href="#id_-installation"></a>
 </h2>
 <p>You can install the latest version of <strong>BrazilMet</strong> from GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install devtools if not already installed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Install BrazilMet</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"FilgueirasR/BrazilMet"</span><span class="op">)</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level1">
-<h1 id="id_-usage-example---eto-estimation">🚀 Usage Example - ETo estimation<a class="anchor" aria-label="anchor" href="#id_-usage-example---eto-estimation"></a>
-</h1>
+<div class="section level2">
+<h2 id="id_-usage-example---eto-estimation">🚀 Usage Example - ETo estimation<a class="anchor" aria-label="anchor" href="#id_-usage-example---eto-estimation"></a>
+</h2>
 <p>Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56 for multiple stations and years:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FilgueirasR/BrazilMet" class="external-link">BrazilMet</a></span><span class="op">)</span></span>
 <span></span>
@@ -176,11 +178,11 @@
 <span>                          z <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">altitude_m</span>,</span>
 <span>                          date <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="id_-usage-example-design-eto-calculation">🚀 Usage Example design ETo calculation<a class="anchor" aria-label="anchor" href="#id_-usage-example-design-eto-calculation"></a>
-</h1>
+<div class="section level2">
+<h2 id="id_-usage-example-design-eto-calculation">🚀 Usage Example design ETo calculation<a class="anchor" aria-label="anchor" href="#id_-usage-example-design-eto-calculation"></a>
+</h2>
 <p>Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56, followed by the calculation of the design ETo.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FilgueirasR/BrazilMet" class="external-link">BrazilMet</a></span><span class="op">)</span></span>
 <span><span class="va">stations</span> <span class="op">&lt;-</span> <span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="reference/see_stations_info.html">see_stations_info</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -210,7 +212,7 @@
 <p>Let’s make BrazilMet even better together! 🚀</p>
 </div>
 </div>
-
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">

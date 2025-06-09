@@ -1,11 +1,11 @@
-![CRAN Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/BrazilMet)
-![CRAN Download Badge](https://cranlogs.r-pkg.org/badges/BrazilMet)
-
-
 # BrazilMet
 
 <div class="fluid-row" id="header">
-    <img src='docs/figures/logo_BrazilMet.png' height='150' width='auto' align='right'>
+
+<img src="man/figures/logo_BrazilMet.png" height="120" style="float: right; margin-left: 10px;" />
+    
+![CRAN Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/BrazilMet)
+![CRAN Download Badge](https://cranlogs.r-pkg.org/badges/BrazilMet)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/FilgueirasR/BrazilMet/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FilgueirasR/BrazilMet/actions/workflows/R-CMD-check.yaml)
@@ -66,7 +66,7 @@ install.packages("devtools")
 devtools::install_github("FilgueirasR/BrazilMet")
 
 ```
-#  🚀 Usage Example - ETo estimation
+##  🚀 Usage Example - ETo estimation
 
 Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56 for multiple stations and years:
 
@@ -96,7 +96,7 @@ df$eto <- daily_eto_FAO56(lat = df$latitude_degrees,
                           date = df$date)
 
 ```
-#  🚀 Usage Example design ETo calculation
+##  🚀 Usage Example design ETo calculation
 
 Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56, followed by the calculation of the design ETo.
 

@@ -1,0 +1,4 @@
+.navbar-brand img {
+  height: 10px; /* Ajuste este valor conforme necessário */
+  width: auto; /* Mantém a proporção da imagem */
+}
