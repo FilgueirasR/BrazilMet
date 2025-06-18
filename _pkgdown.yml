@@ -83,3 +83,4 @@ articles:
   - title: "Tutorials"
     contents:
       - eto_pm_estimation
+      - design_eto_estimation

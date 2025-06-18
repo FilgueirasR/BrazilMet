@@ -24,7 +24,7 @@ es_calculation <- function(tmin, tmax){
 #' @param tdew A dataframe with dewpoint temperature (Celsius).
 #' @examples
 #' \dontrun{
-#' ea <-ea_dew_calculation(tdew).
+#' ea <-ea_dew_calculation(tdew)
 #' }
 #' @export
 #' @return Returns a data.frame object with the ea from dewpoint data.

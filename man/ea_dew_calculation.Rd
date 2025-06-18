@@ -17,7 +17,7 @@ Actual vapour pressure (ea) derived from dewpoint temperature
 }
 \examples{
 \dontrun{
-ea <-ea_dew_calculation(tdew).
+ea <-ea_dew_calculation(tdew)
 }
 }
 \author{
