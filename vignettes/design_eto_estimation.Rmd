@@ -1,0 +1,95 @@
+---
+title: "🌱💧 Design ETo calculation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{🌱💧 Design ETo calculation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## 🚀 Design ETo calculation estimation
+
+This article shows a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56, followed by the calculation of the design ETo.
+
+## 📦 Load the package
+
+```{r}
+library(BrazilMet)
+```
+
+## 🌍 View available INMET stations
+
+Before downloading data, you can check the available weather stations with:
+
+```{r}
+see_stations_info()
+```
+
+## ⬇️ Download daily weather data
+
+Let’s download daily meteorological data for one stations between January 2000 until March 2025:
+
+```{r}
+df <- BrazilMet::download_AWS_INMET_daily(stations = "A001",
+                                          start_date = "2000-01-01",
+                                          end_date = "2025-03-31")
+```
+
+The resulting data frame includes temperature, solar radiation, wind speed, humidity, and atmospheric pressure
+
+## 🧠 Calculate daily ETo using FAO-56
+
+Now we use the daily_eto_FAO56() function to estimate daily ETo values:
+
+```{r}
+df$eto <- daily_eto_FAO56(
+  lat    = df$latitude_degrees,
+  tmin   = df$tair_min_c,
+  tmax   = df$tair_max_c,
+  tmean  = df$tair_mean_c,
+  Rs     = df$sr_mj_m2,
+  u2     = df$ws_2_m_s,
+  Patm   = df$patm_mb,
+  RH_max = df$rh_max_porc,
+  RH_min = df$rh_min_porc,
+  z      = df$altitude_m,
+  date   = df$date
+)
+```
+
+## 💧 Design ETo calculation
+
+And after the ETo calculation, we use the design_eto() function to estimate the design ETo for irrigation project purpose:
+
+```{r}
+
+eto_design <- BrazilMet::design_eto(eto_daily_data = df, percentile = .80)
+
+```
+
+
+## 📝 Printing the design ETo based on an 80% probability of occurrence
+
+Below is a basic line plot of daily ETo:
+
+```{r plot-eto-ggplot, fig.width = 10, fig.height = 4}
+
+print(eto_design)
+
+```
+
+## ✅ Summary
+
+The BrazilMet package allows you to download official INMET weather data and compute ETo using the FAO-56 method in a reproducible and efficient way. This is essential for irrigation planning, crop modeling, and climate-based decision support.
+
+
+## 🔗 Useful links
+
+https://github.com/FilgueirasR/BrazilMet
