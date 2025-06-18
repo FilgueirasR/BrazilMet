@@ -61,7 +61,7 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>BrazilMet</strong> is an R package designed to facilitate the acquisition and processing of meteorological data from INMET stations. It includes functions for downloading, calculating atmospheric parameters, estimating evapotranspiration, and more.</p>
+<p><strong>BrazilMet</strong> is an R package designed to facilitate the acquisition and processing of meteorological data from INMET stations. It includes functions for downloading, calculating atmospheric parameters, estimating evapotranspiration, and more. Please, see the package page 🔗 <a href="https://filgueirasr.github.io/BrazilMet/" class="uri">https://filgueirasr.github.io/BrazilMet/</a></p>
 <hr>
 </div>
 <div class="section level2">
@@ -177,31 +177,6 @@
 <span>                          RH_min <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">rh_min_porc</span>,</span>
 <span>                          z <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">altitude_m</span>,</span>
 <span>                          date <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="id_-usage-example-design-eto-calculation">🚀 Usage Example design ETo calculation<a class="anchor" aria-label="anchor" href="#id_-usage-example-design-eto-calculation"></a>
-</h2>
-<p>Here’s a quick example of how to download INMET station data and estimate reference evapotranspiration (ETo) using FAO-56, followed by the calculation of the design ETo.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FilgueirasR/BrazilMet" class="external-link">BrazilMet</a></span><span class="op">)</span></span>
-<span><span class="va">stations</span> <span class="op">&lt;-</span> <span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="reference/see_stations_info.html">see_stations_info</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="reference/download_AWS_INMET_daily.html">download_AWS_INMET_daily</a></span><span class="op">(</span>stations <span class="op">=</span> <span class="st">"A001"</span>, start_date <span class="op">=</span> <span class="st">"2000-01-01"</span>, end_date <span class="op">=</span> <span class="st">"2025-03-31"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df</span><span class="op">$</span><span class="va">eto</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/daily_eto_FAO56.html">daily_eto_FAO56</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">latitude_degrees</span>,</span>
-<span>                          tmin <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">tair_min_c</span>,</span>
-<span>                          tmax <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">tair_max_c</span>,</span>
-<span>                          tmean <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">tair_mean_c</span>,</span>
-<span>                          Rs <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">sr_mj_m2</span>,</span>
-<span>                          u2 <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">ws_2_m_s</span>,</span>
-<span>                          Patm <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">patm_mb</span>,</span>
-<span>                          RH_max <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">rh_max_porc</span>,</span>
-<span>                          RH_min <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">rh_min_porc</span>,</span>
-<span>                          z <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">altitude_m</span>,</span>
-<span>                          date <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="reference/design_eto.html">design_eto</a></span><span class="op">(</span>eto_daily_data <span class="op">=</span> <span class="va">df</span>, percentile <span class="op">=</span> <span class="fl">.80</span><span class="op">)</span></span></code></pre></div>
 <p>🤝 Contributing</p>
 <p>We welcome contributions from the community! Whether it’s reporting issues, suggesting improvements, or submitting pull requests, your help is greatly appreciated.</p>
 <p>How to contribute: Fork the repository</p>
