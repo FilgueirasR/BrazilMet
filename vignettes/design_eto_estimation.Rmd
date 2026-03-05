@@ -69,6 +69,8 @@ df$eto <- daily_eto_FAO56(
 And after the ETo calculation, we use the design_eto() function to estimate the design ETo for irrigation project purpose:
 
 ```{r}
+# Ensure date column is in Date format
+df$date <- as.Date(df$date)
 
 eto_design <- BrazilMet::design_eto(eto_daily_data = df, percentile = .80)
 
