@@ -74,7 +74,10 @@ Below is a basic line plot of daily ETo:
 
 library(ggplot2)
 
-ggplot(df, aes(x = as.Date(date), y = eto)) +
+# Ensure date column is in Date format
+df$date <- as.Date(df$date)
+
+ggplot(df, aes(x = date, y = eto)) +
   geom_line(color = "darkblue", size = 1) +
   labs(
     title = "Reference Evapotranspiration (FAO-56)",
