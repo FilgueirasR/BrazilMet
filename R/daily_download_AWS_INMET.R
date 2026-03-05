@@ -17,6 +17,9 @@
 #' @importFrom dplyr summarize
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rename
+#' @importFrom dplyr distinct
+#' @importFrom dplyr bind_rows
+#' @importFrom lubridate hours
 #' @examples
 #' \dontrun{
 #' df <- download_AWS_INMET_daily(
@@ -30,6 +33,28 @@
 #' @author Roberto Filgueiras, Luan P. Venancio, Catariny C. Aleman and Fernando F. da Cunha
 
 download_AWS_INMET_daily <- function(stations, start_date, end_date) {
+  # Desabilitar mensagens verbosas do tidyverse/vctrs
+  old_opts <- options(
+    rlib_message_verbosity = "quiet",
+    readr.show_col_types = FALSE,
+    readr.show_progress = FALSE
+  )
+  on.exit(options(old_opts), add = TRUE)
+  
+  # Validação de inputs
+  if (missing(stations) || length(stations) == 0) {
+    stop("Parameter 'stations' must be provided and cannot be empty.")
+  }
+  if (missing(start_date) || missing(end_date)) {
+    stop("Parameters 'start_date' and 'end_date' must be provided.")
+  }
+  if (!grepl("^\\d{4}-\\d{2}-\\d{2}$", start_date) || !grepl("^\\d{4}-\\d{2}-\\d{2}$", end_date)) {
+    stop("Dates must be in format 'YYYY-MM-DD'.")
+  }
+  if (as.Date(start_date) > as.Date(end_date)) {
+    stop("'start_date' cannot be after 'end_date'.")
+  }
+  
   X <- patm_max_mb <- patm_min_mb <- hour <- NULL
   dew_tmin_c <- dew_tmax_c <- tair_min_c <- tair_max_c <- tair_dry_bulb_c <- NULL
   rainfall_mm <- rh_max_porc <- rh_min_porc <- rh_mean_porc <- NULL
@@ -42,7 +67,8 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
   start_year <- substr(start_date, 1, 4)
   end_year <- substr(end_date, 1, 4)
 
-  df_sequence <- data.frame()
+  df_sequence <- list()
+  seq_idx <- 1
 
   for (year in seq(from = as.numeric(start_year), to = as.numeric(end_year))) {
     message("Downloading data for: ", year)
@@ -52,55 +78,109 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
     outdir <- gsub("\\", "/", tempdir, fixed = TRUE)
     options(timeout = 600)
 
-    utils::download.file(
-      url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"),
-      destfile = tf, method = "auto", cacheOK = F, quiet = T
-    )
+    # Tentar download com tratamento de erro
+    download_success <- tryCatch({
+      utils::download.file(
+        url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"),
+        destfile = tf, method = "auto", cacheOK = F, quiet = T
+      )
+      TRUE
+    }, error = function(e) {
+      warning("Failed to download data for year ", year, ": ", e$message)
+      FALSE
+    })
+    
+    if (!download_success) {
+      next
+    }
 
-    a <- unzip(zipfile = tf, exdir = outdir, junkpaths = T)
+    # Tentar unzip com tratamento de erro
+    unzip_success <- tryCatch({
+      a <- unzip(zipfile = tf, exdir = outdir, junkpaths = T)
+      TRUE
+    }, error = function(e) {
+      warning("Failed to unzip file for year ", year, ": ", e$message)
+      FALSE
+    })
+    
+    if (!unzip_success) {
+      next
+    }
 
-    df_all_stations <- data.frame()
+    df_all_stations <- list()
+    station_idx <- 1
 
     for (station in stations) {
+      df <- NULL  # Inicializar df para cada estação
       station_file <- list.files(outdir, pattern = station, full.names = T, all.files = T)
 
       if (length(station_file) == 0) {
         message("There is no data for this period for this station. Choose another period!")
       } else {
-        df <- data.frame()
-        dfx <- read.csv(
-          file = station_file,
-          header = T,
-          sep = ";",
-          skip = 8,
-          na = "-9999",
-          dec = ",",
-          check.names = F
-        )
-
-        header_info <- read.csv(file = station_file, header = F, sep = ";")
-
-        OMM <- header_info[4, 2]
-        UF <- header_info[2, 2]
-        station <- header_info[3, 2]
-
-        # Função para converter coordenadas no formato correto
-
-        convert_coord <- function(coord) {
-          # lat_part <- substr(coord, 1, 3)
-          lat_part <- sub(",.*", "", coord) #
-
-          # dec_part <- substr(coord, 5, 10)
-          dec_part <- sub(".*,", "", coord)
-          as.numeric(paste0(lat_part, ".", dec_part))
+        # Verificar se há múltiplos arquivos para a mesma estação
+        if (length(station_file) > 1) {
+          message(paste0("Found ", length(station_file), " files for station ", station, " in year ", year, ". Processing all files..."))
         }
-
-        # Extrai e converte os valores desejados
-        latitude <- convert_coord(header_info[5, 2])
-        longitude <- convert_coord(header_info[6, 2])
-
-        # Ajuste da altitude
-        altitude <- as.numeric(gsub(",", ".", header_info[7, 2]))
+        
+        # Processar cada arquivo encontrado
+        dfx_list <- list()
+        header_info <- NULL
+        OMM <- NULL
+        UF <- NULL
+        station_name <- NULL
+        latitude <- NULL
+        longitude <- NULL
+        altitude <- NULL
+        
+        for (i in seq_along(station_file)) {
+          # Ler dados do arquivo - suprimindo todas as mensagens e warnings
+          invisible(capture.output({
+            dfx_temp <- suppressWarnings(suppressMessages(read.csv(
+              file = station_file[i],
+              header = T,
+              sep = ";",
+              skip = 8,
+              na = "-9999",
+              dec = ",",
+              check.names = F
+            )))
+          }))
+          
+          dfx_list[[i]] <- dfx_temp
+          
+          # Ler informações do cabeçalho do primeiro arquivo
+          if (i == 1) {
+            invisible(capture.output({
+              header_info <- suppressWarnings(suppressMessages(read.csv(file = station_file[i], header = F, sep = ";")))
+            }))
+            
+            OMM <- header_info[4, 2]
+            UF <- header_info[2, 2]
+            station_name <- header_info[3, 2]
+            
+            # Função para converter coordenadas no formato correto
+            convert_coord <- function(coord) {
+              lat_part <- sub(",.*", "", coord)
+              dec_part <- sub(".*,", "", coord)
+              as.numeric(paste0(lat_part, ".", dec_part))
+            }
+            
+            # Extrai e converte os valores desejados
+            latitude <- convert_coord(header_info[5, 2])
+            longitude <- convert_coord(header_info[6, 2])
+            
+            # Ajuste da altitude
+            altitude <- as.numeric(gsub(",", ".", header_info[7, 2]))
+          }
+        }
+        
+        # Combinar todos os dados dos arquivos
+        invisible(capture.output({
+          dfx <- suppressWarnings(dplyr::bind_rows(dfx_list))
+        }))
+        
+        # Usar o nome da estação do cabeçalho
+        station <- station_name
 
         names(dfx) <- c(
           "date", "hour", "rainfall_mm", "patm_mb",
@@ -116,6 +196,10 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           date = as.Date(date),
           hour = as.numeric(substr(hour, 1, 2))
         )
+        
+        # Remover duplicatas antes de processar (importante quando há múltiplos arquivos)
+        dfx <- dfx %>%
+          dplyr::distinct(date, hour, .keep_all = TRUE)
 
         dfx$date_hour <- paste0(dfx$date, " ", dfx$hour)
         dfx$date_hour <- as.POSIXct(strptime(dfx$date_hour, format = "%Y-%m-%d %H"))
@@ -148,7 +232,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           group_var <- all.vars(formula)[2]
           
           if (all(is.na(df[[var]]))) {
-            # Retorna um data.frame com NA para cada data única
             dates <- unique(df[[group_var]])
             return(data.frame(date = dates, tmp = NA_real_)) |>
               stats::setNames(c(group_var, var))
@@ -157,17 +240,11 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           }
         }
         
-        
-        # estudar melhor essa condicao
-        # if (nrow(dfx) < 4380 & diff_days > 120) {} else {
-        # dfx_temp <- na.omit(dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmax_c, tair_min_c, tair_max_c, dry_bulb_t_c))
         dfx_temp <- dplyr::select(dfx, hour, date, dew_tmin_c, dew_tmean_c, dew_tmax_c, tair_min_c, tair_max_c, tair_dry_bulb_c)
-        # Remove colunas totalmente NA (caso alguma esteja completamente vazia)
 
         # Filtra linhas que não têm todos os campos relevantes como NA
         dfx_temp <- dfx_temp %>%
           dplyr::filter(!(is.na(tair_min_c) & is.na(tair_max_c) & is.na(tair_dry_bulb_c) & is.na(dew_tmin_c) & is.na(dew_tmean_c) & is.na(dew_tmax_c)))
-
 
         n_dfx_temp <- dplyr::group_by(dfx_temp, date) |>
           dplyr::summarise(n = n()) |>
@@ -178,10 +255,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         } else {
           dfx_temp <- dplyr::left_join(dfx_temp, n_dfx_temp, by = "date")
           dfx_temp <- dplyr::filter(dfx_temp, n == 24)
-          # dfx_temp <- dplyr::mutate(dfx_temp, tair_mean_c = ((tair_min_c + tair_max_c) / 2))
-          # dfx_temp <- dplyr::mutate(dfx_temp, dew_tmean_c = ((dew_tmin_c + dew_tmax_c) / 2))
 
-          
           dfx_temp_mean_day <- agg_safe_fillna(dfx_temp, tair_dry_bulb_c ~ date, mean, na.rm = TRUE)
           names(dfx_temp_mean_day)[2] <- "tair_dry_bulb_c"
           dfx_temp_min_day  <- agg_safe_fillna(dfx_temp, tair_min_c ~ date, min, na.rm = TRUE)
@@ -209,7 +283,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
             dplyr::rename("tair_mean_c" = "tair_dry_bulb_c")
         }
 
-        # dfx_prec <- na.omit(dplyr::select(dfx, hour, date, rainfall_mm))
         dfx_prec <- dplyr::select(dfx, hour, date, rainfall_mm)
         dfx_prec <- dplyr::group_by(dfx_prec, date)
 
@@ -220,12 +293,10 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         if (nrow(dfx_prec) == 0) {
           message(paste0("No valid data for this period in this station: ", OMM, " - year ", year, " - Rainfall group"))
         } else {
-          #dfx_prec_day <- stats::aggregate(rainfall_mm ~ date, dfx_prec, sum)
           dfx_prec_day   <- agg_safe_fillna(dfx_prec, rainfall_mm ~ date, sum, na.rm = TRUE)
           names(dfx_prec_day)[2] <- "rainfall_mm"
         }
 
-        # dfx_press <- na.omit(dplyr::select(dfx, hour, date, patm_mb))
         dfx_press <- dplyr::select(dfx, hour, date, patm_mb)
 
         dfx_press <- dfx_press %>%
@@ -241,13 +312,10 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_press <- dplyr::left_join(dfx_press, n_dfx_press, by = "date")
           dfx_press <- dplyr::filter(dfx_press, n == 24)
 
-          #dfx_press_mean_day <- stats::aggregate(patm_mb ~ date, dfx_press, mean)
           dfx_press_mean_day   <- agg_safe_fillna(dfx_press, patm_mb ~ date, mean, na.rm = TRUE)
           names(dfx_press_mean_day)[2] <- "patm_mb"
-          
         }
 
-        # dfx_ur <- na.omit(dplyr::select(dfx, hour, date, rh_max_porc, rh_min_porc, rh_mean_porc))
         dfx_ur <- dplyr::select(dfx, hour, date, rh_max_porc, rh_min_porc, rh_mean_porc)
 
         # Filtra linhas que não têm todos os campos relevantes como NA
@@ -264,10 +332,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_ur <- dplyr::left_join(dfx_ur, n_dfx_ur, by = "date")
           dfx_ur <- dplyr::filter(dfx_ur, n == 24)
 
-          #dfx_ur_mean_day <- stats::aggregate(rh_mean_porc ~ date, dfx_ur, mean)
-          #dfx_ur_min_day <- aggregate(rh_min_porc ~ date, dfx_ur, min)
-          #dfx_ur_max_day <- stats::aggregate(rh_max_porc ~ date, dfx_ur, max)
-          
           dfx_ur_mean_day <- agg_safe_fillna(dfx_ur, rh_mean_porc ~ date, mean, na.rm = TRUE)
           names(dfx_ur_mean_day)[2] <- "rh_mean_porc"
           dfx_ur_min_day <- agg_safe_fillna(dfx_ur, rh_min_porc ~ date, min, na.rm = TRUE)
@@ -284,13 +348,8 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
               dfx_urs_day <- left_join(dfx_urs_day, j, by = "date")
             }
           }
-          
-          #dfx_urs_day <- dfx_ur_mean_day |>
-          #  dplyr::left_join(dfx_ur_max_day, by = "date") |>
-          #  dplyr::left_join(dfx_ur_min_day, by = "date")
         }
 
-        # dfx_vv <- na.omit(dplyr::select(dfx, hour, date, ws_2_m_s, ws_gust_m_s, wd_degrees))
         dfx_vv <- dplyr::select(dfx, hour, date, ws_2_m_s, ws_gust_m_s, wd_degrees)
 
         dfx_vv <- dfx_vv %>%
@@ -305,13 +364,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         } else {
           dfx_vv <- dplyr::left_join(dfx_vv, n_dfx_vv, by = "date")
           dfx_vv <- dplyr::filter(dfx_vv, n == 24)
-          # dfx_vv <- dplyr::mutate(dfx_vv, u2 = (4.868 / (log(67.75 *10 - 5.42))) * ws_10_m_s)
 
-          #dfx_vv_mean_day <- aggregate(ws_2_m_s ~ date, dfx_vv, mean)
-          # dfx_vv_meanu2_day <- aggregate(u2 ~ date, dfx_vv, mean)
-          #dfx_vv_raj_day <- stats::aggregate(ws_gust_m_s ~ date, dfx_vv, max)
-          #dfx_vv_dir_day <- stats::aggregate(wd_degrees ~ date, dfx_vv, mean)
-          
           dfx_vv_mean_day <- agg_safe_fillna(dfx_vv, ws_2_m_s ~ date, mean, na.rm = TRUE)
           names(dfx_vv_mean_day)[2] <- "ws_2_m_s"
           dfx_vv_raj_day <- agg_safe_fillna(dfx_vv, ws_gust_m_s ~ date, max, na.rm = TRUE)
@@ -319,7 +372,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_vv_dir_day <- agg_safe_fillna(dfx_vv, wd_degrees ~ date, mean, na.rm = TRUE)
           names(dfx_vv_dir_day)[2] <- "wd_degrees"
           
-          joins <- list(dfx_vv_raj_day, dfx_vv_raj_day)
+          joins <- list(dfx_vv_raj_day, dfx_vv_dir_day)
           
           dfx_vvs_day <- dfx_vv_mean_day
           
@@ -328,12 +381,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
               dfx_vvs_day <- left_join(dfx_vvs_day, j, by = "date")
             }
           }
-          
-
-          #dfx_vvs_day <- dfx_vv_mean_day |>
-            # dplyr::left_join(dfx_vv_meanu2_day, by = "date")|>
-            #dplyr::left_join(dfx_vv_raj_day, by = "date") |>
-            #dplyr::left_join(dfx_vv_dir_day, by = "date")
         }
 
         dfx_RG <- dplyr::select(dfx, hour, date, sr_kj_m2)
@@ -342,8 +389,7 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dplyr::filter(!(is.na(sr_kj_m2)))
 
         dfx_RG <- dplyr::mutate(dfx_RG, sr_mj_m2 = sr_kj_m2 / 1000)
-        # dfx_RG <- na.omit(dplyr::select(dfx_RG, sr_kj_m2))
-        dfx_RG <- dplyr::select(dfx_RG, date, sr_mj_m2) ########
+        dfx_RG <- dplyr::select(dfx_RG, date, sr_mj_m2)
 
         dfx_RG <- dplyr::filter(dfx_RG, sr_mj_m2 > 0)
 
@@ -357,10 +403,8 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
           dfx_RG <- dplyr::left_join(dfx_RG, n_RG, by = "date")
           dfx_RG <- dplyr::filter(dfx_RG, n >= 12)
 
-          #dfx_RG_sum_day <- aggregate(sr_mj_m2 ~ date, dfx_RG, sum)
           dfx_RG_sum_day <- agg_safe_fillna(dfx_RG, sr_mj_m2 ~ date, sum, na.rm = TRUE)
           names(dfx_RG_sum_day)[2] <- "sr_mj_m2"
-          
           
           dfx_RG_sum_day <- dfx_RG_sum_day |>
             dplyr::mutate(julian_day = as.numeric(format(date, "%j")))
@@ -413,7 +457,6 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
             dplyr::rename(
               "station_code" = "OMM",
               "uf" = "UF",
-              # "ws_2_m_s" = "u2",
               "ra_mj_m2" = "ra"
             ) |>
             dplyr::select(c(
@@ -444,13 +487,30 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
         } else {}
       }
 
-      df_all_stations <- rbind(df_all_stations, df)
+      if (!is.null(df) && nrow(df) > 0) {
+        df_all_stations[[station_idx]] <- df
+        station_idx <- station_idx + 1
+      }
     }
 
-    df_sequence <- rbind(df_sequence, df_all_stations)
-
-    df_sequence <- df_sequence
+    if (length(df_all_stations) > 0) {
+      df_sequence[[seq_idx]] <- dplyr::bind_rows(df_all_stations)
+      seq_idx <- seq_idx + 1
+    }
   }
 
-  return(df_sequence)
+  # Combinar todos os dados e remover duplicatas
+  if (length(df_sequence) == 0) {
+    warning("No data was downloaded for the specified stations and period.")
+    return(data.frame())
+  }
+  
+  df_final <- dplyr::bind_rows(df_sequence)
+  
+  # Remover duplicatas mantendo a primeira ocorrência
+  df_final <- df_final %>%
+    dplyr::distinct(station_code, date, .keep_all = TRUE) %>%
+    dplyr::arrange(station_code, date)
+  
+  return(df_final)
 }
