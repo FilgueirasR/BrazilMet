@@ -106,3 +106,10 @@ Functions for computing water balance components.
 
 - [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md)
   : Sequential water balance (Thornthwaite-Mather)
+
+## Data Quality
+
+Tools for handling missing values in weather data.
+
+- [`fill_gaps()`](https://filgueirasr.github.io/BrazilMet/reference/fill_gaps.md)
+  : Fill gaps in daily weather data

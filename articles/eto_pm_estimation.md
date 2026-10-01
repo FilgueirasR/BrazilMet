@@ -41,7 +41,7 @@ see_stations_info()
 
 ## ⬇️ Download daily weather data
 
-Let’s download daily meteorological data for two stations between
+Let’s download daily meteorological data for station A001 between
 January 2023 and December 2024:
 
 ``` r
@@ -51,28 +51,33 @@ df <- download_AWS_INMET_daily(
   start_date = "2023-01-01",
   end_date   = "2024-12-31"
 )
-#> Downloading data for: 2023
-#> Warning in utils::download.file(url =
-#> paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL
-#> 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip': Timeout of 600
-#> seconds was reached
-#> Warning in value[[3L]](cond): Failed to download data for year 2023: cannot
-#> open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip'
-#> Downloading data for: 2024
-#> Warning in utils::download.file(url =
-#> paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL
-#> 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip': Timeout of 600
-#> seconds was reached
-#> Warning in value[[3L]](cond): Failed to download data for year 2024: cannot
-#> open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip'
-#> Warning in download_AWS_INMET_daily(stations = c("A001"), start_date =
-#> "2023-01-01", : No data was downloaded for the specified stations and period.
 ```
 
 The resulting data frame includes temperature, solar radiation, wind
-speed, humidity, and atmospheric pressure
+speed, humidity, and atmospheric pressure.
+
+To keep this article reproducible without depending on the INMET server,
+the data downloaded with the call above are bundled with the package and
+loaded here:
+
+``` r
+
+df <- readRDS(system.file("extdata", "A001_daily_2023_2024.rds", package = "BrazilMet"))
+```
 
 ## 🧠 Calculate daily ETo using FAO-56
+
+Station data have occasional sensor failures, and any missing input
+makes ETo `NA` on that day.
+[`fill_gaps()`](https://filgueirasr.github.io/BrazilMet/reference/fill_gaps.md)
+fills gaps of up to three days by linear interpolation and flags the
+filled values in `*_filled` columns:
+
+``` r
+
+df <- fill_gaps(df, max_gap = 3)
+#> Filled values (remaining NA): tair_mean_c = 29 (0), tair_min_c = 29 (0), tair_max_c = 29 (0), rh_max_porc = 30 (0), rh_min_porc = 30 (0), ws_2_m_s = 33 (0), patm_mb = 28 (0), sr_mj_m2 = 7 (0)
+```
 
 Now we use the daily_eto_FAO56() function to estimate daily ETo values:
 
@@ -91,8 +96,6 @@ df$eto <- daily_eto_FAO56(
   z      = df$altitude_m,
   date   = df$date
 )
-#> Warning in daily_eto_FAO56(lat = df$latitude_degrees, tmin = df$tair_min_c, :
-#> NAs introduced by coercion
 ```
 
 ## 📊 Plotting ETo results
@@ -108,7 +111,7 @@ library(ggplot2)
 df$date <- as.Date(df$date)
 
 ggplot(df, aes(x = date, y = eto)) +
-  geom_line(color = "darkblue", size = 1) +
+  geom_line(color = "darkblue", linewidth = 1) +
   labs(
     title = "Reference Evapotranspiration (FAO-56)",
     x = "Date",
@@ -119,11 +122,6 @@ ggplot(df, aes(x = date, y = eto)) +
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   )
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 ```
 
 ![](eto_pm_estimation_files/figure-html/plot-eto-ggplot-1.png)

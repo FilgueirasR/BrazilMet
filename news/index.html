@@ -35,6 +35,21 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="brazilmet-development-version">BrazilMet (development version)<a class="anchor" aria-label="anchor" href="#brazilmet-development-version"></a></h2>
+<div class="section level3">
+<h3 id="new-functions-development-version">New functions<a class="anchor" aria-label="anchor" href="#new-functions-development-version"></a></h3>
+<ul><li>
+<code><a href="../reference/fill_gaps.html">fill_gaps()</a></code>: fills short gaps in daily weather data by linear interpolation (optionally by climatology) and flags the filled values. Rainfall is deliberately not allowed.</li>
+<li>New tutorial for <code><a href="../reference/water_balance.html">water_balance()</a></code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<ul><li>
+<code><a href="../reference/water_balance.html">water_balance()</a></code>: actual evapotranspiration (<code>etr</code>) can no longer exceed <code>etp</code>, so <code>def</code> is never negative.</li>
+<li>The ETo and design ETo tutorials now use datasets bundled with the package instead of downloading data while building the site.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="brazilmet-040-2025-05-23">BrazilMet 0.4.0 (2025-05-23)<a class="anchor" aria-label="anchor" href="#brazilmet-040-2025-05-23"></a></h2><p class="text-muted">CRAN release: 2025-05-23</p>
 <p>##New functions - Implemented the climatological_normal_cws.R - Implemented the design_eto.R - Implemented the eto_hs.R - Implemented max_eto_grid_download.R - Implemented get_max_eto_at_location.R - Implemented selectedAWSstations.R</p>
 <p>##Improvements - Fixed some bugs in daily_download_AWS_INMET.R. - Corrected typos description of some functions. - General improvements to some function descriptions.</p>

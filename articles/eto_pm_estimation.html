@@ -102,39 +102,35 @@ with:</p>
 <div class="section level2">
 <h2 id="download-daily-weather-data">⬇️ Download daily weather data<a class="anchor" aria-label="anchor" href="#download-daily-weather-data"></a>
 </h2>
-<p>Let’s download daily meteorological data for two stations between
+<p>Let’s download daily meteorological data for station A001 between
 January 2023 and December 2024:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_AWS_INMET_daily.html">download_AWS_INMET_daily</a></span><span class="op">(</span></span>
 <span>  stations   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A001"</span><span class="op">)</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="st">"2023-01-01"</span>,</span>
 <span>  end_date   <span class="op">=</span> <span class="st">"2024-12-31"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading data for: 2023</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2023: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2024</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2024: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip'</span></span>
-<span><span class="co">#&gt; Warning in download_AWS_INMET_daily(stations = c("A001"), start_date =</span></span>
-<span><span class="co">#&gt; "2023-01-01", : No data was downloaded for the specified stations and period.</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The resulting data frame includes temperature, solar radiation, wind
-speed, humidity, and atmospheric pressure</p>
+speed, humidity, and atmospheric pressure.</p>
+<p>To keep this article reproducible without depending on the INMET
+server, the data downloaded with the call above are bundled with the
+package and loaded here:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"A001_daily_2023_2024.rds"</span>, package <span class="op">=</span> <span class="st">"BrazilMet"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calculate-daily-eto-using-fao-56">🧠 Calculate daily ETo using FAO-56<a class="anchor" aria-label="anchor" href="#calculate-daily-eto-using-fao-56"></a>
 </h2>
+<p>Station data have occasional sensor failures, and any missing input
+makes ETo <code>NA</code> on that day. <code><a href="../reference/fill_gaps.html">fill_gaps()</a></code> fills
+gaps of up to three days by linear interpolation and flags the filled
+values in <code>*_filled</code> columns:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fill_gaps.html">fill_gaps</a></span><span class="op">(</span><span class="va">df</span>, max_gap <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Filled values (remaining NA): tair_mean_c = 29 (0), tair_min_c = 29 (0), tair_max_c = 29 (0), rh_max_porc = 30 (0), rh_min_porc = 30 (0), ws_2_m_s = 33 (0), patm_mb = 28 (0), sr_mj_m2 = 7 (0)</span></span></code></pre></div>
 <p>Now we use the daily_eto_FAO56() function to estimate daily ETo
 values:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">eto</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/daily_eto_FAO56.html">daily_eto_FAO56</a></span><span class="op">(</span></span>
 <span>  lat    <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">latitude_degrees</span>,</span>
 <span>  tmin   <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">tair_min_c</span>,</span>
@@ -147,15 +143,13 @@ values:</p>
 <span>  RH_min <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">rh_min_porc</span>,</span>
 <span>  z      <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">altitude_m</span>,</span>
 <span>  date   <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">date</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in daily_eto_FAO56(lat = df$latitude_degrees, tmin = df$tair_min_c, :</span></span>
-<span><span class="co">#&gt; NAs introduced by coercion</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="plotting-eto-results">📊 Plotting ETo results<a class="anchor" aria-label="anchor" href="#plotting-eto-results"></a>
 </h2>
 <p>Below is a basic line plot of daily ETo:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -163,7 +157,7 @@ values:</p>
 <span><span class="va">df</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">eto</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"darkblue"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"darkblue"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Reference Evapotranspiration (FAO-56)"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Date"</span>,</span>
@@ -173,12 +167,7 @@ values:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="eto_pm_estimation_files/figure-html/plot-eto-ggplot-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level2">

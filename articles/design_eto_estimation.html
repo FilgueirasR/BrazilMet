@@ -102,205 +102,42 @@ with:</p>
 <div class="section level2">
 <h2 id="download-daily-weather-data">⬇️ Download daily weather data<a class="anchor" aria-label="anchor" href="#download-daily-weather-data"></a>
 </h2>
-<p>Let’s download daily meteorological data for one stations between
-January 2000 until March 2025:</p>
+<p>Let’s download daily meteorological data for one station between
+January 2000 and March 2025 (the station A001 started operating in May
+2000):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="../reference/download_AWS_INMET_daily.html">download_AWS_INMET_daily</a></span><span class="op">(</span>stations <span class="op">=</span> <span class="st">"A001"</span>,</span>
-<span>                                          start_date <span class="op">=</span> <span class="st">"2000-01-01"</span>,</span>
-<span>                                          end_date <span class="op">=</span> <span class="st">"2025-03-31"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading data for: 2000</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2000.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2000: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2000.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2001</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2001.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2001: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2001.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2002</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2002.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2002: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2002.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2003</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2003.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2003: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2003.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2004</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2004.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2004: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2004.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2005</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2005.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2005: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2005.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2006</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2006.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2006: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2006.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2007</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2007.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2007: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2007.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2008</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2008.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2008: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2008.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2009</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2009.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2009: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2009.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2010</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2010.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2010: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2010.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2011</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2011.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2011: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2011.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2012</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2012.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2012: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2012.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2013</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2013.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2013: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2013.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2014</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2014.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2014: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2014.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2015</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2015.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2015: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2015.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2016</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2016.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2016: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2016.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2017</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2017.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2017: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2017.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2018</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2018.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2018: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2018.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2019</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2019.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2019: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2019.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2020</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2020.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2020: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2020.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2021</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2021.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2021: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2021.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2022</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2022.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2022: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2022.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2023</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2023: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2024</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2024: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip'</span></span>
-<span><span class="co">#&gt; Downloading data for: 2025</span></span>
-<span><span class="co">#&gt; Warning in utils::download.file(url =</span></span>
-<span><span class="co">#&gt; paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL</span></span>
-<span><span class="co">#&gt; 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip': Timeout of 600</span></span>
-<span><span class="co">#&gt; seconds was reached</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Failed to download data for year 2025: cannot</span></span>
-<span><span class="co">#&gt; open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip'</span></span>
-<span><span class="co">#&gt; Warning in BrazilMet::download_AWS_INMET_daily(stations = "A001", start_date =</span></span>
-<span><span class="co">#&gt; "2000-01-01", : No data was downloaded for the specified stations and period.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_AWS_INMET_daily.html">download_AWS_INMET_daily</a></span><span class="op">(</span></span>
+<span>  stations   <span class="op">=</span> <span class="st">"A001"</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="st">"2000-01-01"</span>,</span>
+<span>  end_date   <span class="op">=</span> <span class="st">"2025-03-31"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The resulting data frame includes temperature, solar radiation, wind
-speed, humidity, and atmospheric pressure</p>
+speed, humidity, and atmospheric pressure.</p>
+<p>To keep this article reproducible without depending on the INMET
+server, the data downloaded with the call above are bundled with the
+package and loaded here:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"A001_daily_2000_2025.rds"</span>, package <span class="op">=</span> <span class="st">"BrazilMet"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="fill-gaps-in-the-weather-data">🧩 Fill gaps in the weather data<a class="anchor" aria-label="anchor" href="#fill-gaps-in-the-weather-data"></a>
+</h2>
+<p>A long series has many sensor failures, and any missing input makes
+ETo <code>NA</code> on that day. <code><a href="../reference/fill_gaps.html">fill_gaps()</a></code> fills short
+gaps (up to three days) by linear interpolation and the remaining ones
+with the mean of the same day of the year in the other years. Every
+filled value is flagged in a <code>*_filled</code> column:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fill_gaps.html">fill_gaps</a></span><span class="op">(</span><span class="va">df</span>, method <span class="op">=</span> <span class="st">"both"</span>, max_gap <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Filled values (remaining NA): tair_mean_c = 559 (0), tair_min_c = 560 (0), tair_max_c = 560 (0), rh_max_porc = 600 (0), rh_min_porc = 600 (0), ws_2_m_s = 680 (0), patm_mb = 597 (0), sr_mj_m2 = 696 (0)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calculate-daily-eto-using-fao-56">🧠 Calculate daily ETo using FAO-56<a class="anchor" aria-label="anchor" href="#calculate-daily-eto-using-fao-56"></a>
 </h2>
 <p>Now we use the daily_eto_FAO56() function to estimate daily ETo
 values:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">eto</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/daily_eto_FAO56.html">daily_eto_FAO56</a></span><span class="op">(</span></span>
 <span>  lat    <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">latitude_degrees</span>,</span>
 <span>  tmin   <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">tair_min_c</span>,</span>
@@ -313,34 +150,29 @@ values:</p>
 <span>  RH_min <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">rh_min_porc</span>,</span>
 <span>  z      <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">altitude_m</span>,</span>
 <span>  date   <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">date</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in daily_eto_FAO56(lat = df$latitude_degrees, tmin = df$tair_min_c, :</span></span>
-<span><span class="co">#&gt; NAs introduced by coercion</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="design-eto-calculation">💧 Design ETo calculation<a class="anchor" aria-label="anchor" href="#design-eto-calculation"></a>
 </h2>
 <p>And after the ETo calculation, we use the design_eto() function to
 estimate the design ETo for irrigation project purpose:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ensure date column is in Date format</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">eto_design</span> <span class="op">&lt;-</span> <span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="../reference/design_eto.html">design_eto</a></span><span class="op">(</span>eto_daily_data <span class="op">=</span> <span class="va">df</span>, percentile <span class="op">=</span> <span class="fl">.80</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in BrazilMet::design_eto(eto_daily_data = df, percentile = 0.8): It is</span></span>
-<span><span class="co">#&gt; recommended to use at least 10 years of data to calculate the design reference</span></span>
-<span><span class="co">#&gt; evapotranspiration.</span></span></code></pre></div>
+<span><span class="va">eto_design</span> <span class="op">&lt;-</span> <span class="fu">BrazilMet</span><span class="fu">::</span><span class="fu"><a href="../reference/design_eto.html">design_eto</a></span><span class="op">(</span>eto_daily_data <span class="op">=</span> <span class="va">df</span>, percentile <span class="op">=</span> <span class="fl">.80</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="printing-the-design-eto-based-on-an-80-probability-of-occurrence">📝 Printing the design ETo based on an 80% probability of
 occurrence<a class="anchor" aria-label="anchor" href="#printing-the-design-eto-based-on-an-80-probability-of-occurrence"></a>
 </h2>
 <p>Below is a basic line plot of daily ETo:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">eto_design</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   design_eto</span></span>
-<span><span class="co">#&gt; 1         NA</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   5.624202</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary">✅ Summary<a class="anchor" aria-label="anchor" href="#summary"></a>

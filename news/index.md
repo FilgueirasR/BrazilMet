@@ -1,5 +1,24 @@
 # Changelog
 
+## BrazilMet (development version)
+
+### New functions
+
+- [`fill_gaps()`](https://filgueirasr.github.io/BrazilMet/reference/fill_gaps.md):
+  fills short gaps in daily weather data by linear interpolation
+  (optionally by climatology) and flags the filled values. Rainfall is
+  deliberately not allowed.
+- New tutorial for
+  [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md).
+
+### Improvements
+
+- [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md):
+  actual evapotranspiration (`etr`) can no longer exceed `etp`, so `def`
+  is never negative.
+- The ETo and design ETo tutorials now use datasets bundled with the
+  package instead of downloading data while building the site.
+
 ## BrazilMet 0.4.0 (2025-05-23)
 
 CRAN release: 2025-05-23

@@ -241,6 +241,13 @@ Functions for computing water balance components.
 - [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md)
   : Sequential water balance (Thornthwaite-Mather)
 
+## Data Quality
+
+Tools for handling missing values in weather data.
+
+- [`fill_gaps()`](https://filgueirasr.github.io/BrazilMet/reference/fill_gaps.md)
+  : Fill gaps in daily weather data
+
 # Articles
 
 ### Tutorials
@@ -249,3 +256,5 @@ Functions for computing water balance components.
   Penman-Monteith](https://filgueirasr.github.io/BrazilMet/articles/eto_pm_estimation.md):
 - [🌱💧 Design ETo
   calculation](https://filgueirasr.github.io/BrazilMet/articles/design_eto_estimation.md):
+- [🌧️ Sequential Water Balance
+  (Thornthwaite-Mather)](https://filgueirasr.github.io/BrazilMet/articles/water_balance_estimation.md):
