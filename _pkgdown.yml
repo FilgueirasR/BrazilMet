@@ -84,8 +84,14 @@ reference:
     contents:
       - water_balance
 
+  - title: "Data Quality"
+    desc: Tools for handling missing values in weather data.
+    contents:
+      - fill_gaps
+
 articles:
   - title: "Tutorials"
     contents:
       - eto_pm_estimation
       - design_eto_estimation
+      - water_balance_estimation

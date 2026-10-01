@@ -152,8 +152,8 @@ water_balance <- function(ppt, etp, AWC, period = NULL, year = NULL, group = NUL
     alt[first_idx] <- arm[first_idx] - AWC
   }
 
-  # Actual evapotranspiration
-  etr <- ifelse(ppt_etp < 0, round(ppt + abs(alt)), etp)
+  # Actual evapotranspiration (cannot exceed ETP, which rounding of `alt` could cause)
+  etr <- ifelse(ppt_etp < 0, pmin(round(ppt + abs(alt)), etp), etp)
 
   # Water deficit
   def <- etp - etr

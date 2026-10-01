@@ -34,9 +34,9 @@ see_stations_info()
 
 ## ⬇️ Download daily weather data
 
-Let’s download daily meteorological data for two stations between January 2023 and December 2024:
+Let’s download daily meteorological data for station A001 between January 2023 and December 2024:
 
-```{r}
+```{r download, eval = FALSE}
 df <- download_AWS_INMET_daily(
   stations   = c("A001"),
   start_date = "2023-01-01",
@@ -44,9 +44,21 @@ df <- download_AWS_INMET_daily(
 )
 ```
 
-The resulting data frame includes temperature, solar radiation, wind speed, humidity, and atmospheric pressure
+The resulting data frame includes temperature, solar radiation, wind speed, humidity, and atmospheric pressure.
+
+To keep this article reproducible without depending on the INMET server, the data downloaded with the call above are bundled with the package and loaded here:
+
+```{r load-data}
+df <- readRDS(system.file("extdata", "A001_daily_2023_2024.rds", package = "BrazilMet"))
+```
 
 ## 🧠 Calculate daily ETo using FAO-56
+
+Station data have occasional sensor failures, and any missing input makes ETo `NA` on that day. `fill_gaps()` fills gaps of up to three days by linear interpolation and flags the filled values in `*_filled` columns:
+
+```{r gap-fill}
+df <- fill_gaps(df, max_gap = 3)
+```
 
 Now we use the daily_eto_FAO56() function to estimate daily ETo values:
 
@@ -78,7 +90,7 @@ library(ggplot2)
 df$date <- as.Date(df$date)
 
 ggplot(df, aes(x = date, y = eto)) +
-  geom_line(color = "darkblue", size = 1) +
+  geom_line(color = "darkblue", linewidth = 1) +
   labs(
     title = "Reference Evapotranspiration (FAO-56)",
     x = "Date",

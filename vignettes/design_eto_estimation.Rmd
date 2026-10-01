@@ -34,16 +34,32 @@ see_stations_info()
 
 ## ⬇️ Download daily weather data
 
-Let’s download daily meteorological data for one stations between January 2000 until March 2025:
+Let’s download daily meteorological data for one station between January 2000 and March 2025 (the station A001 started operating in May 2000):
 
-```{r}
-df <- BrazilMet::download_AWS_INMET_daily(stations = "A001",
-                                          start_date = "2000-01-01",
-                                          end_date = "2025-03-31")
+```{r download, eval = FALSE}
+df <- download_AWS_INMET_daily(
+  stations   = "A001",
+  start_date = "2000-01-01",
+  end_date   = "2025-03-31"
+)
 ```
 
-The resulting data frame includes temperature, solar radiation, wind speed, humidity, and atmospheric pressure
+The resulting data frame includes temperature, solar radiation, wind speed, humidity, and atmospheric pressure.
 
+To keep this article reproducible without depending on the INMET server, the data downloaded with the call above are bundled with the package and loaded here:
+
+```{r load-data}
+df <- readRDS(system.file("extdata", "A001_daily_2000_2025.rds", package = "BrazilMet"))
+df$date <- as.Date(df$date)
+```
+
+## 🧩 Fill gaps in the weather data
+
+A long series has many sensor failures, and any missing input makes ETo `NA` on that day. `fill_gaps()` fills short gaps (up to three days) by linear interpolation and the remaining ones with the mean of the same day of the year in the other years. Every filled value is flagged in a `*_filled` column:
+
+```{r gap-fill}
+df <- fill_gaps(df, method = "both", max_gap = 3)
+```
 ## 🧠 Calculate daily ETo using FAO-56
 
 Now we use the daily_eto_FAO56() function to estimate daily ETo values:
