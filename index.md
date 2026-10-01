@@ -61,6 +61,11 @@ estimating evapotranspiration, and more. Please, see the package page 🔗
 - Automatic weather station (AWS) metadata.  
 - Selection of AWS stations using an `sf` object.
 
+### 💧 Water Balance
+
+- Sequential water balance (Thornthwaite & Mather, 1955) for daily,
+  weekly, monthly or custom time steps.
+
 ------------------------------------------------------------------------
 
 ## ⚡ Installation
@@ -68,6 +73,7 @@ estimating evapotranspiration, and more. Please, see the package page 🔗
 You can install the latest version of **BrazilMet** from GitHub:
 
 ``` r
+
 # Install devtools if not already installed
 install.packages("devtools")
 
@@ -82,6 +88,7 @@ estimate reference evapotranspiration (ETo) using FAO-56 for multiple
 stations and years:
 
 ``` r
+
 # Load the package
 library(BrazilMet)
 

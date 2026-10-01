@@ -9,6 +9,7 @@ method, using weather data from INMET automatic stations.
 ## 📦 Load the package
 
 ``` r
+
 library(BrazilMet)
 ```
 
@@ -18,6 +19,7 @@ Before downloading data, you can check the available weather stations
 with:
 
 ``` r
+
 see_stations_info()
 #> # A tibble: 564 × 8
 #>    station_municipality uf    situation_operation latitude_degrees
@@ -43,13 +45,28 @@ Let’s download daily meteorological data for two stations between
 January 2023 and December 2024:
 
 ``` r
+
 df <- download_AWS_INMET_daily(
   stations   = c("A001"),
   start_date = "2023-01-01",
   end_date   = "2024-12-31"
 )
 #> Downloading data for: 2023
+#> Warning in utils::download.file(url =
+#> paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL
+#> 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip': Timeout of 600
+#> seconds was reached
+#> Warning in value[[3L]](cond): Failed to download data for year 2023: cannot
+#> open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip'
 #> Downloading data for: 2024
+#> Warning in utils::download.file(url =
+#> paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", : URL
+#> 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip': Timeout of 600
+#> seconds was reached
+#> Warning in value[[3L]](cond): Failed to download data for year 2024: cannot
+#> open URL 'https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip'
+#> Warning in download_AWS_INMET_daily(stations = c("A001"), start_date =
+#> "2023-01-01", : No data was downloaded for the specified stations and period.
 ```
 
 The resulting data frame includes temperature, solar radiation, wind
@@ -60,6 +77,7 @@ speed, humidity, and atmospheric pressure
 Now we use the daily_eto_FAO56() function to estimate daily ETo values:
 
 ``` r
+
 df$eto <- daily_eto_FAO56(
   lat    = df$latitude_degrees,
   tmin   = df$tair_min_c,
@@ -73,6 +91,8 @@ df$eto <- daily_eto_FAO56(
   z      = df$altitude_m,
   date   = df$date
 )
+#> Warning in daily_eto_FAO56(lat = df$latitude_degrees, tmin = df$tair_min_c, :
+#> NAs introduced by coercion
 ```
 
 ## 📊 Plotting ETo results
@@ -80,6 +100,7 @@ df$eto <- daily_eto_FAO56(
 Below is a basic line plot of daily ETo:
 
 ``` r
+
 
 library(ggplot2)
 
@@ -103,8 +124,6 @@ ggplot(df, aes(x = date, y = eto)) +
 #> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_line()`).
 ```
 
 ![](eto_pm_estimation_files/figure-html/plot-eto-ggplot-1.png)

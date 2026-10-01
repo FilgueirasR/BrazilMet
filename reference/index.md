@@ -99,3 +99,10 @@ interest in Brazil.
   : Localization of the automatic weather station of INMET
 - [`selectAWSstations()`](https://filgueirasr.github.io/BrazilMet/reference/selectAWSstations.md)
   : Select Automatic Weather Stations
+
+## Water Balance
+
+Functions for computing water balance components.
+
+- [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md)
+  : Sequential water balance (Thornthwaite-Mather)
