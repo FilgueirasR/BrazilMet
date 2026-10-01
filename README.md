@@ -52,6 +52,9 @@
 - Automatic weather station (AWS) metadata.  
 - Selection of AWS stations using an `sf` object.  
 
+### 💧 Water Balance  
+- Sequential water balance (Thornthwaite & Mather, 1955) for daily, weekly, monthly or custom time steps.  
+
 ---
 
 ## ⚡ Installation  

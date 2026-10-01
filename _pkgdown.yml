@@ -79,6 +79,11 @@ reference:
       - see_stations_info
       - selectAWSstations
 
+  - title: "Water Balance"
+    desc: Functions for computing water balance components.
+    contents:
+      - water_balance
+
 articles:
   - title: "Tutorials"
     contents:
