@@ -1,6 +1,7 @@
 ## Test environments BrazilMet 0.5.0
 
 * local Windows 11, R 4.5.1
+* win-builder (release and devel)
 
 ### R CMD check results
 
