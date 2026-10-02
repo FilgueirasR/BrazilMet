@@ -43,10 +43,15 @@ hourly_weather_station_download <- function(stations, start_date, end_date) {
     tempdir <- tempfile()
     tf <- paste0(gsub("\\", "/", tempdir, fixed = TRUE), ".zip")
     outdir <- gsub("\\", "/", tempdir, fixed = TRUE)
-    options(timeout = 600)
-    
-    utils::download.file(url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"), 
-                         destfile = tf, method = "auto", cacheOK = F, quiet = T)
+
+    download_success <- .download_file(
+      url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"),
+      destfile = tf
+    )
+
+    if (!download_success) {
+      next
+    }
     
     a <- unzip(zipfile = tf, exdir = outdir, junkpaths = T)
     
@@ -202,5 +207,9 @@ names(dfx)
     df_sequence <- df_sequence 
   }
   
+  if (nrow(df_sequence) == 0) {
+    warning("No data was downloaded for the specified stations and period.")
+  }
+
   return(df_sequence)
 }

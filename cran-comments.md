@@ -1,3 +1,21 @@
+## Test environments BrazilMet 0.5.0
+
+* local Windows 11, R 4.5.1
+
+### R CMD check results
+
+0 errors | 0 warnings | 1 note
+
+* checking for future file timestamps ... NOTE: unable to verify current time. This is an environment issue (no access to a time server) and not related to the package.
+
+### Changes in this version
+
+* New functions `water_balance()` and `fill_gaps()`.
+* Download functions no longer modify the user's `timeout` option and fail gracefully with a warning or message when the data cannot be downloaded.
+* Fixed a bug in `max_eto_grid_download()` for the monthly products.
+* Added unit tests.
+
+
 ## Test environments BrazilMet 0.4.0
 
 ### R CMD check results

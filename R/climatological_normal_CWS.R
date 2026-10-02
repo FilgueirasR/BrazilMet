@@ -55,12 +55,11 @@ download_climate_normals <- function(variable, range_time) {
   tempdir <- tempfile()
   tf <- paste0(gsub("\\", "/", tempdir, fixed = TRUE), ".xlsx")
   outdir <- gsub("\\", "/", tempdir, fixed = TRUE)
-  options(timeout = 600)
 
-  utils::download.file(
-    url = base_url,
-    destfile = tf, mode = "wb"
-  )
+  if (!.download_file(url = base_url, destfile = tf)) {
+    message("The climatological normals could not be downloaded. Please check your internet connection and try again.")
+    return(invisible(NULL))
+  }
 
   a <- readxl::read_xlsx(tf, skip = 2, col_names = TRUE) |>
     rename_with(~ stringi::stri_trans_general(., "Latin-ASCII")) |>

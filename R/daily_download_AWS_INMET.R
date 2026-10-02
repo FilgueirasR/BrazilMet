@@ -76,19 +76,11 @@ download_AWS_INMET_daily <- function(stations, start_date, end_date) {
     tempdir <- tempfile()
     tf <- paste0(gsub("\\", "/", tempdir, fixed = TRUE), ".zip")
     outdir <- gsub("\\", "/", tempdir, fixed = TRUE)
-    options(timeout = 600)
 
-    # Tentar download com tratamento de erro
-    download_success <- tryCatch({
-      utils::download.file(
-        url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"),
-        destfile = tf, method = "auto", cacheOK = F, quiet = T
-      )
-      TRUE
-    }, error = function(e) {
-      warning("Failed to download data for year ", year, ": ", e$message)
-      FALSE
-    })
+    download_success <- .download_file(
+      url = paste0("https://portal.inmet.gov.br/uploads/dadoshistoricos/", year, ".zip"),
+      destfile = tf
+    )
     
     if (!download_success) {
       next

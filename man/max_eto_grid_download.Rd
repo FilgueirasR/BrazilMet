@@ -25,11 +25,8 @@ The dataset was developed by Dias (2018).
 }
 \examples{
 \dontrun{
-# Visualize Brazilian states (optional)
-see_brazil_states()
-
-# Download maximum ETo grid (annual)
-img_max_eto <- max_eto_grid_download(dir_out = "data/", product = "max_12_months")
+# Download the annual maximum ETo grid
+img_max_eto <- max_eto_grid_download(dir_out = tempdir(), product = "max_12_months")
 }
 
 }

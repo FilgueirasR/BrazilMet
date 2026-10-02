@@ -1,12 +1,19 @@
-# BrazilMet (development version)
+# BrazilMet 0.5.0
 
 ## New functions
+- `water_balance()`: sequential water balance (Thornthwaite-Mather) for any time step and available water capacity.
 - `fill_gaps()`: fills short gaps in daily weather data by linear interpolation (optionally by climatology) and flags the filled values. Rainfall is deliberately not allowed.
-- New tutorial for `water_balance()`.
+- New tutorials for `water_balance()` and for the ETo workflow with gap filling.
 
 ## Improvements
+- Download functions now send a browser-like User-Agent, since the INMET server resets connections from the default R client, and no longer change the user's `timeout` option.
+- `download_AWS_INMET_daily()`, `hourly_weather_station_download()`, `download_climate_normals()` and `max_eto_grid_download()` fail gracefully (a warning or message instead of an error) when the data cannot be downloaded.
+- `hourly_weather_station_download()` now warns when no data is downloaded.
+- The ETo and design ETo tutorials use datasets bundled with the package instead of downloading data while building the site.
+
+## Bug fixes
+- `max_eto_grid_download()`: the monthly products (`max_jan` to `max_dec`) failed because of a wrong variable name; `product` and `dir_out` are now validated.
 - `water_balance()`: actual evapotranspiration (`etr`) can no longer exceed `etp`, so `def` is never negative.
-- The ETo and design ETo tutorials now use datasets bundled with the package instead of downloading data while building the site.
 
 
 # BrazilMet 0.4.0 (2025-05-23)
