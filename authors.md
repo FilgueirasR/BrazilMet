@@ -20,7 +20,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/FilgueirasR/BrazilMet/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/FilgueirasR/BrazilMet/blob/v0.5.0/DESCRIPTION)
 
 Filgueiras R, Venancio L, Aleman C, da Cunha F (2026). *BrazilMet:
 Download and Processing of Automatic Weather Stations (AWS) Data of
