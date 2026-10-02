@@ -2,6 +2,8 @@
 
 ## BrazilMet 0.5.0
 
+CRAN release: 2026-10-02
+
 ### New functions
 
 - [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md):
