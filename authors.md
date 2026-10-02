@@ -24,13 +24,13 @@ Source:
 
 Filgueiras R, Venancio L, Aleman C, da Cunha F (2026). *BrazilMet:
 Download and Processing of Automatic Weather Stations (AWS) Data of
-INMET-Brazil*. R package version 0.4.0,
+INMET-Brazil*. R package version 0.5.0,
 <https://github.com/FilgueirasR/BrazilMet>.
 
     @Manual{,
       title = {BrazilMet: Download and Processing of Automatic Weather Stations (AWS) Data of INMET-Brazil},
       author = {Roberto Filgueiras and Luan P. Venancio and Catariny C. Aleman and Fernando F. {da Cunha}},
       year = {2026},
-      note = {R package version 0.4.0},
+      note = {R package version 0.5.0},
       url = {https://github.com/FilgueirasR/BrazilMet},
     }

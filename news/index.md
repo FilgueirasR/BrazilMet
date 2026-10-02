@@ -1,23 +1,45 @@
 # Changelog
 
-## BrazilMet (development version)
+## BrazilMet 0.5.0
 
 ### New functions
 
+- [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md):
+  sequential water balance (Thornthwaite-Mather) for any time step and
+  available water capacity.
 - [`fill_gaps()`](https://filgueirasr.github.io/BrazilMet/reference/fill_gaps.md):
   fills short gaps in daily weather data by linear interpolation
   (optionally by climatology) and flags the filled values. Rainfall is
   deliberately not allowed.
-- New tutorial for
-  [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md).
+- New tutorials for
+  [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md)
+  and for the ETo workflow with gap filling.
 
 ### Improvements
 
+- Download functions now send a browser-like User-Agent, since the INMET
+  server resets connections from the default R client, and no longer
+  change the user’s `timeout` option.
+- [`download_AWS_INMET_daily()`](https://filgueirasr.github.io/BrazilMet/reference/download_AWS_INMET_daily.md),
+  [`hourly_weather_station_download()`](https://filgueirasr.github.io/BrazilMet/reference/hourly_weather_station_download.md),
+  [`download_climate_normals()`](https://filgueirasr.github.io/BrazilMet/reference/download_climate_normals.md)
+  and
+  [`max_eto_grid_download()`](https://filgueirasr.github.io/BrazilMet/reference/max_eto_grid_download.md)
+  fail gracefully (a warning or message instead of an error) when the
+  data cannot be downloaded.
+- [`hourly_weather_station_download()`](https://filgueirasr.github.io/BrazilMet/reference/hourly_weather_station_download.md)
+  now warns when no data is downloaded.
+- The ETo and design ETo tutorials use datasets bundled with the package
+  instead of downloading data while building the site.
+
+### Bug fixes
+
+- [`max_eto_grid_download()`](https://filgueirasr.github.io/BrazilMet/reference/max_eto_grid_download.md):
+  the monthly products (`max_jan` to `max_dec`) failed because of a
+  wrong variable name; `product` and `dir_out` are now validated.
 - [`water_balance()`](https://filgueirasr.github.io/BrazilMet/reference/water_balance.md):
   actual evapotranspiration (`etr`) can no longer exceed `etp`, so `def`
   is never negative.
-- The ETo and design ETo tutorials now use datasets bundled with the
-  package instead of downloading data while building the site.
 
 ## BrazilMet 0.4.0 (2025-05-23)
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BrazilMet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,18 +35,30 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="brazilmet-development-version">BrazilMet (development version)<a class="anchor" aria-label="anchor" href="#brazilmet-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.0" id="brazilmet-050">BrazilMet 0.5.0<a class="anchor" aria-label="anchor" href="#brazilmet-050"></a></h2>
 <div class="section level3">
-<h3 id="new-functions-development-version">New functions<a class="anchor" aria-label="anchor" href="#new-functions-development-version"></a></h3>
+<h3 id="new-functions-0-5-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-5-0"></a></h3>
 <ul><li>
+<code><a href="../reference/water_balance.html">water_balance()</a></code>: sequential water balance (Thornthwaite-Mather) for any time step and available water capacity.</li>
+<li>
 <code><a href="../reference/fill_gaps.html">fill_gaps()</a></code>: fills short gaps in daily weather data by linear interpolation (optionally by climatology) and flags the filled values. Rainfall is deliberately not allowed.</li>
-<li>New tutorial for <code><a href="../reference/water_balance.html">water_balance()</a></code>.</li>
+<li>New tutorials for <code><a href="../reference/water_balance.html">water_balance()</a></code> and for the ETo workflow with gap filling.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<h3 id="improvements-0-5-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-5-0"></a></h3>
+<ul><li>Download functions now send a browser-like User-Agent, since the INMET server resets connections from the default R client, and no longer change the user’s <code>timeout</code> option.</li>
+<li>
+<code><a href="../reference/download_AWS_INMET_daily.html">download_AWS_INMET_daily()</a></code>, <code><a href="../reference/hourly_weather_station_download.html">hourly_weather_station_download()</a></code>, <code><a href="../reference/download_climate_normals.html">download_climate_normals()</a></code> and <code><a href="../reference/max_eto_grid_download.html">max_eto_grid_download()</a></code> fail gracefully (a warning or message instead of an error) when the data cannot be downloaded.</li>
+<li>
+<code><a href="../reference/hourly_weather_station_download.html">hourly_weather_station_download()</a></code> now warns when no data is downloaded.</li>
+<li>The ETo and design ETo tutorials use datasets bundled with the package instead of downloading data while building the site.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-5-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-0"></a></h3>
 <ul><li>
+<code><a href="../reference/max_eto_grid_download.html">max_eto_grid_download()</a></code>: the monthly products (<code>max_jan</code> to <code>max_dec</code>) failed because of a wrong variable name; <code>product</code> and <code>dir_out</code> are now validated.</li>
+<li>
 <code><a href="../reference/water_balance.html">water_balance()</a></code>: actual evapotranspiration (<code>etr</code>) can no longer exceed <code>etp</code>, so <code>def</code> is never negative.</li>
-<li>The ETo and design ETo tutorials now use datasets bundled with the package instead of downloading data while building the site.</li>
 </ul></div>
 </div>
     <div class="section level2">
